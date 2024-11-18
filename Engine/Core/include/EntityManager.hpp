@@ -5,19 +5,8 @@
 
 class EntityManager {
 public:
-    Entity createEntity() {
-        if (!availableEntities.empty()) {
-            Entity id = availableEntities.front();
-            availableEntities.pop();
-            return id;
-        } else {
-            return nextEntityId++;
-        }
-    }
-
-    void destroyEntity(Entity entity) {
-        availableEntities.push(entity);
-    }
+    Entity createEntity();
+    void destroyEntity(Entity entity);
 
 private:
     Entity nextEntityId = 0;

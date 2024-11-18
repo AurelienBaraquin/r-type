@@ -6,20 +6,8 @@
 
 class Registry {
 public:
-    Entity createEntity() {
-        Entity entity = entityManager.createEntity();
-        entityMasks[entity] = ComponentMask();
-        return entity;
-    }
-
-    void destroyEntity(Entity entity) {
-        entityManager.destroyEntity(entity);
-        entityMasks.erase(entity);
-
-        for (auto& [type, pool] : componentPools) {
-            pool->remove(entity);
-        }
-    }
+    Entity createEntity();
+    void destroyEntity(Entity entity);
 
     template<typename T, typename... Args>
     void addComponent(Entity entity, Args&&... args) {
