@@ -4,7 +4,10 @@
 
 #pragma once
 #include "raylib.h"
+#include <functional>
 
 struct BoxCollider {
     Rectangle rect;
+    std::function<void()> onBoxColliderEntered;
+    std::function<void()> onBoxColliderExited;
 };
