@@ -1,10 +1,10 @@
 #include "RType.hpp"
+#include "Graphic.hpp"
 
 #include <iostream>
 
 int main()
 {
-    Core core;
-    core.run();
-    return 0;
+    Engine().addSystem<Graphic>("RType", 800, 600)
+            .run();
 }

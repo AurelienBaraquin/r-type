@@ -2,18 +2,32 @@
 
 #include <vector>
 
-#include "ModuleManager.hpp"
+#include "SystemManager.hpp"
 #include "Registry.hpp"
 
-class Core
-{
-   public:
-    Core();
-    ~Core();
+class Engine {
+public:
+    Engine() = default;
 
-    void run();
+    Engine& operator=(const Engine&) = delete;
 
-   private:
-    ModuleManager _moduleManager;
+    template <typename T, typename... Args>
+    Engine& addSystem(Args&&... args) {
+        _systemManager.addSystem<T>(std::forward<Args>(args)...);
+        return *this;
+    }
+
+    void run() {
+        startup();
+        loop();
+        shutdown();
+    }
+
+private:
+    void startup();
+    void loop();
+    void shutdown();
+
+    SystemManager _systemManager;
     Registry _registry;
 };
