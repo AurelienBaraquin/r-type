@@ -19,6 +19,7 @@ constexpr bool is_serializable_v = is_serializable<T>::value;
 template<typename T>
 std::string serialize(const T& value) {
     std::ostringstream oss;
+    oss.imbue(std::locale::classic());
     boost::archive::text_oarchive oa(oss);
     oa << value;
     return oss.str();
@@ -27,6 +28,7 @@ std::string serialize(const T& value) {
 template<typename T>
 T deserialize(const std::string& data) {
     std::istringstream iss(data);
+    iss.imbue(std::locale::classic());
     boost::archive::text_iarchive ia(iss);
     T value;
     ia >> value;
