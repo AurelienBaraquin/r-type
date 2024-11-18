@@ -1,5 +1,6 @@
 #pragma once
 
-struct Position {
+struct Position
+{
     float x, y, z;
 };

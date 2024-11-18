@@ -1,5 +1,6 @@
 #pragma once
 
-struct Velocity {
+struct Velocity
+{
     float dx, dy;
 };

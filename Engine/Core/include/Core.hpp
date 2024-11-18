@@ -5,7 +5,8 @@
 #include "ModuleManager.hpp"
 #include "Registry.hpp"
 
-class Core {
+class Core
+{
    public:
     Core();
     ~Core();

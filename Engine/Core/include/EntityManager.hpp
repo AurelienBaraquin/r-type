@@ -4,7 +4,8 @@
 
 #include "Entity.hpp"
 
-class EntityManager {
+class EntityManager
+{
    public:
     Entity createEntity();
     void destroyEntity(Entity entity);

@@ -7,19 +7,23 @@
 
 #include "IModule.hpp"
 
-class ModuleManager {
+class ModuleManager
+{
    public:
     template <typename T>
-    T& getModule() {
+    T& getModule()
+    {
         auto it = _modules.find(typeid(T));
-        if (it == _modules.end()) {
+        if (it == _modules.end())
+        {
             throw std::runtime_error("Module not found");
         }
         return *static_cast<T*>(it->second.get());
     }
 
     template <typename T, typename... Args>
-    T& addModule(Args&&... args) {
+    T& addModule(Args&&... args)
+    {
         auto module = std::make_unique<T>(std::forward<Args>(args)...);
         auto ptr = module.get();
         _modules[typeid(T)] = std::move(module);
@@ -27,9 +31,11 @@ class ModuleManager {
     }
 
     template <typename T>
-    void removeModule() {
+    void removeModule()
+    {
         auto it = _modules.find(typeid(T));
-        if (it != _modules.end()) {
+        if (it != _modules.end())
+        {
             _modules.erase(it);
         }
     }

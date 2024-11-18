@@ -6,11 +6,16 @@
 #include "Registry.hpp"
 #include "Velocity.hpp"
 
-Core::Core() {}
+Core::Core()
+{
+}
 
-Core::~Core() {}
+Core::~Core()
+{
+}
 
-void Core::run() {
+void Core::run()
+{
     auto entity1 = _registry.createEntity();
     auto entity2 = _registry.createEntity();
 
@@ -20,7 +25,8 @@ void Core::run() {
     _registry.addComponent<Velocity>(entity2, 2.0f, 2.5f);
 
     auto entities = _registry.view<Position, Velocity>();
-    for (auto entity : entities) {
+    for (auto entity : entities)
+    {
         auto pos = _registry.getComponent<Position>(entity);
         auto vel = _registry.getComponent<Velocity>(entity);
         std::cout << "Entity " << entity << ": Position (" << pos->x << ", " << pos->y << ", "
