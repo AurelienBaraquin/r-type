@@ -28,8 +28,14 @@ tasks:
       - ./build/build/Release/Games/RType/RType
 
   test:
-    desc: "Run the test target"
+    desc: "Run the test target with coverage and generate HTML report"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=ON -DCOVERAGE=ON
       - cmake --build build --preset conan-release
       - ./build/build/Release/Engine/Test/Test
+      - lcov --capture --directory ./build --output-file coverage.info
+      - lcov --remove coverage.info '/usr/*' '*/build/_deps/*' --output-file coverage.filtered.info
+      - genhtml coverage.filtered.info --output-directory coverage-report
+      - echo "Coverage report generated in coverage-report/index.html"
+
+    silent: false
