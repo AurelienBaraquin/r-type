@@ -1,6 +1,8 @@
 #include "Core.hpp"
 #include <iostream>
 #include "Registry.hpp"
+#include "Position.hpp"
+#include "Velocity.hpp"
 
 Core::Core()
 {
@@ -9,24 +11,6 @@ Core::Core()
 Core::~Core()
 {
 }
-
-struct Position {
-    float x, y, z;
-
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar & x & y & z;
-    }
-};
-
-struct Velocity {
-    float dx, dy;
-
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar & dx & dy;
-    }
-};
 
 void Core::run() {
     auto entity1 = _registry.createEntity();

@@ -2,6 +2,7 @@ project(Test)
 
 add_executable(${PROJECT_NAME}
     src/Test.cpp
+    src/Serialization.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage --coverage")
@@ -13,4 +14,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Engine
+    gtest::gtest
 )
