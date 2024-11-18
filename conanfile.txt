@@ -1,6 +1,7 @@
 [requires]
 gtest/1.15.0
 raylib/5.0
+incbin/cci.20211107
 
 [generators]
 CMakeDeps

@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 
 find_package(GTest REQUIRED)
 find_package(raylib REQUIRED)
+find_package(incbin REQUIRED)
 
 add_subdirectory(Engine)
 add_subdirectory(Games)
