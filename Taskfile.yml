@@ -19,7 +19,7 @@ tasks:
   build:
     desc: "Build the project with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF
       - cmake --build build --preset conan-release
 
   rtype:
@@ -30,5 +30,6 @@ tasks:
   test:
     desc: "Run the test target"
     cmds:
-      - task build
-      - cmake --build build --preset conan-release --target test
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=ON
+      - cmake --build build --preset conan-release
+      - ./build/build/Release/Engine/Test/Test
