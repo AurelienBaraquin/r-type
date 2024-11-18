@@ -1,0 +1,34 @@
+version: '3'
+
+tasks:
+  i:
+    desc: "Install Conan dependencies and configure build system"
+    cmds:
+      - task install
+
+  install:
+    desc: "Install Conan dependencies and configure build system"
+    cmds:
+      - conan install . --output-folder=build --build=missing
+
+  b:
+    desc: "Build the project with conan-release preset"
+    cmds:
+      - task build
+
+  build:
+    desc: "Build the project with conan-release preset"
+    cmds:
+      - cmake --preset conan-release -DBUILD_RTYPE=ON
+      - cmake --build build --preset conan-release
+
+  rtype:
+    desc: "Run the RType target"
+    cmds:
+      - ./build/build/Release/Games/RType/RType
+
+  test:
+    desc: "Run the test target"
+    cmds:
+      - task build
+      - cmake --build build --preset conan-release --target test
