@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Entity.hpp"
 #include <queue>
 
+#include "Entity.hpp"
+
 class EntityManager {
-public:
+   public:
     Entity createEntity();
     void destroyEntity(Entity entity);
 
-private:
+   private:
     Entity nextEntityId = 0;
     std::queue<Entity> availableEntities;
 };

@@ -1,16 +1,16 @@
 #pragma once
 
-#include <unordered_map>
 #include <memory>
-#include <typeindex>
-#include "IModule.hpp"
 #include <stdexcept>
+#include <typeindex>
+#include <unordered_map>
+
+#include "IModule.hpp"
 
 class ModuleManager {
-public:
+   public:
     template <typename T>
-    T& getModule()
-    {
+    T& getModule() {
         auto it = _modules.find(typeid(T));
         if (it == _modules.end()) {
             throw std::runtime_error("Module not found");
@@ -19,8 +19,7 @@ public:
     }
 
     template <typename T, typename... Args>
-    T& addModule(Args&&... args)
-    {
+    T& addModule(Args&&... args) {
         auto module = std::make_unique<T>(std::forward<Args>(args)...);
         auto ptr = module.get();
         _modules[typeid(T)] = std::move(module);
@@ -28,14 +27,13 @@ public:
     }
 
     template <typename T>
-    void removeModule()
-    {
+    void removeModule() {
         auto it = _modules.find(typeid(T));
         if (it != _modules.end()) {
             _modules.erase(it);
         }
     }
 
-private:
+   private:
     std::unordered_map<std::type_index, std::unique_ptr<IModule>> _modules;
 };

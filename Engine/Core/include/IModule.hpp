@@ -1,6 +1,6 @@
 #pragma once
 
 class IModule {
-public:
+   public:
     virtual ~IModule() = default;
 };

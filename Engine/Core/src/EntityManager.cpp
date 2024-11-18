@@ -10,6 +10,4 @@ Entity EntityManager::createEntity() {
     }
 }
 
-void EntityManager::destroyEntity(Entity entity) {
-    availableEntities.push(entity);
-}
+void EntityManager::destroyEntity(Entity entity) { availableEntities.push(entity); }

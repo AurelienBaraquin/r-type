@@ -4,29 +4,29 @@
 #include "EntityManager.hpp"
 
 class Registry {
-public:
+   public:
     Entity createEntity();
     void destroyEntity(Entity entity);
 
-    template<typename T, typename... Args>
+    template <typename T, typename... Args>
     void addComponent(Entity entity, Args&&... args) {
         getOrCreatePool<T>()->add(entity, T{std::forward<Args>(args)...});
         entityMasks[entity].set(getComponentTypeId<T>());
     }
 
-    template<typename T>
+    template <typename T>
     void removeComponent(Entity entity) {
         getPool<T>()->remove(entity);
         entityMasks[entity].reset(getComponentTypeId<T>());
     }
 
-    template<typename T>
+    template <typename T>
     T* getComponent(Entity entity) {
         auto pool = getPool<T>();
         return pool ? pool->get(entity) : nullptr;
     }
 
-    template<typename... Components>
+    template <typename... Components>
     std::vector<Entity> view() {
         std::vector<Entity> result;
         for (const auto& [entity, mask] : entityMasks) {
@@ -37,18 +37,19 @@ public:
         return result;
     }
 
-private:
+   private:
     EntityManager entityManager;
     std::unordered_map<Entity, ComponentMask> entityMasks;
     std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> componentPools;
 
-    template<typename T>
+    template <typename T>
     ComponentPool<T>* getPool() {
         auto it = componentPools.find(typeid(T));
-        return it != componentPools.end() ? static_cast<ComponentPool<T>*>(it->second.get()) : nullptr;
+        return it != componentPools.end() ? static_cast<ComponentPool<T>*>(it->second.get())
+                                          : nullptr;
     }
 
-    template<typename T>
+    template <typename T>
     ComponentPool<T>* getOrCreatePool() {
         auto it = componentPools.find(typeid(T));
         if (it == componentPools.end()) {
@@ -58,13 +59,13 @@ private:
         return static_cast<ComponentPool<T>*>(componentPools[typeid(T)].get());
     }
 
-    template<typename T>
+    template <typename T>
     size_t getComponentTypeId() {
         static size_t id = nextComponentTypeId++;
         return id;
     }
 
-    template<typename... Components>
+    template <typename... Components>
     ComponentMask componentMask() {
         ComponentMask mask;
         (mask.set(getComponentTypeId<Components>()), ...);

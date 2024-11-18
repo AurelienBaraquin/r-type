@@ -1,16 +1,14 @@
 #include "Core.hpp"
+
 #include <iostream>
-#include "Registry.hpp"
+
 #include "Position.hpp"
+#include "Registry.hpp"
 #include "Velocity.hpp"
 
-Core::Core()
-{
-}
+Core::Core() {}
 
-Core::~Core()
-{
-}
+Core::~Core() {}
 
 void Core::run() {
     auto entity1 = _registry.createEntity();
@@ -25,6 +23,7 @@ void Core::run() {
     for (auto entity : entities) {
         auto pos = _registry.getComponent<Position>(entity);
         auto vel = _registry.getComponent<Velocity>(entity);
-        std::cout << "Entity " << entity << ": Position (" << pos->x << ", " << pos->y << ", " << pos->z << "), Velocity (" << vel->dx << ", " << vel->dy << ")" << std::endl;
+        std::cout << "Entity " << entity << ": Position (" << pos->x << ", " << pos->y << ", "
+                  << pos->z << "), Velocity (" << vel->dx << ", " << vel->dy << ")" << std::endl;
     }
 }

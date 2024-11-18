@@ -1,16 +1,18 @@
 #pragma once
 
-#include "ModuleManager.hpp"
 #include <vector>
+
+#include "ModuleManager.hpp"
 #include "Registry.hpp"
 
 class Core {
-public:
+   public:
     Core();
     ~Core();
 
     void run();
-private:
+
+   private:
     ModuleManager _moduleManager;
     Registry _registry;
 };
