@@ -1,6 +1,8 @@
 #pragma once
 
-struct Velocity
-{
-    float dx, dy;
-};
+namespace Components {
+    struct Velocity
+    {
+        float dx, dy;
+    };
+}

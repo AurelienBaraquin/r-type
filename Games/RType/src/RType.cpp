@@ -1,14 +1,20 @@
 #include "RType.hpp"
 #include "Graphic.hpp"
 #include "Import.hpp"
+#include "TextureManager.hpp"
 
 #include <iostream>
 
-IMPORT_TEXT(assets, "../../../format.sh");
+IMPORT_ASSETS(assets, "../../../Games/RType/assets/r-typesheet1.gif");
 
 int main()
 {
-    // Engine().addSystem<Graphic>("RType", 800, 600)
-    //         .run();
-    std::cout << gassetsData << std::endl;
+    Engine engine;
+    auto& graphic = engine.addModule<Graphic>("R-Type", 800, 600);
+
+    graphic.loadTexture(0, gassetsData, gassetsSize);
+
+    engine.run();
+
+    return 0;
 }

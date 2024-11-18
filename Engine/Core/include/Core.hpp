@@ -12,9 +12,9 @@ public:
     Engine& operator=(const Engine&) = delete;
 
     template <typename T, typename... Args>
-    Engine& addSystem(Args&&... args) {
+    T& addModule(Args&&... args) {
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
-        return *this;
+        return _systemManager.getSystem<T>();
     }
 
     void run() {
