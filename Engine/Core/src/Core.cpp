@@ -1,30 +1,29 @@
 #include "Core.hpp"
 #include "Registry.hpp"
 
-Core::Core()
+void Engine::startup()
 {
+    for (auto& [type, system] : _systemManager)
+    {
+        system->startup();
+    }
 }
 
-Core::~Core()
+void Engine::loop()
 {
+    while (true)
+    {
+        for (auto& [type, system] : _systemManager)
+        {
+            system->update(0.0f);
+        }
+    }
 }
 
-void Core::run()
+void Engine::shutdown()
 {
-    // auto entity1 = _registry.createEntity();
-    // auto entity2 = _registry.createEntity();
-
-    // _registry.addComponent<Position>(entity1, 10.0f, 20.0f, 30.0f);
-    // _registry.addComponent<Velocity>(entity1, 1.0f, 1.5f);
-    // _registry.addComponent<Position>(entity2, 30.0f, 40.0f, 50.0f);
-    // _registry.addComponent<Velocity>(entity2, 2.0f, 2.5f);
-
-    // auto entities = _registry.view<Position, Velocity>();
-    // for (auto entity : entities)
-    // {
-    //     auto pos = _registry.getComponent<Position>(entity);
-    //     auto vel = _registry.getComponent<Velocity>(entity);
-    //     std::cout << "Entity " << entity << ": Position (" << pos->x << ", " << pos->y << ", "
-    //               << pos->z << "), Velocity (" << vel->dx << ", " << vel->dy << ")" << std::endl;
-    // }
+    for (auto& [type, system] : _systemManager)
+    {
+        system->shutdown();
+    }
 }
