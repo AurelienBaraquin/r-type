@@ -2,7 +2,6 @@
 
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
-#include "Serialization.hpp"
 
 class Registry {
 public:
@@ -11,7 +10,6 @@ public:
 
     template<typename T, typename... Args>
     void addComponent(Entity entity, Args&&... args) {
-        static_assert(is_serializable_v<T>, "All components must implement serialization!");
         getOrCreatePool<T>()->add(entity, T{std::forward<Args>(args)...});
         entityMasks[entity].set(getComponentTypeId<T>());
     }

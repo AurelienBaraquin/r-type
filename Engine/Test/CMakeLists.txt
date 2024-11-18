@@ -5,7 +5,6 @@ enable_testing()
 
 add_executable(${PROJECT_NAME}
     src/Test.cpp
-    src/Serialization.cpp
 )
 
 option(COVERAGE "Enable coverage reporting" ON)
