@@ -12,7 +12,7 @@ void Physics::Physics::startup()
 void Physics::Physics::update(float deltaTime, Registry& registry)
 {
     for (auto entity : registry.view<Components::BoxCollider>()) {
-        auto& collider = registry.getComponent<Components::BoxCollider>(entity);
+        auto collider = registry.getComponent<Components::BoxCollider>(entity);
     }
 }
 
