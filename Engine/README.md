@@ -98,6 +98,16 @@ target_link_libraries(MyModule PRIVATE Core SDL2_image::SDL2_image SDL2::SDL2mai
 add_library(Engine::MyModule ALIAS MyModule)
 ```
 
+## Adding it to the task builder
+
+To add the module to the task builder, add it to the Taskfile.yml
+
+```  build:
+    desc: "Build the project with conan-release preset"
+    cmds:
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DMYMODULE=ON```
+```
+
 ## Adding it to the engine
 
 To add the module to the engine, add the following line to the ```Engine/CMakeLists.txt``` file:
@@ -120,15 +130,6 @@ if (PHYSICS)
 endif()
 ```
 
-## add to the task builder
-
-To add the module to the task builder, add it to the Taskfile.yml
-
-```  build:
-    desc: "Build the project with conan-release preset"
-    cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DMYMODULE=ON```
-```
 ## Adding it to the game
 
 To add the module to the game, add the following line to your cmake game file:
