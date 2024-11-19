@@ -9,7 +9,9 @@
 class Engine : public ISystem
 {
    public:
-    Engine() = default;
+    Engine() {
+        registerComponentFactory(_componentFactory);
+    }
 
     Engine& operator=(const Engine&) = delete;
 
@@ -17,7 +19,9 @@ class Engine : public ISystem
     T& addModule(Args&&... args)
     {
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
-        return _systemManager.getSystem<T>();
+        auto& system = _systemManager.getSystem<T>();
+        system.registerComponentFactory(_componentFactory);
+        return system;
     }
 
     EntityBuilder addEntity()
@@ -28,15 +32,6 @@ class Engine : public ISystem
     SceneLoader ManageScene()
     {
         return SceneLoader(_componentFactory, _registry);
-    }
-
-    void initModules()
-    {
-        for (auto& [type, system] : _systemManager)
-        {
-            system->registerComponentFactory(_componentFactory);
-        }
-        registerComponentFactory(_componentFactory);
     }
 
     void run()

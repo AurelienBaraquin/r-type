@@ -7,8 +7,6 @@ int main()
     Engine engine;
     auto& graphic = engine.addModule<Graphic>("R-Type", 800, 600);
 
-    engine.initModules();
-
     graphic.loadTexture(0, gassetsData, gassetsSize);
 
     graphic.loadAnimation(0, {
