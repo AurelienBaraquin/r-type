@@ -8,4 +8,9 @@ endif()
 
 if(GRAPHIC)
     add_subdirectory(Modules/Graphic)
+
+endif ()
+
+if (PHYSICS)
+    add_subdirectory(Modules/Physics)
 endif()
