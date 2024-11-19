@@ -29,13 +29,6 @@ int main()
         .addComponent<Components::Script>("test.lua")
         .build();
 
-    engine.addEntity()
-        .addComponent<Components::Position>(300, 100, 0)
-        .addComponent<Components::Scale>(1, 1)
-        .addComponent<Components::Rotation>(0.0f)
-        .addComponent<Components::Sprite>(0, 260, 143, 0, 0)
-        .build();
-
     engine.run();
 
     return 0;
