@@ -40,7 +40,7 @@ void Graphic::update(float deltaTime, Registry& registry) {
         }
         if (_event.type == SDL_KEYDOWN) {
             if (_event.key.keysym.sym == SDLK_ESCAPE) {
-                exit(0);
+                eventManager->publish<Events::Shutdown>(std::make_shared<Events::Shutdown>());
             }
         }
     }
