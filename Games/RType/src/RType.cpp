@@ -17,7 +17,9 @@ int main()
     graphic.loadTexture(0, gassetsData, gassetsSize);
 
     engine.addEntity()
-        .addComponent<Components::Position>(400, 300)
+        .addComponent<Components::Position>(400, 300, 0)
+        .addComponent<Components::Scale>(1, 1)
+        .addComponent<Components::Rotation>(0.0f)
         .addComponent<Components::Sprite>(0, 32, 32, 16, 16)
         .build();
 

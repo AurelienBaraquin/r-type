@@ -3,7 +3,6 @@ project(Graphic)
 add_library(Graphic STATIC src/Graphic.cpp
     src/Texture.cpp
     src/AnimationManager.cpp
-    src/SpriteManager.cpp
     src/TextureManager.cpp)
 
 target_include_directories(Graphic PUBLIC 

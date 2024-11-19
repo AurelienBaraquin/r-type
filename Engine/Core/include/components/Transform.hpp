@@ -3,12 +3,12 @@
 namespace Components {
     struct Position
     {
-        float x, y, z;
+        int x, y, z;
     };
 
     struct Scale
     {
-        float x, y;
+        int x, y;
     };
 
     struct Rotation
