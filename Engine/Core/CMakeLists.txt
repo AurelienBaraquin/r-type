@@ -4,11 +4,13 @@ add_library(Core STATIC src/Core.cpp
     src/EntityManager.cpp
     src/Registry.cpp)
 
+target_link_libraries(Core PRIVATE incbin::incbin)
+
 target_include_directories(Core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/components
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/entity)
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/entity
+    ${incbin_INCLUDE_DIRS})
 
-target_link_libraries(Core PRIVATE incbin::incbin)
 
 add_library(Engine ALIAS Core)
