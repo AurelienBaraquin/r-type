@@ -29,26 +29,32 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
         };
     });
 
-    scriptManager.registerBinding("Position", [&registry = registry](sol::state& luaState) {
-        luaState["getPosition"] = [&registry, &luaState](Entity entity) {
-            auto* position = registry.getComponent<Components::Position>(entity);
-            if (!position)
-                throw std::runtime_error("Position component not found");
+    scriptManager.registerBinding("Animation", [&registry = registry](sol::state& luaState) {
+        luaState["getAnimation"] = [&registry, &luaState](Entity entity) {
+            auto* animation = registry.getComponent<Components::Animation>(entity);
+            if (!animation)
+                throw std::runtime_error("Animation component not found");
             return luaState.create_table_with(
-                "x", position->x,
-                "y", position->y,
-                "z", position->z
+                "animationID", animation->animationID,
+                "currentFrame", animation->currentFrame,
+                "elapsedTime", animation->elapsedTime,
+                "frameTime", animation->frameTime,
+                "playing", animation->playing,
+                "loop", animation->loop
             );
         };
 
-        luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
-            auto* position = registry.getComponent<Components::Position>(entity);
-            if (!position)
-                throw std::runtime_error("Position component not found");
-            if (position) {
-                position->x = data["x"].get_or(position->x);
-                position->y = data["y"].get_or(position->y);
-                position->z = data["z"].get_or(position->z);
+        luaState["setAnimation"] = [&registry, &luaState](Entity entity, sol::table data) {
+            auto* animation = registry.getComponent<Components::Animation>(entity);
+            if (!animation)
+                throw std::runtime_error("Animation component not found");
+            if (animation) {
+                animation->animationID = data["animationID"].get_or(animation->animationID);
+                animation->currentFrame = data["currentFrame"].get_or(animation->currentFrame);
+                animation->elapsedTime = data["elapsedTime"].get_or(animation->elapsedTime);
+                animation->frameTime = data["frameTime"].get_or(animation->frameTime);
+                animation->playing = data["playing"].get_or(animation->playing);
+                animation->loop = data["loop"].get_or(animation->loop);
             }
         };
     });
