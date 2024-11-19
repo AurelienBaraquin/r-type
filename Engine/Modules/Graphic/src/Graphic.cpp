@@ -43,7 +43,41 @@ void Graphic::update(float deltaTime, Registry& registry) {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
+    std::vector<Entity> drawnEntities;
+
+    for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale, Components::Rotation>()) {
+        if (std::find(drawnEntities.begin(), drawnEntities.end(), entity) != drawnEntities.end())
+            continue;
+
+        auto animation = registry.getComponent<Components::Animation>(entity);
+        auto position = registry.getComponent<Components::Position>(entity);
+        auto scale = registry.getComponent<Components::Scale>(entity);
+        auto rotation = registry.getComponent<Components::Rotation>(entity);
+
+        if (!animation->playing)
+            continue;
+
+        _animationManager.updateAnimation(*animation, deltaTime);
+        auto frames = _animationManager.getAnimation(animation->animationID);
+        auto currentFrame = frames[animation->currentFrame];
+
+        auto sprite = Components::Sprite{
+            currentFrame.textureID,
+            currentFrame.width,
+            currentFrame.height,
+            currentFrame.originX,
+            currentFrame.originY
+        };
+
+        drawTextureEx(&sprite, position, rotation, scale);
+
+        drawnEntities.push_back(entity);
+    }
+
     for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale, Components::Rotation>()) {
+        if (std::find(drawnEntities.begin(), drawnEntities.end(), entity) != drawnEntities.end())
+            continue;
+
         auto sprite = registry.getComponent<Components::Sprite>(entity);
         auto position = registry.getComponent<Components::Position>(entity);
         auto scale = registry.getComponent<Components::Scale>(entity);

@@ -4,11 +4,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "TextureManager.hpp"
+#include "AnimationManager.hpp"
 #include <string>
 
 #include "Transform.hpp"
 #include "Sprite.hpp"
-#include "Animation.hpp"
 
 class Graphic : public ISystem
 {
@@ -27,6 +27,9 @@ class Graphic : public ISystem
     void loadTexture(int textureID, const unsigned char* data, std::size_t size);
     void removeTexture(int textureID);
 
+    void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
+    void removeAnimation(int animationID);
+
    private:
     std::string _title;
     int _width;
@@ -37,6 +40,7 @@ class Graphic : public ISystem
     SDL_Event _event;
 
     TextureManager _textureManager;
+    AnimationManager _animationManager;
     std::unordered_map<int, SDL_Texture*> _textures;
 
     SDL_Texture* getTexture(int textureID);

@@ -3,6 +3,7 @@ project(Graphic)
 add_library(Graphic STATIC src/Graphic.cpp
     src/Texture.cpp
     src/AnimationManager.cpp
+    src/Animation.cpp
     src/TextureManager.cpp
     src/ScriptBindings.cpp)
 

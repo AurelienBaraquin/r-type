@@ -1,14 +1,11 @@
 #pragma once
 
 #include "Animation.hpp"
+#include "Sprite.hpp"
 #include <vector>
 #include <unordered_map>
 
-struct AnimationFrame {
-    int textureID;
-    float width, height;
-    float originX, originY;
-};
+using AnimationFrame = Components::Sprite;
 
 class AnimationManager {
 public:
