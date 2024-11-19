@@ -1,9 +1,9 @@
-function update()
-    local position = getPosition()
-    local rotation = getRotation()
+function update(e)
+    local position = getPosition(e)
+    local rotation = getRotation(e)
     rotation.angle = rotation.angle + 5
     position.x = position.x + 2
     position.y = position.y + 2
-    setPosition({x = position.x, y = position.y, z = position.z})
-    setRotation({angle = rotation.angle})
+    setPosition(e, {x = position.x, y = position.y, z = position.z})
+    setRotation(e, {angle = rotation.angle})
 end

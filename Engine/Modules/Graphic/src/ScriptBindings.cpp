@@ -1,8 +1,8 @@
 #include "Graphic.hpp"
 
 void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& registry) {
-    scriptManager.registerBinding("Sprite", [&registry = registry](sol::state& luaState, Entity entity) {
-        luaState["getSprite"] = [&registry, &luaState, entity]() {
+    scriptManager.registerBinding("Sprite", [&registry = registry](sol::state& luaState) {
+        luaState["getSprite"] = [&registry, &luaState](Entity entity) {
             auto* sprite = registry.getComponent<Components::Sprite>(entity);
             if (!sprite)
                 throw std::runtime_error("Sprite component not found");
@@ -15,7 +15,7 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             );
         };
 
-        luaState["setSprite"] = [&registry, &luaState, entity](sol::table data) {
+        luaState["setSprite"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* sprite = registry.getComponent<Components::Sprite>(entity);
             if (!sprite)
                 throw std::runtime_error("Sprite component not found");
@@ -29,8 +29,8 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
         };
     });
 
-    scriptManager.registerBinding("Position", [&registry = registry](sol::state& luaState, Entity entity) {
-        luaState["getPosition"] = [&registry, &luaState, entity]() {
+    scriptManager.registerBinding("Position", [&registry = registry](sol::state& luaState) {
+        luaState["getPosition"] = [&registry, &luaState](Entity entity) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
                 throw std::runtime_error("Position component not found");
@@ -41,7 +41,7 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             );
         };
 
-        luaState["setPosition"] = [&registry, &luaState, entity](sol::table data) {
+        luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
                 throw std::runtime_error("Position component not found");

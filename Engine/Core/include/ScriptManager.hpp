@@ -9,27 +9,27 @@
 
 class ScriptManager {
 public:
-    using BindingFunction = std::function<void(sol::state&, Entity)>;
+    using BindingFunction = std::function<void(sol::state&)>;
 
     void registerBinding(const std::string& name, BindingFunction func) {
         bindings[name].push_back(func);
     }
 
-    void applyBindings(sol::state& luaState, Entity entity) {
+    void applyBindings(sol::state& luaState) {
         for (auto& [name, funcs] : bindings) {
             for (auto& func : funcs) {
-                func(luaState, entity);
+                func(luaState);
             }
         }
     }
 
-    sol::state& getScript(const std::string& scriptPath, Entity entity)
+    sol::state& getScript(const std::string& scriptPath)
     {
         if (scripts.find(scriptPath) == scripts.end())
         {
             scripts[scriptPath] = sol::state();
             scripts[scriptPath].open_libraries(sol::lib::base, sol::lib::math);
-            applyBindings(scripts[scriptPath], entity);
+            applyBindings(scripts[scriptPath]);
             scripts[scriptPath].script_file(scriptPath);
         }
 
