@@ -2,6 +2,7 @@
 
 #include "Registry.hpp"
 #include "ScriptManager.hpp"
+#include "Event.hpp"
 
 class ISystem
 {

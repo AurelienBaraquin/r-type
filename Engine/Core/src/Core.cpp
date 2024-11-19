@@ -16,7 +16,13 @@ void Engine::startup()
 
 void Engine::loop()
 {
-    while (true)
+    bool running = true;
+
+    eventManager->subscribe<Events::Shutdown>([&running](std::shared_ptr<Event> event) {
+        running = false;
+    });
+
+    while (running)
     {
         updateScript();
         for (auto& [type, system] : _systemManager)

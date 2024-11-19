@@ -36,7 +36,12 @@ void Graphic::startup() {
 void Graphic::update(float deltaTime, Registry& registry) {
     while (SDL_PollEvent(&_event)) {
         if (_event.type == SDL_QUIT) {
-            exit(0); // TODO
+            eventManager->publish<Events::Shutdown>(std::make_shared<Events::Shutdown>());
+        }
+        if (_event.type == SDL_KEYDOWN) {
+            if (_event.key.keysym.sym == SDLK_ESCAPE) {
+                exit(0);
+            }
         }
     }
 

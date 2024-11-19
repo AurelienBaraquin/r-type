@@ -3,7 +3,8 @@ project(core)
 add_library(Core STATIC src/Core.cpp
     src/EntityManager.cpp
     src/Registry.cpp
-    src/ScriptBindings.cpp)
+    src/ScriptBindings.cpp
+    src/Event.cpp)
 
 target_link_libraries(Core PRIVATE incbin::incbin sol2::sol2 lua::lua)
 
