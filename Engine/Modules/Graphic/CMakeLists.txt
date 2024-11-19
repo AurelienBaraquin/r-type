@@ -3,7 +3,8 @@ project(Graphic)
 add_library(Graphic STATIC src/Graphic.cpp
     src/Texture.cpp
     src/AnimationManager.cpp
-    src/TextureManager.cpp)
+    src/TextureManager.cpp
+    src/ScriptBindings.cpp)
 
 target_include_directories(Graphic PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include
