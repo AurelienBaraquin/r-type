@@ -23,7 +23,7 @@ void Engine::loop()
         {
             system->update(0.0f, _registry);
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(160));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
