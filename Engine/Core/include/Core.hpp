@@ -5,7 +5,7 @@
 #include "SystemManager.hpp"
 #include "EntityBuilder.hpp"
 
-class Engine {
+class Engine : public ISystem {
 public:
     Engine() = default;
 
@@ -29,9 +29,14 @@ public:
 
 private:
     void startup();
+    void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
     void loop();
     void shutdown();
 
+    void updateScript();
+    void update(float deltaTime, Registry& registry) override {}
+
+    ScriptManager _scriptManager;
     SystemManager _systemManager;
     Registry _registry;
 };
