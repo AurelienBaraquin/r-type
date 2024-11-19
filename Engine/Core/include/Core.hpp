@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "SystemManager.hpp"
-#include "Registry.hpp"
+#include "EntityBuilder.hpp"
 
 class Engine {
 public:
@@ -15,6 +15,10 @@ public:
     T& addModule(Args&&... args) {
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
         return _systemManager.getSystem<T>();
+    }
+
+    EntityBuilder addEntity() {
+        return EntityBuilder(_registry.createEntity(), _registry);
     }
 
     void run() {

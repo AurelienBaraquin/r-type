@@ -5,7 +5,7 @@
 
 class SpriteManager {
 public:
-    void loadSprite(int spriteID, int textureID, float width, float height, float originX, float originY);
+    void loadSprite(int spriteID, int textureID, int width, int height, int originX, int originY);
     void removeSprite(int spriteID);
     Components::Sprite getSprite(int spriteID);
 

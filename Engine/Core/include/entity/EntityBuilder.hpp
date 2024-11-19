@@ -1,0 +1,22 @@
+#pragma once
+
+#include "Registry.hpp"
+
+class EntityBuilder {
+public:
+    EntityBuilder(Entity entity, Registry& registry) : _entity(entity), _registry(registry) {}
+
+    template <typename T, typename... Args>
+    EntityBuilder& addComponent(Args&&... args) {
+        _registry.addComponent<T>(_entity, std::forward<Args>(args)...);
+        return *this;
+    }
+
+    Entity build() {
+        return _entity;
+    }
+
+private:
+    Entity _entity;
+    Registry& _registry;
+};

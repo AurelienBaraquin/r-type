@@ -1,6 +1,6 @@
 #include "SpriteManager.hpp"
 
-void SpriteManager::loadSprite(int spriteID, int textureID, float width, float height, float originX, float originY)
+void SpriteManager::loadSprite(int spriteID, int textureID, int width, int height, int originX, int originY)
 {
     sprites[spriteID] = Components::Sprite{textureID, width, height, originX, originY};
 }
