@@ -1,8 +1,6 @@
 #include "RType.hpp"
 #include "Graphic.hpp"
 
-#include <iostream>
-
 IMPORT_ASSETS(assets, "../../../Games/RType/assets/r-typesheet1.gif");
 
 int main()

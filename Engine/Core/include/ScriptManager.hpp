@@ -7,8 +7,6 @@
 #include "Script.hpp"
 #include "Entity.hpp"
 
-#include <iostream>
-
 class ScriptManager {
 public:
     using BindingFunction = std::function<void(sol::state&, Entity)>;
@@ -19,7 +17,6 @@ public:
 
     void applyBindings(sol::state& luaState, Entity entity) {
         for (auto& [name, funcs] : bindings) {
-            std::cout << "Applying bindings for " << name << std::endl;
             for (auto& func : funcs) {
                 func(luaState, entity);
             }
