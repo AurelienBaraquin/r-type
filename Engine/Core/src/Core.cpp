@@ -39,10 +39,10 @@ void Engine::updateScript() {
     for (auto entity : _registry.view<Components::Script>()) {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
-        sol::state& luaState = _scriptManager.getScript(script->scriptPath, entity);
+        sol::state& luaState = _scriptManager.getScript(script->scriptPath);
 
         if (luaState["update"]) {
-            luaState["update"]();
+            luaState["update"](entity);
         }
     }
 }

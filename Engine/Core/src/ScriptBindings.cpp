@@ -5,8 +5,8 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
 {
     (void)scriptManager; // UNUSED !
 
-    _scriptManager.registerBinding("Position", [&registry = registry](sol::state& luaState, Entity entity) {
-        luaState["getPosition"] = [&registry, &luaState, entity]() {
+    _scriptManager.registerBinding("Position", [&registry = registry](sol::state& luaState) {
+        luaState["getPosition"] = [&registry, &luaState](Entity entity) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
                 throw std::runtime_error("Position component not found");
@@ -17,7 +17,7 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
             );
         };
 
-        luaState["setPosition"] = [&registry, &luaState, entity](sol::table data) {
+        luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
                 throw std::runtime_error("Position component not found");
@@ -29,8 +29,8 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
         };
     });
 
-    _scriptManager.registerBinding("Scale", [&registry = registry](sol::state& luaState, Entity entity) {
-        luaState["getScale"] = [&registry, &luaState, entity]() {
+    _scriptManager.registerBinding("Scale", [&registry = registry](sol::state& luaState) {
+        luaState["getScale"] = [&registry, &luaState](Entity entity) {
             auto* scale = registry.getComponent<Components::Scale>(entity);
             if (!scale)
                 throw std::runtime_error("Scale component not found");
@@ -40,7 +40,7 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
             );
         };
 
-        luaState["setScale"] = [&registry, &luaState, entity](sol::table data) {
+        luaState["setScale"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* scale = registry.getComponent<Components::Scale>(entity);
             if (!scale)
                 throw std::runtime_error("Scale component not found");
@@ -51,8 +51,8 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
         };
     });
 
-    _scriptManager.registerBinding("Rotation", [&registry = registry](sol::state& luaState, Entity entity) {
-        luaState["getRotation"] = [&registry, &luaState, entity]() {
+    _scriptManager.registerBinding("Rotation", [&registry = registry](sol::state& luaState) {
+        luaState["getRotation"] = [&registry, &luaState](Entity entity) {
             auto* rotation = registry.getComponent<Components::Rotation>(entity);
             if (!rotation)
                 throw std::runtime_error("Rotation component not found");
@@ -61,7 +61,7 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
             );
         };
 
-        luaState["setRotation"] = [&registry, &luaState, entity](sol::table data) {
+        luaState["setRotation"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* rotation = registry.getComponent<Components::Rotation>(entity);
             if (!rotation)
                 throw std::runtime_error("Rotation component not found");
