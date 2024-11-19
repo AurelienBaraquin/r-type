@@ -3,11 +3,11 @@
   "entities": [
     {
       "components": {
-        "Position": { "x": 100, "y": 200, "z": 0 },
+        "Position": { "x": 400, "y": 200, "z": 0 },
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
         "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
-        "Script": { "scriptPath": "Games/RType/script/test.lua" }
+        "Script": { "scriptPath": "Games/RType/script/left.lua" }
       }
     },
     {
@@ -15,8 +15,8 @@
         "Position": { "x": 400, "y": 300, "z": 0 },
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
-        "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
-        "Script": { "scriptPath": "Games/RType/script/test.lua" }
+        "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 2.0, "elapsedTime": 0.0, "loop": true, "playing": true },
+        "Script": { "scriptPath": "Games/RType/script/right.lua" }
       }
     }
   ]
