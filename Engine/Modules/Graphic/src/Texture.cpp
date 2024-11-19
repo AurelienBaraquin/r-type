@@ -41,10 +41,10 @@ SDL_Texture* Graphic::getTexture(int textureID) {
 
 void Graphic::drawTexture(Components::Sprite* sprite, Components::Position* position) {
     SDL_Rect srcRect = {
-        sprite->originX,
-        sprite->originY,
-        sprite->width,
-        sprite->height
+        sprite->originX,  // Crop x
+        sprite->originY,  // Crop y
+        sprite->width,    // Crop width
+        sprite->height    // Crop height
     };
 
     SDL_Rect dstRect = {
@@ -66,25 +66,25 @@ void Graphic::drawTexture(Components::Sprite* sprite, Components::Position* posi
     );
 }
 
-
 void Graphic::drawTextureEx(Components::Sprite* sprite, Components::Position* position, Components::Rotation* rotation, Components::Scale* scale) {
     SDL_Rect srcRect = {
-        sprite->originX,
-        sprite->originY,
-        sprite->width,
-        sprite->height
+        sprite->originX,  // Crop x
+        sprite->originY,  // Crop y
+        sprite->width,    // Crop width
+        sprite->height    // Crop height
     };
 
     SDL_Rect dstRect = {
         static_cast<int>(position->x),
         static_cast<int>(position->y),
-        static_cast<int>(sprite->width * scale->x),
-        static_cast<int>(sprite->height * scale->y)
+        static_cast<int>(sprite->width * scale->x),   // Scaled width
+        static_cast<int>(sprite->height * scale->y)   // Scaled height
     };
 
-    SDL_Point origin = {
-        sprite->originX,
-        sprite->originY
+    // Calcul du centre pour la rotation
+    SDL_Point center = {
+        dstRect.w / 2,  // Centre x
+        dstRect.h / 2   // Centre y
     };
 
     SDL_Texture* texture = getTexture(sprite->textureID);
@@ -92,13 +92,14 @@ void Graphic::drawTextureEx(Components::Sprite* sprite, Components::Position* po
         return;
     }
 
+    // Appliquer la rotation autour du centre
     SDL_RenderCopyEx(
         _renderer,
         texture,
         &srcRect,
         &dstRect,
-        rotation->angle,
-        &origin,
-        SDL_FLIP_NONE
+        rotation->angle,  // Angle de rotation
+        &center,          // Point d'origine pour la rotation
+        SDL_FLIP_NONE     // Pas de flip
     );
 }

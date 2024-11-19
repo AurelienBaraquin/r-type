@@ -1,7 +1,7 @@
 project(Physics)
 
 add_library(Physics STATIC src/Physics.cpp
-                src/components/Boxcollider.cpp)
+                src/Boxcollider.cpp)
 
 target_include_directories(Physics PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include

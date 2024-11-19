@@ -6,7 +6,5 @@
 namespace Components {
     struct Script {
         std::string scriptPath;
-        sol::state luaState;
-        bool loaded = false;
     };
 }

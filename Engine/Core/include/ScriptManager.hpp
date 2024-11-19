@@ -7,8 +7,6 @@
 #include "Script.hpp"
 #include "Entity.hpp"
 
-#include <iostream>
-
 class ScriptManager {
 public:
     using BindingFunction = std::function<void(sol::state&, Entity)>;
@@ -19,13 +17,31 @@ public:
 
     void applyBindings(sol::state& luaState, Entity entity) {
         for (auto& [name, funcs] : bindings) {
-            std::cout << "Applying bindings for " << name << std::endl;
             for (auto& func : funcs) {
                 func(luaState, entity);
             }
         }
     }
 
+    sol::state& getScript(const std::string& scriptPath, Entity entity)
+    {
+        if (scripts.find(scriptPath) == scripts.end())
+        {
+            scripts[scriptPath] = sol::state();
+            scripts[scriptPath].open_libraries(sol::lib::base, sol::lib::math);
+            applyBindings(scripts[scriptPath], entity);
+            scripts[scriptPath].script_file(scriptPath);
+        }
+
+        return scripts[scriptPath];
+    }
+
+    void removeScript(const std::string& scriptPath)
+    {
+        scripts.erase(scriptPath);
+    }
+
 private:
+    std::unordered_map<std::string, sol::state> scripts;
     std::unordered_map<std::string, std::vector<BindingFunction>> bindings;
 };
