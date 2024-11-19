@@ -2,11 +2,14 @@
 
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
+#include <vector>
+
+using Tag = std::string;
 
 class Registry
 {
    public:
-    Entity createEntity();
+    Entity createEntity(std::vector<Tag> tags = {});
     void destroyEntity(Entity entity);
 
     template <typename T, typename... Args>
@@ -46,6 +49,7 @@ class Registry
 
    private:
     EntityManager entityManager;
+    std::unordered_map<Tag, std::vector<Entity>> _tags;
     std::unordered_map<Entity, ComponentMask> entityMasks;
     std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> componentPools;
 
