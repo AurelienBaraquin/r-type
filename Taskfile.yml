@@ -19,7 +19,7 @@ tasks:
   build:
     desc: "Build the project with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON
       - cmake --build build --preset conan-release
 
   rtype:
