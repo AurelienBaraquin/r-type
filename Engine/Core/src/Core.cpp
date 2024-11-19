@@ -1,4 +1,5 @@
 #include "Core.hpp"
+
 #include "Registry.hpp"
 
 void Engine::startup()
@@ -11,16 +12,15 @@ void Engine::startup()
     registerScriptBindings(_scriptManager, _registry);
 }
 
-#include <thread>
 #include <chrono>
+#include <thread>
 
 void Engine::loop()
 {
     bool running = true;
 
-    eventManager->subscribe<Events::Shutdown>([&running](std::shared_ptr<Event> event) {
-        running = false;
-    });
+    eventManager->subscribe<Events::Shutdown>([&running](std::shared_ptr<Event> event)
+                                              { running = false; });
 
     while (running)
     {
@@ -41,13 +41,16 @@ void Engine::shutdown()
     }
 }
 
-void Engine::updateScript() {
-    for (auto entity : _registry.view<Components::Script>()) {
+void Engine::updateScript()
+{
+    for (auto entity : _registry.view<Components::Script>())
+    {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
         sol::state& luaState = _scriptManager.getScript(script->scriptPath);
 
-        if (luaState["update"]) {
+        if (luaState["update"])
+        {
             luaState["update"](entity);
         }
     }

@@ -1,23 +1,29 @@
 #pragma once
 
 #include <functional>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
-#include "Script.hpp"
-#include "Entity.hpp"
 
-class ScriptManager {
-public:
+#include "Entity.hpp"
+#include "Script.hpp"
+
+class ScriptManager
+{
+   public:
     using BindingFunction = std::function<void(sol::state&)>;
 
-    void registerBinding(const std::string& name, BindingFunction func) {
+    void registerBinding(const std::string& name, BindingFunction func)
+    {
         bindings[name].push_back(func);
     }
 
-    void applyBindings(sol::state& luaState) {
-        for (auto& [name, funcs] : bindings) {
-            for (auto& func : funcs) {
+    void applyBindings(sol::state& luaState)
+    {
+        for (auto& [name, funcs] : bindings)
+        {
+            for (auto& func : funcs)
+            {
                 func(luaState);
             }
         }
@@ -41,7 +47,7 @@ public:
         scripts.erase(scriptPath);
     }
 
-private:
+   private:
     std::unordered_map<std::string, sol::state> scripts;
     std::unordered_map<std::string, std::vector<BindingFunction>> bindings;
 };

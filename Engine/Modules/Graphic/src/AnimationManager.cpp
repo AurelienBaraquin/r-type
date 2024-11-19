@@ -25,20 +25,22 @@ void AnimationManager::playAnimation(int animationID, Components::Animation& ani
 
 void AnimationManager::updateAnimation(Components::Animation& animation, float deltaTime)
 {
-    if (animations.find(animation.animationID) == animations.end())
-        return;
+    if (animations.find(animation.animationID) == animations.end()) return;
 
     auto& frames = animations[animation.animationID];
     auto& currentFrame = frames[animation.currentFrame];
 
     animation.elapsedTime += deltaTime;
-    if (animation.elapsedTime >= animation.frameTime) {
+    if (animation.elapsedTime >= animation.frameTime)
+    {
         animation.elapsedTime = 0;
         animation.currentFrame++;
-        if (animation.currentFrame >= frames.size()) {
+        if (animation.currentFrame >= frames.size())
+        {
             if (animation.loop)
                 animation.currentFrame = 0;
-            else {
+            else
+            {
                 animation.currentFrame = frames.size() - 1;
                 stopAnimation(animation);
             }

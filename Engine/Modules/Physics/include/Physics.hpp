@@ -4,13 +4,13 @@
 
 #pragma once
 
+#include "BoxCollider.hpp"
 #include "ISystem.hpp"
 #include "Registry.hpp"
-#include "BoxCollider.hpp"
 
 class Physics : public ISystem
 {
-    public:
+   public:
     Physics() = default;
     ~Physics() override = default;
     void startup() override;

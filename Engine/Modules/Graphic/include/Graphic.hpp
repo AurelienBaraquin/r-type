@@ -1,19 +1,21 @@
 #pragma once
 
-#include "ISystem.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "TextureManager.hpp"
-#include "AnimationManager.hpp"
+
 #include <string>
 
-#include "Transform.hpp"
+#include "AnimationManager.hpp"
+#include "ISystem.hpp"
 #include "Sprite.hpp"
+#include "TextureManager.hpp"
+#include "Transform.hpp"
 
 class Graphic : public ISystem
 {
    public:
-    Graphic(std::string title, int width, int height) : _title(title), _width(width), _height(height)
+    Graphic(std::string title, int width, int height)
+        : _title(title), _width(width), _height(height)
     {
     }
 
@@ -47,5 +49,6 @@ class Graphic : public ISystem
     void loadTexturesInMemory();
 
     void drawTexture(Components::Sprite* sprite, Components::Position* position);
-    void drawTextureEx(Components::Sprite* sprite, Components::Position* position, Components::Rotation* rotation, Components::Scale* scale);
+    void drawTextureEx(Components::Sprite* sprite, Components::Position* position,
+                       Components::Rotation* rotation, Components::Scale* scale);
 };

@@ -1,14 +1,16 @@
 #pragma once
 
+#include <unordered_map>
+#include <vector>
+
 #include "Animation.hpp"
 #include "Sprite.hpp"
-#include <vector>
-#include <unordered_map>
 
 using AnimationFrame = Components::Sprite;
 
-class AnimationManager {
-public:
+class AnimationManager
+{
+   public:
     void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
     void removeAnimation(int animationID);
     std::vector<AnimationFrame> getAnimation(int animationID);
@@ -17,6 +19,6 @@ public:
     void updateAnimation(Components::Animation& animation, float deltaTime);
     void stopAnimation(Components::Animation& animation);
 
-private:
+   private:
     std::unordered_map<int, std::vector<AnimationFrame>> animations;
 };

@@ -1,10 +1,12 @@
 #pragma once
 
-#include <string>
 #include <sol/sol.hpp>
+#include <string>
 
-namespace Components {
-    struct Script {
-        std::string scriptPath;
-    };
-}
+namespace Components
+{
+struct Script
+{
+    std::string scriptPath;
+};
+}  // namespace Components
