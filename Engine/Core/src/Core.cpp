@@ -39,18 +39,10 @@ void Engine::updateScript() {
     for (auto entity : _registry.view<Components::Script>()) {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
-        if (script->loaded == false) {
-            script->luaState = sol::state();
+        sol::state& luaState = _scriptManager.getScript(script->scriptPath, entity);
 
-            script->luaState.open_libraries(sol::lib::base, sol::lib::math);
-            _scriptManager.applyBindings(script->luaState, entity);
-            script->luaState.script_file(script->scriptPath);
-
-            script->loaded = true;
-        }
-
-        if (script->luaState["update"]) {
-            script->luaState["update"]();
+        if (luaState["update"]) {
+            luaState["update"]();
         }
     }
 }
