@@ -1,9 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <vector>
+
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
-#include <vector>
-#include <algorithm>
 
 class Registry
 {

@@ -3,8 +3,8 @@
 #include <vector>
 
 #include "EntityBuilder.hpp"
-#include "SystemManager.hpp"
 #include "Scene.hpp"
+#include "SystemManager.hpp"
 
 class Engine : public ISystem
 {
