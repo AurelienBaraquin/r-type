@@ -1,7 +1,6 @@
 function update(e)
     local animation = getAnimation(e)
     if animation.playing == false then
-        animation.playing = true
+        playAnimation(e, 0)
     end
-    setAnimation(e, animation)
 end

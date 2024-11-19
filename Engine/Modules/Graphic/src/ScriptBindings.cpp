@@ -58,4 +58,22 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             }
         };
     });
+
+    scriptManager.registerBinding("Animation", [&registry = registry, &_animationManager = _animationManager](sol::state& luaState) {
+        luaState["playAnimation"] = [&registry, &_animationManager](Entity entity, int animationID) {
+            auto* animation = registry.getComponent<Components::Animation>(entity);
+            if (!animation)
+                throw std::runtime_error("Animation component not found");
+            _animationManager.playAnimation(animationID, *animation);
+        };
+    });
+
+    scriptManager.registerBinding("Animation", [&registry = registry, &_animationManager = _animationManager](sol::state& luaState) {
+        luaState["stopAnimation"] = [&registry, &_animationManager](Entity entity) {
+            auto* animation = registry.getComponent<Components::Animation>(entity);
+            if (!animation)
+                throw std::runtime_error("Animation component not found");
+            _animationManager.stopAnimation(*animation);
+        };
+    });
 }
