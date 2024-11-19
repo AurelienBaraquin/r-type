@@ -6,6 +6,9 @@
 #include "TextureManager.hpp"
 #include <string>
 
+#include "Transform.hpp"
+#include "Sprite.hpp"
+
 class Graphic : public ISystem
 {
    public:
@@ -16,7 +19,7 @@ class Graphic : public ISystem
     ~Graphic() override = default;
 
     void startup() override;
-    void update(float deltaTime) override;
+    void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
 
     void loadTexture(int textureID, const unsigned char* data, std::size_t size);
@@ -37,5 +40,6 @@ class Graphic : public ISystem
     SDL_Texture* getTexture(int textureID);
     void loadTexturesInMemory();
 
-    void drawTexture(int textureID, float width, float height, float x, float y);
+    void drawTexture(Components::Sprite* sprite, Components::Position* position);
+    void drawTextureEx(Components::Sprite* sprite, Components::Position* position, Components::Rotation* rotation, Components::Scale* scale);
 };

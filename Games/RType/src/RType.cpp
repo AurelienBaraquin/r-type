@@ -2,9 +2,6 @@
 #include "Graphic.hpp"
 #include "Import.hpp"
 
-#include "Transform.hpp"
-#include "Sprite.hpp"
-
 #include <iostream>
 
 IMPORT_ASSETS(assets, "../../../Games/RType/assets/r-typesheet1.gif");
@@ -17,10 +14,10 @@ int main()
     graphic.loadTexture(0, gassetsData, gassetsSize);
 
     engine.addEntity()
-        .addComponent<Components::Position>(400, 300, 0)
+        .addComponent<Components::Position>(10, 200, 0)
         .addComponent<Components::Scale>(1, 1)
         .addComponent<Components::Rotation>(0.0f)
-        .addComponent<Components::Sprite>(0, 32, 32, 16, 16)
+        .addComponent<Components::Sprite>(0, 532, 37, 0, 0)
         .build();
 
     engine.run();

@@ -1,6 +1,9 @@
 #include "Graphic.hpp"
 #include <stdexcept>
 
+#include "Sprite.hpp"
+#include "Transform.hpp"
+
 void Graphic::startup() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw std::runtime_error("Failed to initialize SDL: " + std::string(SDL_GetError()));
@@ -30,19 +33,24 @@ void Graphic::startup() {
     loadTexturesInMemory();
 }
 
-void Graphic::update(float deltaTime) {
+void Graphic::update(float deltaTime, Registry& registry) {
     while (SDL_PollEvent(&_event)) {
         if (_event.type == SDL_QUIT) {
             exit(0); // TODO
         }
     }
 
-    SDL_SetRenderDrawColor(_renderer, 245, 245, 245, 255);
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
-    SDL_Rect rect = {190, 200, 400, 50};
-    SDL_SetRenderDrawColor(_renderer, 200, 200, 200, 255);
-    SDL_RenderFillRect(_renderer, &rect);
+    for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale, Components::Rotation>()) {
+        auto sprite = registry.getComponent<Components::Sprite>(entity);
+        auto position = registry.getComponent<Components::Position>(entity);
+        auto scale = registry.getComponent<Components::Scale>(entity);
+        auto rotation = registry.getComponent<Components::Rotation>(entity);
+
+        drawTextureEx(sprite, position, rotation, scale);
+    }
 
     SDL_RenderPresent(_renderer);
 }

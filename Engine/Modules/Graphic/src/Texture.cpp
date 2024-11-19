@@ -39,7 +39,66 @@ SDL_Texture* Graphic::getTexture(int textureID) {
     return _textures[textureID];
 }
 
-void Graphic::drawTexture(int textureID, float width, float height, float x, float y) {
-    SDL_Rect rect = {static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height)};
-    SDL_RenderCopy(_renderer, getTexture(textureID), nullptr, &rect);
+void Graphic::drawTexture(Components::Sprite* sprite, Components::Position* position) {
+    SDL_Rect srcRect = {
+        sprite->originX,
+        sprite->originY,
+        sprite->width,
+        sprite->height
+    };
+
+    SDL_Rect dstRect = {
+        static_cast<int>(position->x),
+        static_cast<int>(position->y),
+        sprite->width,
+        sprite->height
+    };
+
+    SDL_Texture* texture = getTexture(sprite->textureID);
+    if (!texture)
+        return;
+
+    SDL_RenderCopy(
+        _renderer,
+        texture,
+        &srcRect,
+        &dstRect
+    );
+}
+
+
+void Graphic::drawTextureEx(Components::Sprite* sprite, Components::Position* position, Components::Rotation* rotation, Components::Scale* scale) {
+    SDL_Rect srcRect = {
+        sprite->originX,
+        sprite->originY,
+        sprite->width,
+        sprite->height
+    };
+
+    SDL_Rect dstRect = {
+        static_cast<int>(position->x),
+        static_cast<int>(position->y),
+        static_cast<int>(sprite->width * scale->x),
+        static_cast<int>(sprite->height * scale->y)
+    };
+
+    SDL_Point origin = {
+        sprite->originX,
+        sprite->originY
+    };
+
+    SDL_Texture* texture = getTexture(sprite->textureID);
+    if (!texture) {
+        return;
+    }
+
+    SDL_RenderCopyEx(
+        _renderer,
+        texture,
+        &srcRect,
+        &dstRect,
+        rotation->angle,
+        &origin,
+        SDL_FLIP_NONE
+    );
 }

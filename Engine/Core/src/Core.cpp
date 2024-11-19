@@ -15,7 +15,7 @@ void Engine::loop()
     {
         for (auto& [type, system] : _systemManager)
         {
-            system->update(0.0f);
+            system->update(0.0f, _registry);
         }
     }
 }
