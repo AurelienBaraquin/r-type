@@ -54,10 +54,11 @@ void Graphic::update(float deltaTime, Registry& registry) {
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rotation = registry.getComponent<Components::Rotation>(entity);
 
+        _animationManager.updateAnimation(*animation, deltaTime);
+
         if (!animation->playing)
             continue;
 
-        _animationManager.updateAnimation(*animation, deltaTime);
         auto frames = _animationManager.getAnimation(animation->animationID);
         auto currentFrame = frames[animation->currentFrame];
 

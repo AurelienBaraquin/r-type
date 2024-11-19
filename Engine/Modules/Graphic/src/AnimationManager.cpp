@@ -38,8 +38,10 @@ void AnimationManager::updateAnimation(Components::Animation& animation, float d
         if (animation.currentFrame >= frames.size()) {
             if (animation.loop)
                 animation.currentFrame = 0;
-            else
+            else {
                 animation.currentFrame = frames.size() - 1;
+                stopAnimation(animation);
+            }
         }
     }
 }

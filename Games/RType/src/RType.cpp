@@ -25,7 +25,7 @@ int main()
         .addComponent<Components::Scale>(1, 1)
         .addComponent<Components::Rotation>(0.0f)
         .addComponent<Components::Sprite>(0, 260, 143, 0, 0)
-        .addComponent<Components::Animation>(0, 0, 4.0f, 0.0f, true, true)
+        .addComponent<Components::Animation>(0, 0, 10.0f, 0.0f, false, true)
         .addComponent<Components::Script>("test.lua")
         .build();
 
