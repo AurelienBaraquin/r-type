@@ -7,7 +7,7 @@
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
         "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
-        "Script": { "scriptPath": "test.lua" }
+        "Script": { "scriptPath": "Games/RType/script/test.lua" }
       }
     },
     {
@@ -16,7 +16,7 @@
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
         "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
-        "Script": { "scriptPath": "test.lua" }
+        "Script": { "scriptPath": "Games/RType/script/test.lua" }
       }
     }
   ]

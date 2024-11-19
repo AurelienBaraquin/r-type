@@ -22,7 +22,7 @@ int main()
                                  {0, 260, 143, 0, 429},
                              });
 
-    engine.ManageScene().loadScene("scene.json");
+    engine.ManageScene().loadScene("Games/RType/script/scene.json");
 
     engine.run();
 
