@@ -20,7 +20,7 @@ void Graphic::loadTexture(int textureID, const unsigned char* data, std::size_t 
     _textureManager.loadTexture(textureID, data, size);
 }
 
-void Graphic::loadTexturesInMemory(int textureID, const unsigned char* data, std::size_t size) {
+void Graphic::loadTexturesInMemory() {
     for (auto& texture : _textureManager) {
         _textures[texture.first] = LoadTextureFromMemory(_renderer, texture.second.data, texture.second.size);
         if (!_textures[texture.first]) {

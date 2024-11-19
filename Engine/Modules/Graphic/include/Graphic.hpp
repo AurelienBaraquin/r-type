@@ -35,7 +35,7 @@ class Graphic : public ISystem
     std::unordered_map<int, SDL_Texture*> _textures;
 
     SDL_Texture* getTexture(int textureID);
-    void loadTexturesInMemory(int textureID, const unsigned char* data, std::size_t size);
+    void loadTexturesInMemory();
 
     void drawTexture(int textureID, float width, float height, float x, float y);
 };

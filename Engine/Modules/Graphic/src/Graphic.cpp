@@ -26,6 +26,8 @@ void Graphic::startup() {
     if (!_renderer) {
         throw std::runtime_error("Failed to create renderer: " + std::string(SDL_GetError()));
     }
+
+    loadTexturesInMemory();
 }
 
 void Graphic::update(float deltaTime) {
