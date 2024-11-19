@@ -25,6 +25,7 @@ class Graphic : public ISystem
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
     void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
 
     void loadTexture(int textureID, const unsigned char* data, std::size_t size);
     void removeTexture(int textureID);

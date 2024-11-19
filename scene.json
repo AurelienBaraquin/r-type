@@ -1,0 +1,23 @@
+{
+  "sceneName": "MainMenu",
+  "entities": [
+    {
+      "components": {
+        "Position": { "x": 100, "y": 200, "z": 0 },
+        "Scale": { "x": 1, "y": 1 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
+        "Script": { "scriptPath": "test.lua" }
+      }
+    },
+    {
+      "components": {
+        "Position": { "x": 400, "y": 300, "z": 0 },
+        "Scale": { "x": 1, "y": 1 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "textureID": 0, "width": 64, "height": 64, "originX": 32, "originY": 32 },
+        "Script": { "scriptPath": "test.lua" }
+      }
+    }
+  ]
+}

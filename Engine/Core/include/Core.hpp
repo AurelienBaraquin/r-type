@@ -4,6 +4,7 @@
 
 #include "EntityBuilder.hpp"
 #include "SystemManager.hpp"
+#include "Scene.hpp"
 
 class Engine : public ISystem
 {
@@ -24,6 +25,20 @@ class Engine : public ISystem
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
+    SceneLoader ManageScene()
+    {
+        return SceneLoader(_componentFactory, _registry);
+    }
+
+    void initModules()
+    {
+        for (auto& [type, system] : _systemManager)
+        {
+            system->registerComponentFactory(_componentFactory);
+        }
+        registerComponentFactory(_componentFactory);
+    }
+
     void run()
     {
         startup();
@@ -34,6 +49,7 @@ class Engine : public ISystem
    private:
     void startup();
     void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
     void loop();
     void shutdown();
 
@@ -44,5 +60,6 @@ class Engine : public ISystem
 
     ScriptManager _scriptManager;
     SystemManager _systemManager;
+    ComponentFactory _componentFactory;
     Registry _registry;
 };

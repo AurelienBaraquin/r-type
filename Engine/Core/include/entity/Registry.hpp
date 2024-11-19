@@ -78,6 +78,14 @@ class Registry
         return result;
     }
 
+    void clear()
+    {
+        entityManager.clear();
+        _tags.clear();
+        entityMasks.clear();
+        componentPools.clear();
+    }
+
    private:
     EntityManager entityManager;
     std::unordered_map<Tag, std::vector<Entity>> _tags;

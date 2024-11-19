@@ -1,6 +1,6 @@
 function update(e)
-    local animation = getAnimation(e)
-    if animation.playing == false then
-        playAnimation(e, 0)
-    end
+    local position = getPosition(e)
+    position.x = position.x + 1
+    position.y = position.y + 1
+    setPosition(e, position)
 end
