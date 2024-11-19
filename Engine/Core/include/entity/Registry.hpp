@@ -3,14 +3,45 @@
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
 #include <vector>
-
-using Tag = std::string;
+#include <algorithm>
 
 class Registry
 {
    public:
     Entity createEntity(std::vector<Tag> tags = {});
     void destroyEntity(Entity entity);
+
+    std::vector<Entity> getEntitiesByTag(Tag tag)
+    {
+        return _tags[tag];
+    }
+
+    void addTag(Entity entity, Tag tag)
+    {
+        _tags[tag].push_back(entity);
+    }
+
+    void removeTag(Entity entity, Tag tag)
+    {
+        auto& entities = _tags[tag];
+        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+    }
+
+    void removeAllTags(Entity entity)
+    {
+        for (auto& [tag, entities] : _tags)
+        {
+            entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+        }
+    }
+
+    void removeEntityByTag(Tag tag)
+    {
+        for (auto entity : _tags[tag])
+        {
+            destroyEntity(entity);
+        }
+    }
 
     template <typename T, typename... Args>
     void addComponent(Entity entity, Args&&... args)

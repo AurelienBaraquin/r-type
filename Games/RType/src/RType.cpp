@@ -27,6 +27,7 @@ int main()
         .addComponent<Components::Sprite>(0, 260, 143, 0, 0)
         .addComponent<Components::Animation>(0, 0, 10.0f, 0.0f, false, true)
         .addComponent<Components::Script>("test.lua")
+        .addTag("Player")
         .build();
 
     engine.run();

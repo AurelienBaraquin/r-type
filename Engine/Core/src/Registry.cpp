@@ -1,5 +1,4 @@
 #include "Registry.hpp"
-#include <algorithm>
 
 Entity Registry::createEntity(std::vector<Tag> tags)
 {

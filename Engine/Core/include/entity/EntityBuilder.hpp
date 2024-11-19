@@ -16,6 +16,12 @@ class EntityBuilder
         return *this;
     }
 
+    EntityBuilder& addTag(Tag tag)
+    {
+        _registry.addTag(_entity, tag);
+        return *this;
+    }
+
     Entity build()
     {
         return _entity;
