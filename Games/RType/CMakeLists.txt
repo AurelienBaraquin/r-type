@@ -12,6 +12,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Engine
     Engine::Graphic
     Engine::Physics
-    SDL2_image::SDL2_image
-    SDL2::SDL2main
+    Engine::Inputs
 )

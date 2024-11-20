@@ -52,7 +52,6 @@ class SceneLoader : public ILoader
             {
                 std::filesystem::path scenePath =
                     std::filesystem::path(filePath).parent_path() / scene;
-                std::cout << "Loading scene: " << scenePath << std::endl;
                 SceneLoader(factory, registry, loaderManager).load(scenePath.string());
             }
         }

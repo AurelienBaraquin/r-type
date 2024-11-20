@@ -10,7 +10,9 @@ class ISystem
    public:
     virtual ~ISystem() = default;
     virtual void startup() = 0;
-    virtual void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) = 0;
+    virtual void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
+    {
+    }
     virtual void registerComponentFactory(ComponentFactory& componentFactory)
     {
     }

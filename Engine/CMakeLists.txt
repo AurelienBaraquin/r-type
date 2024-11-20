@@ -13,3 +13,7 @@ endif()
 if (PHYSICS)
     add_subdirectory(Modules/Physics)
 endif()
+
+if (INPUTS)
+    add_subdirectory(Modules/Inputs)
+endif()
