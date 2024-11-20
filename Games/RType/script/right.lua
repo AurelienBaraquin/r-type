@@ -16,7 +16,6 @@ function onCollide(e)
 end
 
 function setSpeed(e, newSpeed)
-    print(newSpeed)
     if newSpeed ~= nil then
         speed = newSpeed
     end
