@@ -3,6 +3,7 @@
 //
 
 #include "Physics.hpp"
+#include <chipmunk/chipmunk.h>
 
 void Physics::Physics::startup()
 {

@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+//#include <chipmunk/chipmunk.h>
 #include "BoxCollider.hpp"
 #include "ISystem.hpp"
 #include "Registry.hpp"
@@ -16,4 +16,5 @@ class Physics : public ISystem
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
+private:
 };
