@@ -7,6 +7,8 @@
 
 #include "Registry.hpp"
 
+#include <iostream>
+
 class ComponentFactory
 {
    public:
@@ -27,7 +29,8 @@ class ComponentFactory
         }
         else
         {
-            throw std::runtime_error("Component '" + componentName + "' is not registered.");
+            // throw std::runtime_error("Component '" + componentName + "' is not registered.");
+            std::cout << "Warning : Component '" << componentName << "' is not registered." << std::endl;
         }
     }
 
