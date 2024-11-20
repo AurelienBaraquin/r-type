@@ -7,8 +7,8 @@
 #include <typeinfo>
 void Physics::Physics::startup()
 {
-    _space = SpacePtr(cpSpaceNew(), ChipmunkDeleter());
-    auto handler = cpSpaceAddCollisionHandler(_space.get(), 0, 0);
+    _space = cpSpaceNew(); //TODO destroy space
+    auto handler = cpSpaceAddCollisionHandler(_space, 0, 0);
     handler->beginFunc = BeginCollision;
     handler->separateFunc = [](cpArbiter *arb, cpSpace *space, void *data) {
         cpShape *a, *b;
@@ -24,13 +24,13 @@ cpBool Physics::BeginCollision(cpArbiter *arb, cpSpace *space, void *data) {
 
 void Physics::Physics::update(float deltaTime, Registry &registry)
 {
-    cpSpaceStep(_space.get(), deltaTime);
+    cpSpaceStep(_space, deltaTime);
     for (auto entity : registry.view<Components::BoxCollider, Components::Position>()) //TO DO add rotation
     {
         Components::BoxCollider* boxCollider = registry.getComponent<Components::BoxCollider>(entity);
         auto* position = registry.getComponent<Components::Position>(entity);
 
-        cpBodySetPosition(boxCollider->body.get(), cpVect{(double)position->x, (double)position->y});
+//        cpBodySetPosition(boxCollider->body.get(), cpVect{(double)position->x, (double)position->y});
     }
 }
 

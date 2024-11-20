@@ -19,9 +19,8 @@ class Physics : public ISystem
     void shutdown() override;
 
     void registerComponentFactory(ComponentFactory& componentFactory) override;
-    void initBoxCollider(BoxCollider& collider, SpacePtr space, float width, float height, float mass);
 private:
-    std::shared_ptr<cpSpace> _space;
+    cpSpace *_space;
     static cpBool BeginCollision(cpArbiter *arb, cpSpace *space, void *data);
     static cpBool EndCollision(cpArbiter *arb, cpSpace *space, void *data);
 };
