@@ -11,11 +11,11 @@
       "Aim": "RightButton"
     },
     "controller": {
-      "MoveUp": "AxisYNegative",
-      "MoveDown": "AxisYPositive",
-      "MoveLeft": "AxisXNegative",
-      "MoveRight": "AxisXPositive",
-      "Jump": "ButtonA",
-      "Shoot": "ButtonB"
+      "MoveUp": "RightStickYNegative",
+      "MoveDown": "RightStickYPositive",
+      "MoveLeft": "LeftStickXNegative",
+      "MoveRight": "LeftStickXPositive",
+      "Jump": "A",
+      "Shoot": "B"
     }
   }
