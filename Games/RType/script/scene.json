@@ -37,5 +37,17 @@
         { "textureID": 0, "width": 260, "height": 143, "originX": 0, "originY": 429 }
       ]
     }
+  ],
+  "sprites": [
+    {
+      "spriteID": 0,
+      "data": {
+        "textureID": 0,
+        "width": 260,
+        "height": 143,
+        "originX": 0,
+        "originY": 0
+      }
+    }
   ]
 }

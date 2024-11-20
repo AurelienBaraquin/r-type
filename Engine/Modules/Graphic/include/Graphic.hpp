@@ -44,7 +44,8 @@ class Graphic : public ISystem, public ILoader
 
     void load(std::string filePath) override
     {
-        _AnimationSystem.loadAnimations(filePath);
+        _AnimationSystem.load(filePath);
+        _SpriteSystem.load(filePath);
     }
 
    private:

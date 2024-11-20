@@ -1,6 +1,4 @@
 #include "AnimationSystem.hpp"
-
-#include <fstream>
 #include <nlohmann/json.hpp>
 
 void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
@@ -8,7 +6,7 @@ void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame>
     animations[animationID] = frames;
 }
 
-void AnimationSystem::loadAnimations(std::string filePath)
+void AnimationSystem::load(std::string filePath)
 {
     std::ifstream file(filePath);
     nlohmann::json data;
