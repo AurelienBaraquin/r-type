@@ -21,6 +21,8 @@ class SceneLoader
         nlohmann::json sceneData;
         file >> sceneData;
 
+        std::string sceneTag = sceneData["sceneTag"];
+
         for (const auto& entityData : sceneData["entities"])
         {
             Entity entity = registry.createEntity();
@@ -29,6 +31,13 @@ class SceneLoader
             for (auto& [componentName, componentData] : components.items())
             {
                 factory.addComponent(entity, componentName, componentData, registry);
+            }
+
+            const auto& tags = entityData["tags"];
+
+            for (const auto& tag : tags)
+            {
+                registry.addTag(entity, tag);
             }
         }
     }

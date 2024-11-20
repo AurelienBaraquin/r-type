@@ -16,11 +16,6 @@ SDL_Texture* LoadTextureFromMemory(SDL_Renderer* renderer, const unsigned char* 
     return texture;
 }
 
-void Graphic::loadTexture(int textureID, const unsigned char* data, std::size_t size)
-{
-    _textureManager.loadTexture(textureID, data, size);
-}
-
 void Graphic::loadTexturesInMemory()
 {
     for (auto& texture : _textureManager)
@@ -35,25 +30,18 @@ void Graphic::loadTexturesInMemory()
     }
 }
 
-void Graphic::removeTexture(int textureID)
-{
-    _textureManager.removeTexture(textureID);
-    SDL_DestroyTexture(_textures[textureID]);
-    _textures.erase(textureID);
-}
-
 SDL_Texture* Graphic::getTexture(int textureID)
 {
     return _textures[textureID];
 }
 
-void Graphic::drawTexture(Components::Sprite* sprite, Components::Position* position)
+void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
 {
     SDL_Rect srcRect = {
-        sprite->originX,  // Crop x
-        sprite->originY,  // Crop y
-        sprite->width,    // Crop width
-        sprite->height    // Crop height
+        sprite->originX,
+        sprite->originY,
+        sprite->width,
+        sprite->height
     };
 
     SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y), sprite->width,
@@ -65,26 +53,27 @@ void Graphic::drawTexture(Components::Sprite* sprite, Components::Position* posi
     SDL_RenderCopy(_renderer, texture, &srcRect, &dstRect);
 }
 
-void Graphic::drawTextureEx(Components::Sprite* sprite, Components::Position* position,
+void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
                             Components::Rotation* rotation, Components::Scale* scale)
 {
+
+
     SDL_Rect srcRect = {
-        sprite->originX,  // Crop x
-        sprite->originY,  // Crop y
-        sprite->width,    // Crop width
-        sprite->height    // Crop height
+        sprite->originX,
+        sprite->originY,
+        sprite->width,
+        sprite->height
     };
 
     SDL_Rect dstRect = {
         static_cast<int>(position->x), static_cast<int>(position->y),
-        static_cast<int>(sprite->width * scale->x),  // Scaled width
-        static_cast<int>(sprite->height * scale->y)  // Scaled height
+        static_cast<int>(sprite->width * scale->x),
+        static_cast<int>(sprite->height * scale->y)
     };
 
-    // Calcul du centre pour la rotation
     SDL_Point center = {
-        dstRect.w / 2,  // Centre x
-        dstRect.h / 2   // Centre y
+        dstRect.w / 2,
+        dstRect.h / 2
     };
 
     SDL_Texture* texture = getTexture(sprite->textureID);
@@ -93,10 +82,9 @@ void Graphic::drawTextureEx(Components::Sprite* sprite, Components::Position* po
         return;
     }
 
-    // Appliquer la rotation autour du centre
     SDL_RenderCopyEx(_renderer, texture, &srcRect, &dstRect,
-                     rotation->angle,  // Angle de rotation
-                     &center,          // Point d'origine pour la rotation
-                     SDL_FLIP_NONE     // Pas de flip
+                     rotation->angle,
+                     &center,
+                     SDL_FLIP_NONE
     );
 }

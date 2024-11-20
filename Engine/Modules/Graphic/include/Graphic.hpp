@@ -5,9 +5,9 @@
 
 #include <string>
 
-#include "AnimationManager.hpp"
 #include "ISystem.hpp"
-#include "Sprite.hpp"
+#include "AnimationManager.hpp"
+#include "SpriteManager.hpp"
 #include "TextureManager.hpp"
 #include "Transform.hpp"
 
@@ -27,11 +27,20 @@ class Graphic : public ISystem
     void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    void loadTexture(int textureID, const unsigned char* data, std::size_t size);
-    void removeTexture(int textureID);
+    TextureManager& manageTextures()
+    {
+        return _textureManager;
+    }
 
-    void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
-    void removeAnimation(int animationID);
+    SpriteManager& manageSprites()
+    {
+        return _spriteManager;
+    }
+
+    AnimationManager& manageAnimations()
+    {
+        return _animationManager;
+    }    
 
    private:
     std::string _title;
@@ -43,13 +52,14 @@ class Graphic : public ISystem
     SDL_Event _event;
 
     TextureManager _textureManager;
+    SpriteManager _spriteManager;
     AnimationManager _animationManager;
     std::unordered_map<int, SDL_Texture*> _textures;
 
     SDL_Texture* getTexture(int textureID);
     void loadTexturesInMemory();
 
-    void drawTexture(Components::Sprite* sprite, Components::Position* position);
-    void drawTextureEx(Components::Sprite* sprite, Components::Position* position,
+    void drawTexture(BrutSprite* sprite, Components::Position* position);
+    void drawTextureEx(BrutSprite* sprite, Components::Position* position,
                        Components::Rotation* rotation, Components::Scale* scale);
 };

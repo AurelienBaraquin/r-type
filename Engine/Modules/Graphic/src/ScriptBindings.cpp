@@ -10,9 +10,7 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             {
                 auto* sprite = registry.getComponent<Components::Sprite>(entity);
                 if (!sprite) throw std::runtime_error("Sprite component not found");
-                return luaState.create_table_with(
-                    "textureID", sprite->textureID, "width", sprite->width, "height",
-                    sprite->height, "originX", sprite->originX, "originY", sprite->originY);
+                return luaState.create_table_with("spriteID", sprite->spriteID);
             };
 
             luaState["setSprite"] = [&registry, &luaState](Entity entity, sol::table data)
@@ -21,11 +19,7 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
                 if (!sprite) throw std::runtime_error("Sprite component not found");
                 if (sprite)
                 {
-                    sprite->textureID = data["textureID"].get_or(sprite->textureID);
-                    sprite->width = data["width"].get_or(sprite->width);
-                    sprite->height = data["height"].get_or(sprite->height);
-                    sprite->originX = data["originX"].get_or(sprite->originX);
-                    sprite->originY = data["originY"].get_or(sprite->originY);
+                    sprite->spriteID = data["spriteID"].get_or(sprite->spriteID);
                 }
             };
         });

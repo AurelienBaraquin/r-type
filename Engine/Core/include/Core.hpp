@@ -29,7 +29,7 @@ class Engine : public ISystem
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
-    SceneLoader ManageScene()
+    SceneLoader manageScene()
     {
         return SceneLoader(_componentFactory, _registry);
     }

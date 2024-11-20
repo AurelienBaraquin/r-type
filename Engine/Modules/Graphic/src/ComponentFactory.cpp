@@ -7,8 +7,7 @@ void Graphic::registerComponentFactory(ComponentFactory& componentFactory)
         [](Entity entity, const nlohmann::json& data, Registry& registry)
         {
             registry.addComponent<Components::Sprite>(
-                entity, data["textureID"].get<int>(), data["originX"].get<int>(),
-                data["originY"].get<int>(), data["width"].get<int>(), data["height"].get<int>());
+                entity, data["spriteID"].get<int>());
         });
 
     componentFactory.registerComponent(

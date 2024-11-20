@@ -74,7 +74,7 @@ void Graphic::update(float deltaTime, Registry& registry)
         auto currentFrame = frames[animation->currentFrame];
 
         auto sprite =
-            Components::Sprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
+            BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
                                currentFrame.originX, currentFrame.originY};
 
         drawTextureEx(&sprite, position, rotation, scale);
@@ -93,7 +93,9 @@ void Graphic::update(float deltaTime, Registry& registry)
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rotation = registry.getComponent<Components::Rotation>(entity);
 
-        drawTextureEx(sprite, position, rotation, scale);
+        auto brutSprite = _spriteManager.getSprite(sprite->spriteID);
+
+        drawTextureEx(&brutSprite, position, rotation, scale);
     }
 
     SDL_RenderPresent(_renderer);

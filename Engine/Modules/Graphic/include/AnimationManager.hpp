@@ -6,7 +6,7 @@
 #include "Animation.hpp"
 #include "Sprite.hpp"
 
-using AnimationFrame = Components::Sprite;
+using AnimationFrame = BrutSprite;
 
 class AnimationManager
 {
