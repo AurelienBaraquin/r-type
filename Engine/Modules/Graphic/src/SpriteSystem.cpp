@@ -7,7 +7,7 @@ void SpriteSystem::loadSprite(int spriteID, int textureID, int width, int height
     sprites[spriteID] = {textureID, width, height, originX, originY};
 }
 
-void SpriteSystem::load(std::string filePath)
+void SpriteSystem::load(const std::string& filePath)
 {
     std::ifstream file(filePath);
     nlohmann::json data;

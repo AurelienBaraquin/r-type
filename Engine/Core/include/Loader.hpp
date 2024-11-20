@@ -9,7 +9,7 @@ class ILoader
     ILoader() = default;
     virtual ~ILoader() = default;
 
-    virtual void load(std::string filePath) = 0;
+    virtual void load(const std::string& filePath) = 0;
 };
 
 class LoaderManager

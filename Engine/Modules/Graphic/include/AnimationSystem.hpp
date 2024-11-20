@@ -17,7 +17,7 @@ class AnimationSystem : public ILoader
     void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
 
     // Loader interface
-    void load(std::string filePath) override;
+    void load(const std::string& filePath) override;
 
     void removeAnimation(int animationID);
     std::vector<AnimationFrame> getAnimation(int animationID);

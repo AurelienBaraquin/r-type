@@ -42,7 +42,7 @@ class Graphic : public ISystem, public ILoader
         return _AnimationSystem;
     }
 
-    void load(std::string filePath) override
+    void load(const std::string& filePath) override
     {
         _AnimationSystem.load(filePath);
         _SpriteSystem.load(filePath);

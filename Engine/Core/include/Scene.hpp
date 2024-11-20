@@ -8,7 +8,10 @@
 #include "Registry.hpp"
 #include "Loader.hpp"
 
-class SceneLoader
+#include <iostream>
+#include <filesystem>
+
+class SceneLoader : public ILoader
 {
    public:
     SceneLoader(ComponentFactory& factory, Registry& registry, LoaderManager& loaderManager)
@@ -16,7 +19,7 @@ class SceneLoader
     {
     }
 
-    void loadScene(const std::string& filePath)
+    void load(const std::string& filePath) override
     {
         std::ifstream file(filePath);
         nlohmann::json sceneData;
@@ -39,6 +42,17 @@ class SceneLoader
             for (const auto& tag : tags)
             {
                 registry.addTag(entity, tag);
+            }
+        }
+
+        if (sceneData.find("scenes") != sceneData.end())
+        {
+            for (const auto& scene : sceneData["scenes"])
+            {
+                std::filesystem::path scenePath = std::filesystem::path(filePath).parent_path() / scene;
+                std::cout << "Loading scene: " << scenePath << std::endl;
+                SceneLoader(factory, registry, loaderManager).load(scenePath.string());
+
             }
         }
 

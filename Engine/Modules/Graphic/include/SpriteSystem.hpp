@@ -13,7 +13,7 @@ class SpriteSystem : public ILoader
     void loadSprite(int spriteID, int textureID, int width, int height, int originX, int originY);
 
     // Loader interface
-    void load(std::string filePath) override;
+    void load(const std::string& filePath) override;
 
     void removeSprite(int spriteID);
     BrutSprite getSprite(int spriteID);

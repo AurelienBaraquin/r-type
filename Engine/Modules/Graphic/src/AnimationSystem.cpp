@@ -6,7 +6,7 @@ void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame>
     animations[animationID] = frames;
 }
 
-void AnimationSystem::load(std::string filePath)
+void AnimationSystem::load(const std::string& filePath)
 {
     std::ifstream file(filePath);
     nlohmann::json data;

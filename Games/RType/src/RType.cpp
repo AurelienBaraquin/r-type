@@ -9,7 +9,7 @@ int main()
 
     graphic.manageTextures().loadTexture(0, gassetsData, gassetsSize);
 
-    engine.manageScene().loadScene("Games/RType/script/scene.json");
+    engine.manageScene().load("Games/RType/script/scene.json");
 
     engine.run();
 
