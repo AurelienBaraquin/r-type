@@ -12,6 +12,7 @@
     - [Network components](#network-components)
 - [Modules](#modules)
   - [Adding a new module](#adding-a-new-module)
+- [Adding a library to the engine](#adding-a-library-to-the-engine)
 
 
 # Introduction
