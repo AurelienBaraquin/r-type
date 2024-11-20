@@ -6,8 +6,7 @@
 #include <unordered_map>
 
 #include "Registry.hpp"
-
-#include <iostream>
+#include "Log.hpp"
 
 class ComponentFactory
 {
@@ -16,6 +15,11 @@ class ComponentFactory
 
     void registerComponent(const std::string& componentName, ComponentLoader loader)
     {
+        if (componentLoaders.find(componentName) != componentLoaders.end())
+        {
+            Logger::getInstance().error("Component " + componentName + " already registered");
+            return;
+        }
         componentLoaders[componentName] = loader;
     }
 
@@ -29,8 +33,7 @@ class ComponentFactory
         }
         else
         {
-            // throw std::runtime_error("Component '" + componentName + "' is not registered.");
-            std::cout << "Warning : Component '" << componentName << "' is not registered." << std::endl;
+            Logger::getInstance().error("Component " + componentName + " not found");
         }
     }
 

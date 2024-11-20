@@ -20,6 +20,11 @@ class Engine : public ISystem
     template <typename T, typename... Args>
     T& addModule(Args&&... args)
     {
+        if (_systemManager.hasSystem<T>())
+        {
+            Logger::getInstance().error("System already registered");
+            return _systemManager.getSystem<T>();
+        }
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
         auto& system = _systemManager.getSystem<T>();
         system.registerComponentFactory(_componentFactory);
