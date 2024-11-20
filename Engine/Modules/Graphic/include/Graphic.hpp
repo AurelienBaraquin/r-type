@@ -11,7 +11,7 @@
 #include "TextureSystem.hpp"
 #include "Transform.hpp"
 
-class Graphic : public ISystem
+class Graphic : public ISystem, public ILoader
 {
    public:
     Graphic(std::string title, int width, int height)
@@ -40,6 +40,11 @@ class Graphic : public ISystem
     AnimationSystem& manageAnimations()
     {
         return _AnimationSystem;
+    }
+
+    void load(std::string filePath) override
+    {
+        _AnimationSystem.loadAnimations(filePath);
     }
 
    private:

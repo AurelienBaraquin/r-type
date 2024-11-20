@@ -7,13 +7,21 @@
 #include "Animation.hpp"
 #include "Sprite.hpp"
 
+#include "Loader.hpp"
+
 using AnimationFrame = BrutSprite;
 
-class AnimationSystem
+class AnimationSystem : public ILoader
 {
    public:
     void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
     void loadAnimations(std::string filePath);
+
+    // Loader interface
+    void load(std::string filePath) override {
+        loadAnimations(filePath);
+    }
+
     void removeAnimation(int animationID);
     std::vector<AnimationFrame> getAnimation(int animationID);
 

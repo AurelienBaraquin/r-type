@@ -5,6 +5,7 @@
 #include "EntityBuilder.hpp"
 #include "Scene.hpp"
 #include "SystemManager.hpp"
+#include "Loader.hpp"
 
 class Engine : public ISystem
 {
@@ -22,6 +23,12 @@ class Engine : public ISystem
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
         auto& system = _systemManager.getSystem<T>();
         system.registerComponentFactory(_componentFactory);
+
+        if (dynamic_cast<ILoader*>(&system))
+        {
+            _loaderManager.addLoader(dynamic_cast<ILoader*>(&system));
+        }
+
         return system;
     }
 
@@ -32,7 +39,7 @@ class Engine : public ISystem
 
     SceneLoader manageScene()
     {
-        return SceneLoader(_componentFactory, _registry);
+        return SceneLoader(_componentFactory, _registry, _loaderManager);
     }
 
     void run()
@@ -56,6 +63,7 @@ class Engine : public ISystem
 
     ScriptSystem _ScriptSystem;
     SystemManager _systemManager;
+    LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
 };

@@ -14,6 +14,9 @@ void AnimationSystem::loadAnimations(std::string filePath)
     nlohmann::json data;
     file >> data;
 
+    if (data.find("animations") == data.end())
+        return;
+
     const auto& animationsData = data["animations"];
 
     for (const auto& animationData : animationsData)

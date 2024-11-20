@@ -6,12 +6,13 @@
 
 #include "ComponentFactory.hpp"
 #include "Registry.hpp"
+#include "Loader.hpp"
 
 class SceneLoader
 {
    public:
-    SceneLoader(ComponentFactory& factory, Registry& registry)
-        : factory(factory), registry(registry)
+    SceneLoader(ComponentFactory& factory, Registry& registry, LoaderManager& loaderManager)
+        : factory(factory), registry(registry), loaderManager(loaderManager)
     {
     }
 
@@ -40,6 +41,8 @@ class SceneLoader
                 registry.addTag(entity, tag);
             }
         }
+
+        loaderManager.load(filePath);
     }
 
     void clear()
@@ -50,4 +53,5 @@ class SceneLoader
    private:
     ComponentFactory& factory;
     Registry& registry;
+    LoaderManager& loaderManager;
 };
