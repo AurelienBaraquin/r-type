@@ -37,12 +37,7 @@ SDL_Texture* Graphic::getTexture(int textureID)
 
 void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
 {
-    SDL_Rect srcRect = {
-        sprite->originX,
-        sprite->originY,
-        sprite->width,
-        sprite->height
-    };
+    SDL_Rect srcRect = {sprite->originX, sprite->originY, sprite->width, sprite->height};
 
     SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y), sprite->width,
                         sprite->height};
@@ -56,25 +51,13 @@ void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
 void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
                             Components::Rotation* rotation, Components::Scale* scale)
 {
+    SDL_Rect srcRect = {sprite->originX, sprite->originY, sprite->width, sprite->height};
 
+    SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y),
+                        static_cast<int>(sprite->width * scale->x),
+                        static_cast<int>(sprite->height * scale->y)};
 
-    SDL_Rect srcRect = {
-        sprite->originX,
-        sprite->originY,
-        sprite->width,
-        sprite->height
-    };
-
-    SDL_Rect dstRect = {
-        static_cast<int>(position->x), static_cast<int>(position->y),
-        static_cast<int>(sprite->width * scale->x),
-        static_cast<int>(sprite->height * scale->y)
-    };
-
-    SDL_Point center = {
-        dstRect.w / 2,
-        dstRect.h / 2
-    };
+    SDL_Point center = {dstRect.w / 2, dstRect.h / 2};
 
     SDL_Texture* texture = getTexture(sprite->textureID);
     if (!texture)
@@ -82,9 +65,6 @@ void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
         return;
     }
 
-    SDL_RenderCopyEx(_renderer, texture, &srcRect, &dstRect,
-                     rotation->angle,
-                     &center,
-                     SDL_FLIP_NONE
-    );
+    SDL_RenderCopyEx(_renderer, texture, &srcRect, &dstRect, rotation->angle, &center,
+                     SDL_FLIP_NONE);
 }

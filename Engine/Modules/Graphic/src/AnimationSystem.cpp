@@ -1,6 +1,7 @@
 #include "AnimationSystem.hpp"
-#include <nlohmann/json.hpp>
+
 #include <fstream>
+#include <nlohmann/json.hpp>
 
 void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
 {

@@ -9,7 +9,8 @@
 class Engine : public ISystem
 {
    public:
-    Engine() {
+    Engine()
+    {
         registerComponentFactory(_componentFactory);
     }
 

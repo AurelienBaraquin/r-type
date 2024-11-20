@@ -1,8 +1,8 @@
 #pragma once
 
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <string>
 
 #include "Animation.hpp"
 #include "Sprite.hpp"

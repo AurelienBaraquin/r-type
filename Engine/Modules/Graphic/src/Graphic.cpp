@@ -73,9 +73,8 @@ void Graphic::update(float deltaTime, Registry& registry)
         auto frames = _AnimationSystem.getAnimation(animation->animationID);
         auto currentFrame = frames[animation->currentFrame];
 
-        auto sprite =
-            BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
-                               currentFrame.originX, currentFrame.originY};
+        auto sprite = BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
+                                 currentFrame.originX, currentFrame.originY};
 
         drawTextureEx(&sprite, position, rotation, scale);
 

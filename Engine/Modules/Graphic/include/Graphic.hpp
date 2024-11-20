@@ -5,8 +5,8 @@
 
 #include <string>
 
-#include "ISystem.hpp"
 #include "AnimationSystem.hpp"
+#include "ISystem.hpp"
 #include "SpriteSystem.hpp"
 #include "TextureSystem.hpp"
 #include "Transform.hpp"
@@ -40,7 +40,7 @@ class Graphic : public ISystem
     AnimationSystem& manageAnimations()
     {
         return _AnimationSystem;
-    }    
+    }
 
    private:
     std::string _title;

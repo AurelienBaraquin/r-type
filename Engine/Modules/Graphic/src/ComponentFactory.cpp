@@ -3,12 +3,8 @@
 void Graphic::registerComponentFactory(ComponentFactory& componentFactory)
 {
     componentFactory.registerComponent(
-        "Sprite",
-        [](Entity entity, const nlohmann::json& data, Registry& registry)
-        {
-            registry.addComponent<Components::Sprite>(
-                entity, data["spriteID"].get<int>());
-        });
+        "Sprite", [](Entity entity, const nlohmann::json& data, Registry& registry)
+        { registry.addComponent<Components::Sprite>(entity, data["spriteID"].get<int>()); });
 
     componentFactory.registerComponent(
         "Animation",
