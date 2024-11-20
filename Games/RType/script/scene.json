@@ -15,11 +15,11 @@
     {
       "tags" : ["enemy"],
       "components": {
-        "Position": { "x": 400, "y": 300, "z": 0 },
+        "Position": { "x": 0, "y": 300, "z": 0 },
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
         "Sprite": { "spriteID": 0 },
-        "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 2.0, "elapsedTime": 0.0, "loop": true, "playing": true },
+        "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 3.0, "elapsedTime": 0.0, "loop": true, "playing": true },
         "Script": { "scriptPath": "Games/RType/script/right.lua" }
       }
     }
