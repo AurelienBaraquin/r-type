@@ -1,5 +1,6 @@
 project(Physics)
 
+
 add_library(Physics STATIC src/Physics.cpp
                 src/Boxcollider.cpp
         src/ComponentFactory.cpp)
@@ -9,6 +10,6 @@ target_include_directories(Physics PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include/components
         ${chipmunk2d_INCLUDE_DIRS})
 
-target_link_libraries(Physics PRIVATE Core chipmunk2d::chipmunk2d)
+target_link_libraries(Physics PRIVATE Core chipmunk2d::chipmunk2d SDL2::SDL2main)
 
 add_library(Engine::Physics ALIAS Physics)

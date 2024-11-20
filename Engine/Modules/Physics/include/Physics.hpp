@@ -8,6 +8,7 @@
 #include "ISystem.hpp"
 #include "Registry.hpp"
 #include <memory>
+#include <SDL2/SDL.h>
 
 class Physics : public ISystem
 {

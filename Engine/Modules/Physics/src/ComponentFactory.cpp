@@ -4,7 +4,7 @@
 
 #include "Physics.hpp"
 #include "BoxCollider.hpp"
-
+#include "Area2D.hpp"
 void Physics::registerComponentFactory(ComponentFactory& componentFactory)
 {
     componentFactory.registerComponent(
@@ -17,11 +17,21 @@ void Physics::registerComponentFactory(ComponentFactory& componentFactory)
                 boxCollider.height = data["height"].get<float>();
                 boxCollider.body = cpBodyNew(1.0f, cpMomentForBox(1.0f, boxCollider.width, boxCollider.height));
                 boxCollider.shape = cpBoxShapeNew(boxCollider.body, boxCollider.width, boxCollider.height, 0.0f);
-                cpSpaceAddBody(_space, boxCollider.body);
-                cpSpaceAddShape(_space, boxCollider.shape);
-
+                cpShapeSetCollisionType(boxCollider.shape, 1); //TODO : mutliple collision type
                 registry.addComponent<Components::BoxCollider>(
-                        entity, boxCollider);
+                        entity, std::move(boxCollider));
+            }
+    );
+    componentFactory.registerComponent(
+            "Area2D",
+            [this](Entity entity, const nlohmann::json& data, Registry& registry)
+            {
+                struct Components::Area2D area2d;
+
+                area2d.width = data["width"].get<int>();
+                area2d.height = data["height"].get<int>();
+                registry.addComponent<Components::Area2D>(
+                        entity, std::move(area2d));
             }
     );
 }
