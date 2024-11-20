@@ -13,8 +13,6 @@ int main()
     auto& inputs = engine.addModule<Inputs>();
     auto& physics = engine.addModule<Physics>();
 
-    inputs.loadInputs(0, "Games/RType/script/inputs.json");
-
     graphic.manageTextures().loadTexture(0, gassetsData, gassetsSize);
 
     engine.manageScene().load("Games/RType/script/scene.json");

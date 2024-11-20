@@ -32,65 +32,73 @@ std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
     {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
 
-void InputSystem::loadInput(int inputConfigID, const std::string& configFile)
+void InputSystem::load(const std::string& configFile)
 {
-    if (inputs.find(inputConfigID) != inputs.end())
-        throw std::runtime_error("Input config already loaded: " + std::to_string(inputConfigID));
-
     std::ifstream file(configFile);
     nlohmann::json data;
     file >> data;
 
-    InputConfig inputConfig;
+    if (data.find("inputConfig") == data.end()) return;
 
-    for (const auto& [device, deviceData] : data.items())
+    InputConfig _inputConfig;
+
+    const auto& inputConfigs = data["inputConfig"];
+
+    for (const auto& inputConfig : inputConfigs)
     {
-        for (const auto& [str, code] : deviceData.items())
+        int inputConfigID = inputConfig["id"].get<int>();
+        const auto& inputConfigData = inputConfig["inputConfig"];
+
+        for (const auto& [device, deviceData] : inputConfigData.items())
         {
-            if (device == "keyboard")
+            for (const auto& [str, code] : deviceData.items())
             {
-                SDL_Scancode scancode = SDL_GetScancodeFromName(code.get<std::string>().c_str());
-                if (scancode == SDL_SCANCODE_UNKNOWN)
-                    throw std::runtime_error("Unknown scancode: " + code.get<std::string>());
-                inputConfig.buttons[scancode] = str;
-            }
-            else if (device == "mouse")
-            {
-                std::string button = code.get<std::string>();
-                if (button == "LeftButton")
-                    inputConfig.mouseButtons[SDL_BUTTON_LEFT] = str;
-                else if (button == "MiddleButton")
-                    inputConfig.mouseButtons[SDL_BUTTON_MIDDLE] = str;
-                else if (button == "RightButton")
-                    inputConfig.mouseButtons[SDL_BUTTON_RIGHT] = str;
-                else
-                    throw std::runtime_error("Unknown mouse button: " + button);
-            }
-            else if (device == "controller")
-            {
-                if (code.get<std::string>().find("Stick") != std::string::npos)
+                if (device == "id") continue;
+                if (device == "keyboard")
                 {
-                    if (axisMap.find(code.get<std::string>()) == axisMap.end())
-                        throw std::runtime_error("Unknown controller axis: " +
-                                                 code.get<std::string>());
-                    inputConfig.controllerAxis[axisMap[code.get<std::string>()]] = str;
+                    SDL_Scancode scancode = SDL_GetScancodeFromName(code.get<std::string>().c_str());
+                    if (scancode == SDL_SCANCODE_UNKNOWN)
+                        throw std::runtime_error("Unknown scancode: " + code.get<std::string>());
+                    _inputConfig.buttons[scancode] = str;
+                }
+                else if (device == "mouse")
+                {
+                    std::string button = code.get<std::string>();
+                    if (button == "LeftButton")
+                        _inputConfig.mouseButtons[SDL_BUTTON_LEFT] = str;
+                    else if (button == "MiddleButton")
+                        _inputConfig.mouseButtons[SDL_BUTTON_MIDDLE] = str;
+                    else if (button == "RightButton")
+                        _inputConfig.mouseButtons[SDL_BUTTON_RIGHT] = str;
+                    else
+                        throw std::runtime_error("Unknown mouse button: " + button);
+                }
+                else if (device == "controller")
+                {
+                    if (code.get<std::string>().find("Stick") != std::string::npos)
+                    {
+                        if (axisMap.find(code.get<std::string>()) == axisMap.end())
+                            throw std::runtime_error("Unknown controller axis: " +
+                                                    code.get<std::string>());
+                        _inputConfig.controllerAxis[axisMap[code.get<std::string>()]] = str;
+                    }
+                    else
+                    {
+                        if (buttonMap.find(code.get<std::string>()) == buttonMap.end())
+                            throw std::runtime_error("Unknown controller button: " +
+                                                    code.get<std::string>());
+                        _inputConfig.controllerButtons[buttonMap[code.get<std::string>()]] = str;
+                    }
                 }
                 else
                 {
-                    if (buttonMap.find(code.get<std::string>()) == buttonMap.end())
-                        throw std::runtime_error("Unknown controller button: " +
-                                                 code.get<std::string>());
-                    inputConfig.controllerButtons[buttonMap[code.get<std::string>()]] = str;
+                    throw std::runtime_error("Unknown device: " + device);
                 }
-            }
-            else
-            {
-                throw std::runtime_error("Unknown device: " + device);
             }
         }
-    }
 
-    inputs[inputConfigID] = inputConfig;
+        inputs[inputConfigID] = _inputConfig;
+    }
 }
 
 void InputSystem::removeInput(int inputConfigID)

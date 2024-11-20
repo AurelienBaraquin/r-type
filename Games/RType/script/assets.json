@@ -26,5 +26,8 @@
             "originY": 0
           }
         }
-      ]
+      ],
+    "scenes": [
+        "inputs.json"
+    ]
 }
