@@ -1,6 +1,7 @@
 #include "AnimationSystem.hpp"
 
 #include <nlohmann/json.hpp>
+#include "Log.hpp"
 
 void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
 {
@@ -53,7 +54,11 @@ void AnimationSystem::playAnimation(int animationID, Components::Animation& anim
 
 void AnimationSystem::updateAnimation(Components::Animation& animation, float deltaTime)
 {
-    if (animations.find(animation.animationID) == animations.end()) return;
+    if (animations.find(animation.animationID) == animations.end())
+    {
+        Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
+        return;
+    }
 
     auto& frames = animations[animation.animationID];
     auto& currentFrame = frames[animation.currentFrame];

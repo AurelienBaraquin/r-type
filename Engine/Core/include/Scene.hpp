@@ -2,13 +2,13 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 
 #include "ComponentFactory.hpp"
 #include "Loader.hpp"
 #include "Registry.hpp"
+#include "Log.hpp"
 
 class SceneLoader : public ILoader
 {
@@ -20,6 +20,8 @@ class SceneLoader : public ILoader
 
     void load(const std::string& filePath) override
     {
+        Logger::getInstance().info("Loading scene: " + filePath);
+
         std::ifstream file(filePath);
         nlohmann::json sceneData;
         file >> sceneData;

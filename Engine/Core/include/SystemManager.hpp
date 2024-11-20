@@ -39,6 +39,12 @@ class SystemManager
         }
     }
 
+    template <typename T>
+    bool hasSystem() const
+    {
+        return _systems.find(typeid(T)) != _systems.end();
+    }
+
     auto begin() noexcept
     {
         return _systems.begin();
