@@ -5,23 +5,21 @@
       "id": 0,
       "inputConfig" : {
         "keyboard": {
-          "MoveUp": "W",
+          "MoveUp": "Z",
           "MoveDown": "S",
-          "MoveLeft": "A",
+          "MoveLeft": "Q",
           "MoveRight": "D",
-          "Jump": "Space"
+          "Shoot": "Space"
         },
         "mouse": {
-          "Shoot": "LeftButton",
-          "Aim": "RightButton"
+          "Shoot": "LeftButton"
         },
         "controller": {
-          "MoveUp": "RightStickYNegative",
-          "MoveDown": "RightStickYPositive",
+          "MoveUp": "RightStickYPositive",
+          "MoveDown": "RightStickYNegative",
           "MoveLeft": "LeftStickXNegative",
           "MoveRight": "LeftStickXPositive",
-          "Jump": "A",
-          "Shoot": "B"
+          "Shoot": "A"
         }
       }
     }
