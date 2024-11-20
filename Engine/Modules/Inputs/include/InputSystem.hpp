@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 
+#include "Loader.hpp"
 #include "Input.hpp"
 
 enum class CONTROLLER_AXIS
@@ -27,10 +28,10 @@ struct InputConfig
     std::unordered_map<CONTROLLER_AXIS, std::string> controllerAxis;
 };
 
-class InputSystem
+class InputSystem : public ILoader
 {
    public:
-    void loadInput(int inputConfigID, const std::string& configFile);
+    void load(const std::string& configFile) override;
     void removeInput(int inputConfigID);
     InputConfig& getInput(int inputConfigID);
 

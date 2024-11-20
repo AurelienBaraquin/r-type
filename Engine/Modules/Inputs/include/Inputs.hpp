@@ -2,8 +2,9 @@
 
 #include "ISystem.hpp"
 #include "InputSystem.hpp"
+#include "Loader.hpp"
 
-class Inputs : public ISystem
+class Inputs : public ISystem, public ILoader
 {
    public:
     Inputs() = default;
@@ -15,9 +16,9 @@ class Inputs : public ISystem
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    void loadInputs(int inputConfigID, const std::string& filePath)
+    void load(const std::string& filePath) override
     {
-        _InputSystem.loadInput(inputConfigID, filePath);
+        _InputSystem.load(filePath);
     }
 
    private:
