@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <string>
 
 #include "Animation.hpp"
 #include "Sprite.hpp"
@@ -12,6 +13,7 @@ class AnimationManager
 {
    public:
     void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
+    void loadAnimations(std::string filePath);
     void removeAnimation(int animationID);
     std::vector<AnimationFrame> getAnimation(int animationID);
 

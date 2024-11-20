@@ -1,8 +1,34 @@
 #include "AnimationManager.hpp"
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 void AnimationManager::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
 {
     animations[animationID] = frames;
+}
+
+void AnimationManager::loadAnimations(std::string filePath)
+{
+    std::ifstream file(filePath);
+    nlohmann::json data;
+    file >> data;
+
+    const auto& animationsData = data["animations"];
+
+    for (const auto& animationData : animationsData)
+    {
+        int animationID = animationData["animationID"].get<int>();
+        std::vector<AnimationFrame> frames;
+
+        for (const auto& frameData : animationData["frames"])
+        {
+            frames.push_back({frameData["textureID"].get<int>(), frameData["width"].get<int>(),
+                              frameData["height"].get<int>(), frameData["originX"].get<int>(),
+                              frameData["originY"].get<int>()});
+        }
+
+        loadAnimation(animationID, frames);
+    }
 }
 
 void AnimationManager::removeAnimation(int animationID)

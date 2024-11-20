@@ -11,16 +11,7 @@ int main()
 
     graphic.manageSprites().loadSprite(0, 0, 260, 143, 0, 0);
 
-    graphic.manageAnimations().loadAnimation(0, {
-                                 {0, 260, 143, 260, 0},
-                                 {0, 260, 143, 0, 0},
-                                 {0, 260, 143, 260, 143},
-                                 {0, 260, 143, 0, 143},
-                                 {0, 260, 143, 260, 286},
-                                 {0, 260, 143, 0, 286},
-                                 {0, 260, 143, 260, 429},
-                                 {0, 260, 143, 0, 429},
-                             });
+    graphic.manageAnimations().loadAnimations("Games/RType/script/scene.json");
 
     engine.manageScene().loadScene("Games/RType/script/scene.json");
 

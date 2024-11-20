@@ -22,5 +22,20 @@
         "Script": { "scriptPath": "Games/RType/script/right.lua" }
       }
     }
+  ],
+  "animations": [
+    {
+      "animationID": 0,
+      "frames": [
+        { "textureID": 0, "width": 260, "height": 143, "originX": 260, "originY": 0 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 0, "originY": 0 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 260, "originY": 143 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 0, "originY": 143 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 260, "originY": 286 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 0, "originY": 286 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 260, "originY": 429 },
+        { "textureID": 0, "width": 260, "height": 143, "originX": 0, "originY": 429 }
+      ]
+    }
   ]
 }
