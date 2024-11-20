@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include <unordered_map>
+#include <string>
 
 #include "Input.hpp"
 
@@ -29,10 +30,10 @@ struct InputConfig
 class InputSystem
 {
    public:
-    void loadInput(const std::string& configFile);
-    void removeInput(const std::string& configFile);
-    InputConfig& getInput(const std::string& configFile);
+    void loadInput(int inputConfigID, const std::string& configFile);
+    void removeInput(int inputConfigID);
+    InputConfig& getInput(int inputConfigID);
 
    private:
-    std::unordered_map<std::string, InputConfig> inputs;
+    std::unordered_map<int, InputConfig> inputs;
 };

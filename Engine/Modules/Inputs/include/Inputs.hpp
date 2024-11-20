@@ -15,9 +15,9 @@ class Inputs : public ISystem
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    void loadInputs(const std::string& filePath)
+    void loadInputs(int inputConfigID, const std::string& filePath)
     {
-        _InputSystem.loadInput(filePath);
+        _InputSystem.loadInput(inputConfigID, filePath);
     }
 
    private:
