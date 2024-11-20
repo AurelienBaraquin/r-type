@@ -1,11 +1,13 @@
 #pragma once
 
-extern "C" {
+extern "C"
+{
 #include <incbin.h>
 }
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #define IMPORT_ASSETS(name, path) INCBIN(name, path)

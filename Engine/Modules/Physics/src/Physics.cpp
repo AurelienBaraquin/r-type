@@ -17,7 +17,7 @@ bool checkCollisionAABB(Components::BoxCollider *a, Components::BoxCollider *b)
             a->y + a->height > b->y);
 }
 
-void Physics::Physics::update(float deltaTime, Registry& registry)
+void Physics::Physics::update(float deltaTime, Registry &registry)
 {
 //    for (auto entity : registry.view<Components::BoxCollider>()) {
 //        Components::BoxCollider *collider = registry.getComponent<Components::BoxCollider>(entity);
@@ -36,5 +36,4 @@ void Physics::Physics::update(float deltaTime, Registry& registry)
 
 void Physics::Physics::shutdown()
 {
-
 }

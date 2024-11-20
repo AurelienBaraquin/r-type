@@ -1,19 +1,21 @@
 #pragma once
 
-#include "ISystem.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "TextureManager.hpp"
-#include "AnimationManager.hpp"
+
 #include <string>
 
+#include "AnimationSystem.hpp"
+#include "ISystem.hpp"
+#include "SpriteSystem.hpp"
+#include "TextureSystem.hpp"
 #include "Transform.hpp"
-#include "Sprite.hpp"
 
-class Graphic : public ISystem
+class Graphic : public ISystem, public ILoader
 {
    public:
-    Graphic(std::string title, int width, int height) : _title(title), _width(width), _height(height)
+    Graphic(std::string title, int width, int height)
+        : _title(title), _width(width), _height(height)
     {
     }
 
@@ -22,13 +24,29 @@ class Graphic : public ISystem
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
-    void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    void loadTexture(int textureID, const unsigned char* data, std::size_t size);
-    void removeTexture(int textureID);
+    TextureSystem& manageTextures()
+    {
+        return _TextureSystem;
+    }
 
-    void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
-    void removeAnimation(int animationID);
+    SpriteSystem& manageSprites()
+    {
+        return _SpriteSystem;
+    }
+
+    AnimationSystem& manageAnimations()
+    {
+        return _AnimationSystem;
+    }
+
+    void load(const std::string& filePath) override
+    {
+        _AnimationSystem.load(filePath);
+        _SpriteSystem.load(filePath);
+    }
 
    private:
     std::string _title;
@@ -39,13 +57,15 @@ class Graphic : public ISystem
     SDL_Renderer* _renderer = nullptr;
     SDL_Event _event;
 
-    TextureManager _textureManager;
-    AnimationManager _animationManager;
+    TextureSystem _TextureSystem;
+    SpriteSystem _SpriteSystem;
+    AnimationSystem _AnimationSystem;
     std::unordered_map<int, SDL_Texture*> _textures;
 
     SDL_Texture* getTexture(int textureID);
     void loadTexturesInMemory();
 
-    void drawTexture(Components::Sprite* sprite, Components::Position* position);
-    void drawTextureEx(Components::Sprite* sprite, Components::Position* position, Components::Rotation* rotation, Components::Scale* scale);
+    void drawTexture(BrutSprite* sprite, Components::Position* position);
+    void drawTextureEx(BrutSprite* sprite, Components::Position* position,
+                       Components::Rotation* rotation, Components::Scale* scale);
 };

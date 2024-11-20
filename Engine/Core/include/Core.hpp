@@ -2,41 +2,68 @@
 
 #include <vector>
 
-#include "SystemManager.hpp"
 #include "EntityBuilder.hpp"
+#include "Loader.hpp"
+#include "Scene.hpp"
+#include "SystemManager.hpp"
 
-class Engine : public ISystem {
-public:
-    Engine() = default;
+class Engine : public ISystem
+{
+   public:
+    Engine()
+    {
+        registerComponentFactory(_componentFactory);
+    }
 
     Engine& operator=(const Engine&) = delete;
 
     template <typename T, typename... Args>
-    T& addModule(Args&&... args) {
+    T& addModule(Args&&... args)
+    {
         _systemManager.addSystem<T>(std::forward<Args>(args)...);
-        return _systemManager.getSystem<T>();
+        auto& system = _systemManager.getSystem<T>();
+        system.registerComponentFactory(_componentFactory);
+
+        if (std::is_base_of<ILoader, T>::value)
+        {
+            _loaderManager.addLoader(dynamic_cast<ILoader*>(&system));
+        }
+
+        return system;
     }
 
-    EntityBuilder addEntity() {
+    EntityBuilder addEntity()
+    {
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
-    void run() {
+    SceneLoader manageScene()
+    {
+        return SceneLoader(_componentFactory, _registry, _loaderManager);
+    }
+
+    void run()
+    {
         startup();
         loop();
         shutdown();
     }
 
-private:
+   private:
     void startup();
-    void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
     void loop();
     void shutdown();
 
     void updateScript();
-    void update(float deltaTime, Registry& registry) override {}
+    void update(float deltaTime, Registry& registry) override
+    {
+    }
 
-    ScriptManager _scriptManager;
+    ScriptSystem _ScriptSystem;
     SystemManager _systemManager;
+    LoaderManager _loaderManager;
+    ComponentFactory _componentFactory;
     Registry _registry;
 };

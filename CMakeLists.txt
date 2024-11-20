@@ -11,6 +11,7 @@ find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(SDL2_image)
 find_package(SDL2)
+find_package(nlohmann_json)
 
 add_subdirectory(Engine)
 add_subdirectory(Games)
