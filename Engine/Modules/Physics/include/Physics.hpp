@@ -3,10 +3,11 @@
 //
 
 #pragma once
-//#include <chipmunk/chipmunk.h>
+#include <chipmunk/chipmunk.h>
 #include "BoxCollider.hpp"
 #include "ISystem.hpp"
 #include "Registry.hpp"
+#include <memory>
 
 class Physics : public ISystem
 {
@@ -16,5 +17,11 @@ class Physics : public ISystem
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
+
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
+    void initBoxCollider(BoxCollider& collider, SpacePtr space, float width, float height, float mass);
 private:
+    std::shared_ptr<cpSpace> _space;
+    static cpBool BeginCollision(cpArbiter *arb, cpSpace *space, void *data);
+    static cpBool EndCollision(cpArbiter *arb, cpSpace *space, void *data);
 };

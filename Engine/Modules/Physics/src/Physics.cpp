@@ -3,36 +3,35 @@
 //
 
 #include "Physics.hpp"
-#include <chipmunk/chipmunk.h>
-
+#include "Transform.hpp"
+#include <typeinfo>
 void Physics::Physics::startup()
 {
-
+    _space = SpacePtr(cpSpaceNew(), ChipmunkDeleter());
+    auto handler = cpSpaceAddCollisionHandler(_space.get(), 0, 0);
+    handler->beginFunc = BeginCollision;
+    handler->separateFunc = [](cpArbiter *arb, cpSpace *space, void *data) {
+        cpShape *a, *b;
+        cpArbiterGetShapes(arb, &a, &b);
+    };
 }
 
-bool checkCollisionAABB(Components::BoxCollider *a, Components::BoxCollider *b)
-{
-    return (a->x < b->x + b->width &&
-            a->x + a->width > b->x &&
-            a->y < b->y + b->height &&
-            a->y + a->height > b->y);
+cpBool Physics::BeginCollision(cpArbiter *arb, cpSpace *space, void *data) {
+    cpShape *a, *b;
+    cpArbiterGetShapes(arb, &a, &b);
+    return true;
 }
 
 void Physics::Physics::update(float deltaTime, Registry &registry)
 {
-//    for (auto entity : registry.view<Components::BoxCollider>()) {
-//        Components::BoxCollider *collider = registry.getComponent<Components::BoxCollider>(entity);
-//        for (auto entity2 : registry.view<Components::BoxCollider>()) {
-//            if (entity == entity2)
-//                continue;
-//            Components::BoxCollider *collider2 = registry.getComponent<Components::BoxCollider>(entity2);
-//
-//
-//            if (checkCollisionAABB(collider, collider2)) {
-//                collider->collidedEntities.push_back(entity2);
-//            }
-//        }
-//    }
+    cpSpaceStep(_space.get(), deltaTime);
+    for (auto entity : registry.view<Components::BoxCollider, Components::Position>()) //TO DO add rotation
+    {
+        Components::BoxCollider* boxCollider = registry.getComponent<Components::BoxCollider>(entity);
+        auto* position = registry.getComponent<Components::Position>(entity);
+
+        cpBodySetPosition(boxCollider->body.get(), cpVect{(double)position->x, (double)position->y});
+    }
 }
 
 void Physics::Physics::shutdown()
