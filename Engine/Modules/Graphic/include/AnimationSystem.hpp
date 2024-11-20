@@ -9,7 +9,7 @@
 
 using AnimationFrame = BrutSprite;
 
-class AnimationManager
+class AnimationSystem
 {
    public:
     void loadAnimation(int animationID, std::vector<AnimationFrame> frames);

@@ -7,9 +7,9 @@ void Engine::startup()
     for (auto& [type, system] : _systemManager)
     {
         system->startup();
-        system->registerScriptBindings(_scriptManager, _registry);
+        system->registerScriptBindings(_ScriptSystem, _registry);
     }
-    registerScriptBindings(_scriptManager, _registry);
+    registerScriptBindings(_ScriptSystem, _registry);
 }
 
 #include <chrono>
@@ -47,7 +47,7 @@ void Engine::updateScript()
     {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
-        sol::state& luaState = _scriptManager.getScript(script->scriptPath);
+        sol::state& luaState = _ScriptSystem.getScript(script->scriptPath);
 
         if (luaState["update"])
         {

@@ -43,7 +43,7 @@ class Engine : public ISystem
 
    private:
     void startup();
-    void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
     void loop();
     void shutdown();
@@ -53,7 +53,7 @@ class Engine : public ISystem
     {
     }
 
-    ScriptManager _scriptManager;
+    ScriptSystem _ScriptSystem;
     SystemManager _systemManager;
     ComponentFactory _componentFactory;
     Registry _registry;

@@ -3,14 +3,14 @@
 #include "ComponentFactory.hpp"
 #include "Event.hpp"
 #include "Registry.hpp"
-#include "ScriptManager.hpp"
+#include "ScriptSystem.hpp"
 
 class ISystem
 {
    public:
     virtual ~ISystem() = default;
     virtual void startup() = 0;
-    virtual void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) = 0;
+    virtual void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) = 0;
     virtual void registerComponentFactory(ComponentFactory& componentFactory)
     {
     }

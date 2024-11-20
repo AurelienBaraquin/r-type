@@ -1,8 +1,8 @@
 #include "Graphic.hpp"
 
-void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& registry)
+void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
 {
-    scriptManager.registerBinding(
+    ScriptSystem.registerBinding(
         "Sprite",
         [&registry = registry](sol::state& luaState)
         {
@@ -24,7 +24,7 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             };
         });
 
-    scriptManager.registerBinding(
+    ScriptSystem.registerBinding(
         "Animation",
         [&registry = registry](sol::state& luaState)
         {
@@ -54,28 +54,28 @@ void Graphic::registerScriptBindings(ScriptManager& scriptManager, Registry& reg
             };
         });
 
-    scriptManager.registerBinding(
+    ScriptSystem.registerBinding(
         "Animation",
-        [&registry = registry, &_animationManager = _animationManager](sol::state& luaState)
+        [&registry = registry, &_AnimationSystem = _AnimationSystem](sol::state& luaState)
         {
             luaState["playAnimation"] =
-                [&registry, &_animationManager](Entity entity, int animationID)
+                [&registry, &_AnimationSystem](Entity entity, int animationID)
             {
                 auto* animation = registry.getComponent<Components::Animation>(entity);
                 if (!animation) throw std::runtime_error("Animation component not found");
-                _animationManager.playAnimation(animationID, *animation);
+                _AnimationSystem.playAnimation(animationID, *animation);
             };
         });
 
-    scriptManager.registerBinding(
+    ScriptSystem.registerBinding(
         "Animation",
-        [&registry = registry, &_animationManager = _animationManager](sol::state& luaState)
+        [&registry = registry, &_AnimationSystem = _AnimationSystem](sol::state& luaState)
         {
-            luaState["stopAnimation"] = [&registry, &_animationManager](Entity entity)
+            luaState["stopAnimation"] = [&registry, &_AnimationSystem](Entity entity)
             {
                 auto* animation = registry.getComponent<Components::Animation>(entity);
                 if (!animation) throw std::runtime_error("Animation component not found");
-                _animationManager.stopAnimation(*animation);
+                _AnimationSystem.stopAnimation(*animation);
             };
         });
 }

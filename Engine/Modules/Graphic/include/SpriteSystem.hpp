@@ -5,7 +5,7 @@
 
 #include "Sprite.hpp"
 
-class SpriteManager
+class SpriteSystem
 {
    public:
     void loadSprite(int spriteID, int textureID, int width, int height, int originX, int originY);

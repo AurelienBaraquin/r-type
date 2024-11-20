@@ -2,9 +2,9 @@ project(Graphic)
 
 add_library(Graphic STATIC src/Graphic.cpp
     src/Texture.cpp
-    src/AnimationManager.cpp
-    src/SpriteManager.cpp
-    src/TextureManager.cpp
+    src/AnimationSystem.cpp
+    src/SpriteSystem.cpp
+    src/TextureSystem.cpp
     src/ScriptBindings.cpp
     src/ComponentFactory.cpp)
 

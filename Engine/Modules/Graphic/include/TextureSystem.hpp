@@ -8,7 +8,7 @@ struct Texture
     std::size_t size;
 };
 
-class TextureManager
+class TextureSystem
 {
    public:
     void loadTexture(int textureID, const unsigned char* data, std::size_t size);

@@ -1,11 +1,11 @@
 #include "Core.hpp"
 #include "Transform.hpp"
 
-void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& registry)
+void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
 {
-    (void)scriptManager;  // UNUSED !
+    (void)ScriptSystem;  // UNUSED !
 
-    _scriptManager.registerBinding(
+    _ScriptSystem.registerBinding(
         "Position",
         [&registry = registry](sol::state& luaState)
         {
@@ -30,7 +30,7 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
             };
         });
 
-    _scriptManager.registerBinding(
+    _ScriptSystem.registerBinding(
         "Scale",
         [&registry = registry](sol::state& luaState)
         {
@@ -53,7 +53,7 @@ void Engine::registerScriptBindings(ScriptManager& scriptManager, Registry& regi
             };
         });
 
-    _scriptManager.registerBinding(
+    _ScriptSystem.registerBinding(
         "Rotation",
         [&registry = registry](sol::state& luaState)
         {

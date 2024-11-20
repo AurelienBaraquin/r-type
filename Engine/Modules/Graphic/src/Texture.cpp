@@ -18,7 +18,7 @@ SDL_Texture* LoadTextureFromMemory(SDL_Renderer* renderer, const unsigned char* 
 
 void Graphic::loadTexturesInMemory()
 {
-    for (auto& texture : _textureManager)
+    for (auto& texture : _TextureSystem)
     {
         _textures[texture.first] =
             LoadTextureFromMemory(_renderer, texture.second.data, texture.second.size);

@@ -6,9 +6,9 @@
 #include <string>
 
 #include "ISystem.hpp"
-#include "AnimationManager.hpp"
-#include "SpriteManager.hpp"
-#include "TextureManager.hpp"
+#include "AnimationSystem.hpp"
+#include "SpriteSystem.hpp"
+#include "TextureSystem.hpp"
 #include "Transform.hpp"
 
 class Graphic : public ISystem
@@ -24,22 +24,22 @@ class Graphic : public ISystem
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
-    void registerScriptBindings(ScriptManager& scriptManager, Registry& registry) override;
+    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    TextureManager& manageTextures()
+    TextureSystem& manageTextures()
     {
-        return _textureManager;
+        return _TextureSystem;
     }
 
-    SpriteManager& manageSprites()
+    SpriteSystem& manageSprites()
     {
-        return _spriteManager;
+        return _SpriteSystem;
     }
 
-    AnimationManager& manageAnimations()
+    AnimationSystem& manageAnimations()
     {
-        return _animationManager;
+        return _AnimationSystem;
     }    
 
    private:
@@ -51,9 +51,9 @@ class Graphic : public ISystem
     SDL_Renderer* _renderer = nullptr;
     SDL_Event _event;
 
-    TextureManager _textureManager;
-    SpriteManager _spriteManager;
-    AnimationManager _animationManager;
+    TextureSystem _TextureSystem;
+    SpriteSystem _SpriteSystem;
+    AnimationSystem _AnimationSystem;
     std::unordered_map<int, SDL_Texture*> _textures;
 
     SDL_Texture* getTexture(int textureID);

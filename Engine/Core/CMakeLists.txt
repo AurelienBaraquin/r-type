@@ -4,6 +4,7 @@ add_library(Core STATIC src/Core.cpp
     src/EntityManager.cpp
     src/Registry.cpp
     src/ScriptBindings.cpp
+    src/ScriptSystem.cpp
     src/ComponentFactory.cpp
     src/Event.cpp)
 

@@ -66,11 +66,11 @@ void Graphic::update(float deltaTime, Registry& registry)
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rotation = registry.getComponent<Components::Rotation>(entity);
 
-        _animationManager.updateAnimation(*animation, deltaTime);
+        _AnimationSystem.updateAnimation(*animation, deltaTime);
 
         if (!animation->playing) continue;
 
-        auto frames = _animationManager.getAnimation(animation->animationID);
+        auto frames = _AnimationSystem.getAnimation(animation->animationID);
         auto currentFrame = frames[animation->currentFrame];
 
         auto sprite =
@@ -93,7 +93,7 @@ void Graphic::update(float deltaTime, Registry& registry)
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rotation = registry.getComponent<Components::Rotation>(entity);
 
-        auto brutSprite = _spriteManager.getSprite(sprite->spriteID);
+        auto brutSprite = _SpriteSystem.getSprite(sprite->spriteID);
 
         drawTextureEx(&brutSprite, position, rotation, scale);
     }

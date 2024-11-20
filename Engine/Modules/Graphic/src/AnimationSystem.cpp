@@ -1,13 +1,13 @@
-#include "AnimationManager.hpp"
+#include "AnimationSystem.hpp"
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-void AnimationManager::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
+void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames)
 {
     animations[animationID] = frames;
 }
 
-void AnimationManager::loadAnimations(std::string filePath)
+void AnimationSystem::loadAnimations(std::string filePath)
 {
     std::ifstream file(filePath);
     nlohmann::json data;
@@ -31,17 +31,17 @@ void AnimationManager::loadAnimations(std::string filePath)
     }
 }
 
-void AnimationManager::removeAnimation(int animationID)
+void AnimationSystem::removeAnimation(int animationID)
 {
     animations.erase(animationID);
 }
 
-std::vector<AnimationFrame> AnimationManager::getAnimation(int animationID)
+std::vector<AnimationFrame> AnimationSystem::getAnimation(int animationID)
 {
     return animations[animationID];
 }
 
-void AnimationManager::playAnimation(int animationID, Components::Animation& animation)
+void AnimationSystem::playAnimation(int animationID, Components::Animation& animation)
 {
     animation.animationID = animationID;
     animation.currentFrame = 0;
@@ -49,7 +49,7 @@ void AnimationManager::playAnimation(int animationID, Components::Animation& ani
     animation.playing = true;
 }
 
-void AnimationManager::updateAnimation(Components::Animation& animation, float deltaTime)
+void AnimationSystem::updateAnimation(Components::Animation& animation, float deltaTime)
 {
     if (animations.find(animation.animationID) == animations.end()) return;
 
@@ -74,7 +74,7 @@ void AnimationManager::updateAnimation(Components::Animation& animation, float d
     }
 }
 
-void AnimationManager::stopAnimation(Components::Animation& animation)
+void AnimationSystem::stopAnimation(Components::Animation& animation)
 {
     animation.currentFrame = 0;
     animation.elapsedTime = 0;
