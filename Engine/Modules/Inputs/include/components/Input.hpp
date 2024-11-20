@@ -4,7 +4,8 @@
 
 namespace Components
 {
-struct Input {
+struct Input
+{
     std::string configFile;
 };
 }  // namespace Components

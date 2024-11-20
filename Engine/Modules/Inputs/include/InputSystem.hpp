@@ -1,8 +1,10 @@
 #pragma once
 
-#include "Input.hpp"
-#include <unordered_map>
 #include <SDL2/SDL.h>
+
+#include <unordered_map>
+
+#include "Input.hpp"
 
 enum class CONTROLLER_AXIS
 {
@@ -24,12 +26,13 @@ struct InputConfig
     std::unordered_map<CONTROLLER_AXIS, std::string> controllerAxis;
 };
 
-class InputSystem {
-    public:
-     void loadInput(const std::string& configFile);
-     void removeInput(const std::string& configFile);
-     InputConfig& getInput(const std::string& configFile);
-    
-    private:
-     std::unordered_map<std::string, InputConfig> inputs;
+class InputSystem
+{
+   public:
+    void loadInput(const std::string& configFile);
+    void removeInput(const std::string& configFile);
+    InputConfig& getInput(const std::string& configFile);
+
+   private:
+    std::unordered_map<std::string, InputConfig> inputs;
 };

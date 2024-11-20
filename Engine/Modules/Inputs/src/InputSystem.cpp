@@ -1,7 +1,9 @@
 #include "InputSystem.hpp"
-#include <nlohmann/json.hpp>
-#include <fstream>
+
 #include <SDL2/SDL.h>
+
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 std::unordered_map<std::string, CONTROLLER_AXIS> axisMap = {
     {"LeftStickXPositive", CONTROLLER_AXIS::LEFT_STICK_X_POSITIVE},
@@ -11,8 +13,7 @@ std::unordered_map<std::string, CONTROLLER_AXIS> axisMap = {
     {"RightStickXPositive", CONTROLLER_AXIS::RIGHT_STICK_X_POSITIVE},
     {"RightStickXNegative", CONTROLLER_AXIS::RIGHT_STICK_X_NEGATIVE},
     {"RightStickYPositive", CONTROLLER_AXIS::RIGHT_STICK_Y_POSITIVE},
-    {"RightStickYNegative", CONTROLLER_AXIS::RIGHT_STICK_Y_NEGATIVE}
-};
+    {"RightStickYNegative", CONTROLLER_AXIS::RIGHT_STICK_Y_NEGATIVE}};
 
 std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"A", SDL_CONTROLLER_BUTTON_A},
@@ -29,8 +30,7 @@ std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"DPadUp", SDL_CONTROLLER_BUTTON_DPAD_UP},
     {"DPadDown", SDL_CONTROLLER_BUTTON_DPAD_DOWN},
     {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
-    {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}
-};
+    {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
 
 void InputSystem::loadInput(const std::string& configFile)
 {
@@ -65,13 +65,18 @@ void InputSystem::loadInput(const std::string& configFile)
             }
             else if (device == "controller")
             {
-                if (code.get<std::string>().find("Stick") != std::string::npos) {
+                if (code.get<std::string>().find("Stick") != std::string::npos)
+                {
                     if (axisMap.find(code.get<std::string>()) == axisMap.end())
-                        throw std::runtime_error("Unknown controller axis: " + code.get<std::string>());
+                        throw std::runtime_error("Unknown controller axis: " +
+                                                 code.get<std::string>());
                     inputConfig.controllerAxis[axisMap[code.get<std::string>()]] = str;
-                } else {
+                }
+                else
+                {
                     if (buttonMap.find(code.get<std::string>()) == buttonMap.end())
-                        throw std::runtime_error("Unknown controller button: " + code.get<std::string>());
+                        throw std::runtime_error("Unknown controller button: " +
+                                                 code.get<std::string>());
                     inputConfig.controllerButtons[buttonMap[code.get<std::string>()]] = str;
                 }
             }
