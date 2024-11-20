@@ -10,6 +10,7 @@
     - [Audio components](#audio-components)
     - [Input components](#input-components)
     - [Network components](#network-components)
+    - [add new components](#add-new-components)
 - [Modules](#modules)
   - [Adding a new module](#adding-a-new-module)
 - [Adding a library to the engine](#adding-a-library-to-the-engine)
@@ -139,6 +140,10 @@ TODO: Add graphic components
 # Physics components
 
 TODO: Add physics components
+
+# ADD new components
+
+
 
 # Modules
 

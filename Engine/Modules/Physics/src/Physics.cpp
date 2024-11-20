@@ -36,4 +36,5 @@ void Physics::Physics::update(float deltaTime, Registry &registry)
 
 void Physics::Physics::shutdown()
 {
+    cpSpaceFree(_space);
 }

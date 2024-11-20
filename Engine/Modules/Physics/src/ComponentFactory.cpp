@@ -7,14 +7,21 @@
 
 void Physics::registerComponentFactory(ComponentFactory& componentFactory)
 {
-//    componentFactory.registerComponent(
-//            "BoxCollider",
-//            [this](Entity entity, const nlohmann::json& data, Registry& registry) {
-//                float width = data.value("width", 1.0f;
-//                float height = data.value("height",1.0f);
-//                float mass = data.value("mass", 1.0f);
-//
-////                registry.addComponent<BoxCollider>(entity,
-//            }
-//    );
+    componentFactory.registerComponent(
+            "BoxCollider",
+            [this](Entity entity, const nlohmann::json& data, Registry& registry)
+            {
+                struct Components::BoxCollider boxCollider;
+
+                boxCollider.width = data["width"].get<float>();
+                boxCollider.height = data["height"].get<float>();
+                boxCollider.body = cpBodyNew(1.0f, cpMomentForBox(1.0f, boxCollider.width, boxCollider.height));
+                boxCollider.shape = cpBoxShapeNew(boxCollider.body, boxCollider.width, boxCollider.height, 0.0f);
+                cpSpaceAddBody(_space, boxCollider.body);
+                cpSpaceAddShape(_space, boxCollider.shape);
+
+                registry.addComponent<Components::BoxCollider>(
+                        entity, boxCollider);
+            }
+    );
 }
