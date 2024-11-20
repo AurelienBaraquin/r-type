@@ -49,6 +49,17 @@ void Engine::updateScript()
 
         sol::state& luaState = _ScriptSystem.getScript(script->scriptPath);
 
+//        if (luaState["onCollide"](entity))
+//        {
+//            auto* area2D = _registry.getComponent<Components::Area2D>(entity);
+//            if (area2D) {
+//                if (area2D->firstCollidedEntity) {
+//                    luaState["onCollide"](area2D->firstCollidedEntity);
+//                    area2D->firstCollidedEntity = 0;
+//                }
+//            }
+//        }
+
         if (luaState["update"])
         {
             luaState["update"](entity);

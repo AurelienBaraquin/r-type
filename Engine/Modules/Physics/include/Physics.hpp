@@ -9,11 +9,12 @@
 #include "Registry.hpp"
 #include <memory>
 #include <SDL2/SDL.h>
+#include "Core.hpp"
 
 class Physics : public ISystem
 {
    public:
-    Physics() = default;
+    Physics(ScriptSystem& ScriptSystem);
     ~Physics() override = default;
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
@@ -21,6 +22,7 @@ class Physics : public ISystem
 
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 private:
+    ScriptSystem& _scriptSystem;
     cpSpace *_space;
     static cpBool BeginCollision(cpArbiter *arb, cpSpace *space, void *data);
     static cpBool EndCollision(cpArbiter *arb, cpSpace *space, void *data);

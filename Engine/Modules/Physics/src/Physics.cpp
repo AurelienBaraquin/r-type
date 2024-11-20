@@ -6,6 +6,12 @@
 #include "Transform.hpp"
 #include "Area2D.hpp"
 #include <typeinfo>
+
+
+Physics::Physics::Physics(ScriptSystem &scriptSystem) : ISystem(), _scriptSystem(scriptSystem)
+{
+}
+
 void Physics::Physics::startup()
 {
 //    _space = cpSpaceNew(); //TODO destroy space
@@ -36,15 +42,30 @@ void Physics::Physics::update(float deltaTime, Registry &registry)
 
             SDL_Rect rect1 = {position->x, position->y, area2D->width, area2D->height};
             SDL_Rect rect2 = {position2->x, position2->y, area2D2->width, area2D2->height};
-            if (SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) == area2D->collidedEntities.end())
-            {
-                std::cout << "Collision start" << std::endl;
+
+            if (SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) == area2D->collidedEntities.end()) {
                 area2D->collidedEntities.push_back(entity2);
                 area2D2->collidedEntities.push_back(entity);
+
+                auto* script = registry.getComponent<Components::Script>(entity);
+
+                if (script) {
+                    sol::state& luaState = _scriptSystem.getScript(script->scriptPath);
+                    if (luaState["onCollide"].valid())
+                    {
+                        luaState["onCollide"](entity2);
+                    }
+                }
+
+                auto *script2 = registry.getComponent<Components::Script>(entity2);
+                if (script2) {
+                    sol::state &luaState = _scriptSystem.getScript(script2->scriptPath);
+                    if (luaState["onCollide"].valid()) {
+                        luaState["onCollide"](entity);
+                    }
+                }
             }
-            if (!SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) != area2D->collidedEntities.end())
-            {
-                std::cout << "Collision end" << std::endl;
+            if (!SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) != area2D->collidedEntities.end()) {
                 area2D->collidedEntities.erase(std::remove(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2), area2D->collidedEntities.end());
                 area2D2->collidedEntities.erase(std::remove(area2D2->collidedEntities.begin(), area2D2->collidedEntities.end(), entity), area2D2->collidedEntities.end());
             }

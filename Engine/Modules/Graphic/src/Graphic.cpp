@@ -96,7 +96,6 @@ void Graphic::update(float deltaTime, Registry& registry)
 
         drawTextureEx(&brutSprite, position, rotation, scale);
     }
-
     SDL_RenderPresent(_renderer);
 }
 

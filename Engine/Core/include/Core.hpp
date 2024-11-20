@@ -54,6 +54,11 @@ class Engine : public ISystem
         shutdown();
     }
 
+    ScriptSystem& getScriptSystem()
+    {
+        return _ScriptSystem;
+    }
+
    private:
     void startup();
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
