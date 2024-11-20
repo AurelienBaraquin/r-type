@@ -7,6 +7,6 @@ target_include_directories(Physics PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${CMAKE_CURRENT_SOURCE_DIR}/include/components)
 
-target_link_libraries(Physics PRIVATE Core chipmunk2d::chipmunk2d)
+target_link_libraries(Physics PRIVATE Core)
 
 add_library(Engine::Physics ALIAS Physics)
