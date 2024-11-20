@@ -32,8 +32,11 @@ std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
     {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
 
-void InputSystem::loadInput(const std::string& configFile)
+void InputSystem::loadInput(int inputConfigID, const std::string& configFile)
 {
+    if (inputs.find(inputConfigID) != inputs.end())
+        throw std::runtime_error("Input config already loaded: " + std::to_string(inputConfigID));
+
     std::ifstream file(configFile);
     nlohmann::json data;
     file >> data;
@@ -87,5 +90,15 @@ void InputSystem::loadInput(const std::string& configFile)
         }
     }
 
-    inputs[configFile] = inputConfig;
+    inputs[inputConfigID] = inputConfig;
+}
+
+void InputSystem::removeInput(int inputConfigID)
+{
+    inputs.erase(inputConfigID);
+}
+
+InputConfig& InputSystem::getInput(int inputConfigID)
+{
+    return inputs[inputConfigID];
 }

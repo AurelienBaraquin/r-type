@@ -1,11 +1,9 @@
 #pragma once
 
-#include <string>
-
 namespace Components
 {
 struct Input
 {
-    std::string configFile;
+    int inputConfigID;
 };
 }  // namespace Components
