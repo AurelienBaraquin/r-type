@@ -4,7 +4,7 @@ void Inputs::startup()
 {
 }
 
-void Inputs::update(float deltaTime, Registry& registry)
+void Inputs::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
 }
 

@@ -7,11 +7,6 @@
 #include "Area2D.hpp"
 #include <typeinfo>
 
-
-Physics::Physics::Physics(ScriptSystem &scriptSystem) : ISystem(), _scriptSystem(scriptSystem)
-{
-}
-
 void Physics::Physics::startup()
 {
 //    _space = cpSpaceNew(); //TODO destroy space
@@ -26,7 +21,7 @@ void Physics::Physics::startup()
 //    return true;
 //}
 
-void Physics::callCollideFunction(Registry& registry,Entity entity, Entity entity2)
+void Physics::callCollideFunction(Registry& registry, Entity entity, Entity entity2, ScriptSystem& _scriptSystem)
 {
     auto* script = registry.getComponent<Components::Script>(entity);
 
@@ -39,7 +34,7 @@ void Physics::callCollideFunction(Registry& registry,Entity entity, Entity entit
     }
 }
 
-void Physics::Physics::update(float deltaTime, Registry &registry)
+void Physics::Physics::update(float deltaTime, Registry &registry, ScriptSystem& scriptSystem)
 {
     for (auto entity : registry.view<Components::Position, Components::Area2D>())
     {
@@ -59,8 +54,8 @@ void Physics::Physics::update(float deltaTime, Registry &registry)
             if (SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) == area2D->collidedEntities.end()) {
                 area2D->collidedEntities.push_back(entity2);
                 area2D2->collidedEntities.push_back(entity);
-                callCollideFunction(registry, entity, entity2);
-                callCollideFunction(registry, entity2, entity);
+                callCollideFunction(registry, entity, entity2, scriptSystem);
+                callCollideFunction(registry, entity2, entity, scriptSystem);
 
             }
             if (!SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) != area2D->collidedEntities.end()) {

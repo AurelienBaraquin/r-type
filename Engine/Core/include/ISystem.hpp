@@ -16,6 +16,6 @@ class ISystem
     virtual void registerComponentFactory(ComponentFactory& componentFactory)
     {
     }
-    virtual void update(float deltaTime, Registry& registry) = 0;
+    virtual void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) = 0;
     virtual void shutdown() = 0;
 };

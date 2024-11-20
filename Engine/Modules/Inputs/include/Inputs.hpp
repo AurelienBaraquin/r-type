@@ -11,7 +11,7 @@ class Inputs : public ISystem, public ILoader
     ~Inputs() override = default;
 
     void startup() override;
-    void update(float deltaTime, Registry& registry) override;
+    void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override;
     void shutdown() override;
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;

@@ -27,7 +27,7 @@ void Engine::loop()
         updateScript();
         for (auto& [type, system] : _systemManager)
         {
-            system->update(1.0f, _registry);
+            system->update(1.0f, _registry, _ScriptSystem);
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
     }

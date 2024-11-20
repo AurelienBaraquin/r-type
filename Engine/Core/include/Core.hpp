@@ -67,7 +67,7 @@ class Engine : public ISystem
     void shutdown();
 
     void updateScript();
-    void update(float deltaTime, Registry& registry) override
+    void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override
     {
     }
 

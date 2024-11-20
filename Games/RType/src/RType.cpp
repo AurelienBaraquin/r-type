@@ -9,7 +9,7 @@ int main()
     Engine engine;
     auto& graphic = engine.addModule<Graphic>("R-Type", 800, 600);
     auto& inputs = engine.addModule<Inputs>();
-    auto& physics = engine.addModule<Physics>(engine.getScriptSystem());
+    auto& physics = engine.addModule<Physics>();
 
     graphic.manageTextures().loadTexture(0, gassetsData, gassetsSize);
 

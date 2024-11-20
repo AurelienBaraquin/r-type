@@ -33,7 +33,7 @@ void Graphic::startup()
     loadTexturesInMemory();
 }
 
-void Graphic::update(float deltaTime, Registry& registry)
+void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
     while (SDL_PollEvent(&_event))
     {
