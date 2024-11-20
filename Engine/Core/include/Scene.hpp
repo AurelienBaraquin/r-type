@@ -42,6 +42,8 @@ class SceneLoader : public ILoader
             {
                 registry.addTag(entity, tag);
             }
+
+            registry.addTag(entity, sceneTag + "_scene");
         }
 
         if (sceneData.find("scenes") != sceneData.end())
