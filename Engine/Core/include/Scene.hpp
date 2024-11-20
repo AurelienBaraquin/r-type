@@ -1,15 +1,14 @@
 #pragma once
 
+#include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 
 #include "ComponentFactory.hpp"
-#include "Registry.hpp"
 #include "Loader.hpp"
-
-#include <iostream>
-#include <filesystem>
+#include "Registry.hpp"
 
 class SceneLoader : public ILoader
 {
@@ -49,10 +48,10 @@ class SceneLoader : public ILoader
         {
             for (const auto& scene : sceneData["scenes"])
             {
-                std::filesystem::path scenePath = std::filesystem::path(filePath).parent_path() / scene;
+                std::filesystem::path scenePath =
+                    std::filesystem::path(filePath).parent_path() / scene;
                 std::cout << "Loading scene: " << scenePath << std::endl;
                 SceneLoader(factory, registry, loaderManager).load(scenePath.string());
-
             }
         }
 

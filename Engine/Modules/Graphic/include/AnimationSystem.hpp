@@ -5,9 +5,8 @@
 #include <vector>
 
 #include "Animation.hpp"
-#include "Sprite.hpp"
-
 #include "Loader.hpp"
+#include "Sprite.hpp"
 
 using AnimationFrame = BrutSprite;
 

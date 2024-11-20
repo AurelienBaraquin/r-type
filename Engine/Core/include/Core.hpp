@@ -3,9 +3,9 @@
 #include <vector>
 
 #include "EntityBuilder.hpp"
+#include "Loader.hpp"
 #include "Scene.hpp"
 #include "SystemManager.hpp"
-#include "Loader.hpp"
 
 class Engine : public ISystem
 {

@@ -3,9 +3,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Sprite.hpp"
-
 #include "Loader.hpp"
+#include "Sprite.hpp"
 
 class SpriteSystem : public ILoader
 {
