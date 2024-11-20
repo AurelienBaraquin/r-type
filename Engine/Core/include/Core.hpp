@@ -24,7 +24,7 @@ class Engine : public ISystem
         auto& system = _systemManager.getSystem<T>();
         system.registerComponentFactory(_componentFactory);
 
-        if (dynamic_cast<ILoader*>(&system))
+        if (std::is_base_of<ILoader, T>::value)
         {
             _loaderManager.addLoader(dynamic_cast<ILoader*>(&system));
         }
