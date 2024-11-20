@@ -252,3 +252,9 @@ add_subdirectory(Engine)
 add_subdirectory(Games)
 
 ```
+
+# Adding new functions for lua scripting
+
+To add new functions for lua scripting, add the following code to the ```ScriptBindings.cpp``` file:
+
+```cpp

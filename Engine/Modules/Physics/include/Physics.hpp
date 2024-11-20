@@ -19,7 +19,7 @@ class Physics : public ISystem
     void startup() override;
     void update(float deltaTime, Registry& registry) override;
     void shutdown() override;
-
+    void callCollideFunction(Registry& registry,Entity entity, Entity entity2);
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 private:
     ScriptSystem& _scriptSystem;

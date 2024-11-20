@@ -26,6 +26,19 @@ void Physics::Physics::startup()
 //    return true;
 //}
 
+void Physics::callCollideFunction(Registry& registry,Entity entity, Entity entity2)
+{
+    auto* script = registry.getComponent<Components::Script>(entity);
+
+    if (script) {
+        sol::state& luaState = _scriptSystem.getScript(script->scriptPath);
+        if (luaState["onCollide"].valid())
+        {
+            luaState["onCollide"](entity2);
+        }
+    }
+}
+
 void Physics::Physics::update(float deltaTime, Registry &registry)
 {
     for (auto entity : registry.view<Components::Position, Components::Area2D>())
@@ -46,24 +59,9 @@ void Physics::Physics::update(float deltaTime, Registry &registry)
             if (SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) == area2D->collidedEntities.end()) {
                 area2D->collidedEntities.push_back(entity2);
                 area2D2->collidedEntities.push_back(entity);
+                callCollideFunction(registry, entity, entity2);
+                callCollideFunction(registry, entity2, entity);
 
-                auto* script = registry.getComponent<Components::Script>(entity);
-
-                if (script) {
-                    sol::state& luaState = _scriptSystem.getScript(script->scriptPath);
-                    if (luaState["onCollide"].valid())
-                    {
-                        luaState["onCollide"](entity2);
-                    }
-                }
-
-                auto *script2 = registry.getComponent<Components::Script>(entity2);
-                if (script2) {
-                    sol::state &luaState = _scriptSystem.getScript(script2->scriptPath);
-                    if (luaState["onCollide"].valid()) {
-                        luaState["onCollide"](entity);
-                    }
-                }
             }
             if (!SDL_HasIntersection(&rect1, &rect2) && std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2) != area2D->collidedEntities.end()) {
                 area2D->collidedEntities.erase(std::remove(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity2), area2D->collidedEntities.end());
