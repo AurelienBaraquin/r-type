@@ -1,4 +1,5 @@
 #include "RType.hpp"
+#include "Inputs.hpp"
 
 IMPORT_ASSETS(assets, "../../../Games/RType/assets/r-typesheet32.gif");
 

@@ -1,0 +1,21 @@
+{
+    "keyboard": {
+      "MoveUp": "W",
+      "MoveDown": "S",
+      "MoveLeft": "A",
+      "MoveRight": "D",
+      "Jump": "Space"
+    },
+    "mouse": {
+      "Shoot": "LeftButton",
+      "Aim": "RightButton"
+    },
+    "controller": {
+      "MoveUp": "AxisYNegative",
+      "MoveDown": "AxisYPositive",
+      "MoveLeft": "AxisXNegative",
+      "MoveRight": "AxisXPositive",
+      "Jump": "ButtonA",
+      "Shoot": "ButtonB"
+    }
+  }
