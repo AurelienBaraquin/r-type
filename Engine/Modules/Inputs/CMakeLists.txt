@@ -1,6 +1,8 @@
 project(Inputs)
 
-add_library(Inputs STATIC src/Inputs.cpp)
+add_library(Inputs STATIC src/Inputs.cpp
+        src/ComponentFactory.cpp
+        src/ScriptBindings.cpp)
 
 target_include_directories(Inputs PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include

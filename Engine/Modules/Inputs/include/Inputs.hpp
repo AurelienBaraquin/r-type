@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Input.hpp"
 #include "ISystem.hpp"
-#include "Loader.hpp"
+#include "InputSystem.hpp"
 
 class Inputs : public ISystem
 {
@@ -17,6 +16,5 @@ class Inputs : public ISystem
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
    private:
-    std::unordered_map<std::string, bool> buttons;
-    std::unordered_map<std::string, float> axes;
+    InputSystem _InputSystem;
 };
