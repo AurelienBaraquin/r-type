@@ -19,8 +19,10 @@ tasks:
   build:
     desc: "Build the project with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON
       - cmake --build build --preset conan-release
+      - cp ./build/build/Release/Engine/Tools/DocGen/DocGen ./Release/DocGen
+      - cp ./build/build/Release/Games/RType/RType          ./Release/RType
   
   bw:
     desc: "Build the project with conan-debug preset"

@@ -2,6 +2,7 @@
   "sceneTag": "MainScene",
   "entities": [
     {
+      "_name_": "Player",
       "tags" : ["player"],
       "components": {
         "Position": { "x": 400, "y": 200, "z": 0 },
@@ -13,6 +14,7 @@
       }
     },
     {
+      "_name_": "Enemy",
       "tags" : ["enemy"],
       "components": {
         "Position": { "x": 100, "y": 200, "z": 0 },
