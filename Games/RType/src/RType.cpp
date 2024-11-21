@@ -10,8 +10,6 @@ int main()
     auto& inputs = engine.addModule<Inputs>();
     auto& physics = engine.addModule<Physics>();
 
-    graphic.manageTextures().load(0, "Games/RType/assets/r-typesheet32.gif");
-
     engine.manageScene().load("Games/RType/script/scene.json");
 
     engine.run();

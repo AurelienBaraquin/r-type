@@ -41,6 +41,7 @@ class Graphic : public ISystem, public ILoader
     {
         _AnimationSystem.load(filePath);
         _SpriteSystem.load(filePath);
+        _TextureSystem.load(filePath);
     }
 
    private:

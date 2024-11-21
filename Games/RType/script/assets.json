@@ -35,5 +35,11 @@
       ],
     "scenes": [
         "inputs.json"
+    ],
+    "textures": [
+        {
+            "textureID": 0,
+            "path": "Games/RType/assets/r-typesheet32.gif"
+        }
     ]
 }

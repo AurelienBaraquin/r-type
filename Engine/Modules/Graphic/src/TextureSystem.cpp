@@ -1,8 +1,9 @@
 #include "TextureSystem.hpp"
 #include <stdexcept>
 #include "Log.hpp"
+#include <nlohmann/json.hpp>
 
-void TextureSystem::load(int textureID, const std::string path)
+void TextureSystem::loadTexture(int textureID, const std::string path)
 {
     SDL_Surface* surface = IMG_Load(path.c_str());
     if (!surface)
@@ -21,6 +22,25 @@ void TextureSystem::load(int textureID, const std::string path)
     }
 
     textures[textureID] = texture;
+}
+
+void TextureSystem::load(const std::string& filePath)
+{
+    std::ifstream file(filePath);
+    nlohmann::json data;
+    file >> data;
+
+    if (data.find("textures") == data.end()) return;
+
+    const auto& texturesData = data["textures"];
+
+    for (const auto& textureData : texturesData)
+    {
+        int textureID = textureData["textureID"].get<int>();
+        std::string path = textureData["path"].get<std::string>();
+
+        loadTexture(textureID, path);
+    }
 }
 
 void TextureSystem::remove(int textureID)
