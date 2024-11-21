@@ -1,5 +1,4 @@
 speed = 5
-local test = 10
 function update(e)
     local position = getPosition(e)
 
@@ -23,13 +22,7 @@ function update(e)
         position.y = 10
     end
 
-    if (e == 1) then
-        test = test + 1
-    end
-
     setPosition(e, position)
-
-    print(test)
 end
 
 function onCollide(e)
