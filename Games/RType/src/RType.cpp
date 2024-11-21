@@ -10,7 +10,7 @@ int main()
     auto& inputs = engine.addModule<Inputs>();
     auto& physics = engine.addModule<Physics>();
 
-    engine.manageScene().loadScene("Games/RType/script/scene.json");
+    engine.loadScene("Games/RType/script/scene.json");
 
     engine.run();
 

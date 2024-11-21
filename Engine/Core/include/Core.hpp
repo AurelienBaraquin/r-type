@@ -42,9 +42,10 @@ class Engine : public ISystem
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
-    SceneLoader manageScene()
+
+    void loadScene(const std::string& filePath)
     {
-        return SceneLoader(_componentFactory, _registry, _loaderManager);
+        SceneLoader(_componentFactory, _registry, _loaderManager).loadScene(filePath);
     }
 
     void run()
