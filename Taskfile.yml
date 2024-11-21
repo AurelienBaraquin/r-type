@@ -9,7 +9,7 @@ tasks:
   install:
     desc: "Install Conan dependencies and configure build system"
     cmds:
-      - conan install . --output-folder=build --build=missing
+      - conan install . --output-folder=build --build=missing -s compiler.cppstd=17
 
   b:
     desc: "Build the project with conan-release preset"
