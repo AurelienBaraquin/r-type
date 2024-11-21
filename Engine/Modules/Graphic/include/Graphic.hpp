@@ -14,16 +14,11 @@
 class Graphic : public ISystem, public ILoader
 {
    public:
-    Graphic(std::string title, int width, int height)
-        : _title(title), _width(width), _height(height)
-    {
-    }
+    Graphic(std::string title, int width, int height);
 
-    ~Graphic() override = default;
+    ~Graphic() override;
 
-    void startup() override;
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override;
-    void shutdown() override;
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
@@ -60,10 +55,6 @@ class Graphic : public ISystem, public ILoader
     TextureSystem _TextureSystem;
     SpriteSystem _SpriteSystem;
     AnimationSystem _AnimationSystem;
-    std::unordered_map<int, SDL_Texture*> _textures;
-
-    SDL_Texture* getTexture(int textureID);
-    void loadTexturesInMemory();
 
     void drawTexture(BrutSprite* sprite, Components::Position* position);
     void drawTextureEx(BrutSprite* sprite, Components::Position* position,

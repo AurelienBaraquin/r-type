@@ -9,7 +9,6 @@ class ISystem
 {
    public:
     virtual ~ISystem() = default;
-    virtual void startup() = 0;
     virtual void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
     {
     }
@@ -17,5 +16,4 @@ class ISystem
     {
     }
     virtual void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) = 0;
-    virtual void shutdown() = 0;
 };

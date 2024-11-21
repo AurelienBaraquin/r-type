@@ -16,25 +16,6 @@ SDL_Texture* LoadTextureFromMemory(SDL_Renderer* renderer, const unsigned char* 
     return texture;
 }
 
-void Graphic::loadTexturesInMemory()
-{
-    for (auto& texture : _TextureSystem)
-    {
-        _textures[texture.first] =
-            LoadTextureFromMemory(_renderer, texture.second.data, texture.second.size);
-        if (!_textures[texture.first])
-        {
-            throw std::runtime_error("Failed to load texture from memory: " +
-                                     std::string(IMG_GetError()));
-        }
-    }
-}
-
-SDL_Texture* Graphic::getTexture(int textureID)
-{
-    return _textures[textureID];
-}
-
 void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
 {
     SDL_Rect srcRect = {sprite->originX, sprite->originY, sprite->width, sprite->height};
@@ -42,7 +23,7 @@ void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
     SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y), sprite->width,
                         sprite->height};
 
-    SDL_Texture* texture = getTexture(sprite->textureID);
+    SDL_Texture* texture = _TextureSystem.get(sprite->textureID);
     if (!texture) return;
 
     SDL_RenderCopy(_renderer, texture, &srcRect, &dstRect);
@@ -59,9 +40,10 @@ void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
 
     SDL_Point center = {dstRect.w / 2, dstRect.h / 2};
 
-    SDL_Texture* texture = getTexture(sprite->textureID);
+    SDL_Texture* texture = _TextureSystem.get(sprite->textureID);
     if (!texture)
     {
+        Logger::getInstance().error("Failed to get texture : " + std::to_string(sprite->textureID));
         return;
     }
 

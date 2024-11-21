@@ -5,7 +5,8 @@
 #include "Sprite.hpp"
 #include "Transform.hpp"
 
-void Graphic::startup()
+Graphic::Graphic(std::string title, int width, int height)
+        : _title(title), _width(width), _height(height)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -30,7 +31,7 @@ void Graphic::startup()
         throw std::runtime_error("Failed to create renderer: " + std::string(SDL_GetError()));
     }
 
-    loadTexturesInMemory();
+    _TextureSystem.setRenderer(_renderer);
 }
 
 void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
@@ -99,7 +100,7 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     SDL_RenderPresent(_renderer);
 }
 
-void Graphic::shutdown()
+Graphic::~Graphic()
 {
     if (_renderer)
     {

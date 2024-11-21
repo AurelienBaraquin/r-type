@@ -39,6 +39,11 @@ class SystemManager
         }
     }
 
+    void clear()
+    {
+        _systems.clear();
+    }
+
     template <typename T>
     bool hasSystem() const
     {

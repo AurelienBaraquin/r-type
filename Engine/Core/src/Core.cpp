@@ -6,7 +6,6 @@ void Engine::startup()
 {
     for (auto& [type, system] : _systemManager)
     {
-        system->startup();
         system->registerScriptBindings(_ScriptSystem, _registry);
     }
     registerScriptBindings(_ScriptSystem, _registry);
@@ -35,10 +34,7 @@ void Engine::loop()
 
 void Engine::shutdown()
 {
-    for (auto& [type, system] : _systemManager)
-    {
-        system->shutdown();
-    }
+    _systemManager.clear();
 }
 
 void Engine::updateScript()

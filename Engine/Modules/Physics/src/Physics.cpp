@@ -9,13 +9,6 @@
 #include "Area2D.hpp"
 #include "Transform.hpp"
 
-void Physics::Physics::startup()
-{
-    //    _space = cpSpaceNew(); //TODO destroy space
-    //    cpCollisionHandler *handler = cpSpaceAddDefaultCollisionHandler(_space);
-    //    handler->beginFunc = BeginCollision;
-}
-
 // cpBool Physics::BeginCollision(cpArbiter *arb, cpSpace *space, void *data) {
 //     cpShape *a, *b;
 //     cpArbiterGetShapes(arb, &a, &b);
@@ -90,7 +83,7 @@ void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem&
     //    }
 }
 
-void Physics::Physics::shutdown()
+Physics::~Physics()
 {
     cpSpaceFree(_space);
 }

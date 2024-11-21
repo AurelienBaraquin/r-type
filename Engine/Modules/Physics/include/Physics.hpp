@@ -17,10 +17,8 @@ class Physics : public ISystem
 {
    public:
     Physics() = default;
-    ~Physics() override = default;
-    void startup() override;
+    ~Physics() override;
     void update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) override;
-    void shutdown() override;
     void callCollideFunction(Registry &registry, Entity entity, Entity entity2,
                              ScriptSystem &_scriptSystem);
     void registerComponentFactory(ComponentFactory &componentFactory) override;

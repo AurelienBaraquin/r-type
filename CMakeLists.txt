@@ -6,7 +6,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 
 find_package(GTest REQUIRED)
-find_package(incbin REQUIRED)
 find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(Chipmunk2D)

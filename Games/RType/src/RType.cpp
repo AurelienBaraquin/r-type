@@ -3,8 +3,6 @@
 #include "Inputs.hpp"
 #include "Physics.hpp"
 
-IMPORT_ASSETS(assets, "../../../Games/RType/assets/r-typesheet32.gif");
-
 int main()
 {
     Engine engine;
@@ -12,7 +10,7 @@ int main()
     auto& inputs = engine.addModule<Inputs>();
     auto& physics = engine.addModule<Physics>();
 
-    graphic.manageTextures().loadTexture(0, gassetsData, gassetsSize);
+    graphic.manageTextures().load(0, "Games/RType/assets/r-typesheet32.gif");
 
     engine.manageScene().load("Games/RType/script/scene.json");
 

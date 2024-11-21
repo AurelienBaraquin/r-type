@@ -1,16 +1,44 @@
 #include "TextureSystem.hpp"
+#include <stdexcept>
+#include "Log.hpp"
 
-void TextureSystem::loadTexture(int textureID, const unsigned char* data, std::size_t size)
+void TextureSystem::load(int textureID, const std::string path)
 {
-    textures[textureID] = Texture{data, size};
+    SDL_Surface* surface = IMG_Load(path.c_str());
+    if (!surface)
+    {
+        Logger::getInstance().error("Failed to load texture: " + std::string(IMG_GetError()));
+        return;
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(_renderer, surface);
+    SDL_FreeSurface(surface);
+
+    if (!texture)
+    {
+        Logger::getInstance().error("Failed to create texture: " + std::string(SDL_GetError()));
+        return;
+    }
+
+    textures[textureID] = texture;
 }
 
-void TextureSystem::removeTexture(int textureID)
+void TextureSystem::remove(int textureID)
 {
-    textures.erase(textureID);
+    auto it = textures.find(textureID);
+    if (it != textures.end())
+    {
+        SDL_DestroyTexture(it->second);
+        textures.erase(it);
+    }
 }
 
-const Texture& TextureSystem::getTexture(int textureID)
+SDL_Texture* TextureSystem::get(int textureID) const
 {
-    return textures[textureID];
+    auto it = textures.find(textureID);
+    if (it != textures.end())
+    {
+        return it->second;
+    }
+    return nullptr;
 }
