@@ -37,7 +37,6 @@ class LoaderManager
 
     void addLoader(ILoader* loader)
     {
-        Logger::getInstance().info("Adding loader: " + loader->getPart());
         _loaders.push_back(loader);
         for (auto& subLoader : loader->getLoaders())
         {

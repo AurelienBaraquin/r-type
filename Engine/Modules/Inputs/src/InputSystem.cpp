@@ -60,7 +60,6 @@ void InputSystem::load(const nlohmann::json& data)
             }
         }
 
-        Logger::getInstance().debug("InputSystem: Loaded input config " + std::to_string(inputConfigID));
         configs[inputConfigID] = _inputConfig;
     }
 }
@@ -75,7 +74,7 @@ InputConfig& InputSystem::getInput(int inputConfigID)
     return configs[inputConfigID];
 }
 
-void InputSystem::updateInputs()
+void InputSystem::updateInputs(int inputConfigID)
 {
     SDL_PumpEvents();
 
@@ -84,19 +83,21 @@ void InputSystem::updateInputs()
     }
 
     const Uint8* state = SDL_GetKeyboardState(nullptr);
-    for (auto& [input, action] : configs[0].buttons) {
+    for (auto& [input, action] : configs[inputConfigID].buttons) {
         if (state[input]) {
             currentStates[action] = true;
         }
     }
 
-    for (auto& [input, action] : configs[0].mouseButtons) {
+    for (auto& [input, action] : configs[inputConfigID].mouseButtons) {
         if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
             currentStates[action] = true;
         }
     }
 }
 
-bool InputSystem::isInputActive(const std::string& action) {
+bool InputSystem::isInputActive(int inputConfigID, const std::string& action)
+{
+    updateInputs(inputConfigID);
     return currentStates[action];
 }

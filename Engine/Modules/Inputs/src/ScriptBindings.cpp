@@ -26,11 +26,13 @@ void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
     
     ScriptSystem.registerBinding(
         "isInputActive",
-        [this](sol::state& luaState)
+        [&registry = registry, this](sol::state& luaState)
         {
-            luaState["isInputActive"] = [this](const std::string& action)
+            luaState["isInputActive"] = [&registry, this](Entity entity, const std::string& action)
             {
-                return _InputSystem.isInputActive(action);
+                auto* input = registry.getComponent<Components::Input>(entity);
+                if (!input) throw std::runtime_error("Input component not found");
+                return _InputSystem.isInputActive(input->inputConfigID, action);
             };
         });
 }

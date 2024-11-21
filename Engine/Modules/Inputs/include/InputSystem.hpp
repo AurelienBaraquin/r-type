@@ -65,8 +65,8 @@ class InputSystem : public ILoader
     void removeInput(int inputConfigID);
     InputConfig& getInput(int inputConfigID);
 
-    void updateInputs();
-    bool isInputActive(const std::string& action);
+    void updateInputs(int inputConfigID);
+    bool isInputActive(int inputConfigID, const std::string& action);
 
    private:
     std::unordered_map<int, InputConfig> configs;

@@ -6,19 +6,19 @@ function update(e)
     rot.angle = rot.angle + speed/5
     setRotation(e, rot)
 
-    if isInputActive("MoveUp") then
+    if isInputActive(e, "MoveUp") then
         position.y = position.y - speed
     end
-    if isInputActive("MoveDown") then
+    if isInputActive(e, "MoveDown") then
         position.y = position.y + speed
     end
-    if isInputActive("MoveLeft") then
+    if isInputActive(e, "MoveLeft") then
         position.x = position.x - speed
     end
-    if isInputActive("MoveRight") then
+    if isInputActive(e, "MoveRight") then
         position.x = position.x + speed
     end
-    if isInputActive("Shoot") then
+    if isInputActive(e, "Shoot") then
         position.y = 10
     end
 
