@@ -1,12 +1,28 @@
-speed = 1
+speed = 5
 function update(e)
     local position = getPosition(e)
-    position.x = position.x + speed
-    setPosition(e, position)
 
     local rot = getRotation(e)
     rot.angle = rot.angle + speed/5
     setRotation(e, rot)
+
+    if isInputActive("MoveUp") then
+        position.y = position.y - speed
+    end
+    if isInputActive("MoveDown") then
+        position.y = position.y + speed
+    end
+    if isInputActive("MoveLeft") then
+        position.x = position.x - speed
+    end
+    if isInputActive("MoveRight") then
+        position.x = position.x + speed
+    end
+    if isInputActive("Shoot") then
+        position.y = 10
+    end
+
+    setPosition(e, position)
 end
 
 function onCollide(e)

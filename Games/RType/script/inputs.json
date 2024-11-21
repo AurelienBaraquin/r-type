@@ -5,9 +5,9 @@
       "id": 0,
       "inputConfig" : {
         "keyboard": {
-          "MoveUp": "Z",
+          "MoveUp": "W",
           "MoveDown": "S",
-          "MoveLeft": "Q",
+          "MoveLeft": "A",
           "MoveRight": "D",
           "Shoot": "Space"
         },

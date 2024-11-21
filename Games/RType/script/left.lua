@@ -8,7 +8,6 @@ end
 
 function onCollide(other)
     speed = 10
-    setPosition(other, {x = 0, y = 0})
     if hasMethod(other, "setSpeed") then
         callMethod(other, "setSpeed", 10)
     else

@@ -2,42 +2,11 @@
 
 #include <SDL2/SDL.h>
 
-std::unordered_map<std::string, CONTROLLER_AXIS> axisMap = {
-    {"LeftStickXPositive", CONTROLLER_AXIS::LEFT_STICK_X_POSITIVE},
-    {"LeftStickXNegative", CONTROLLER_AXIS::LEFT_STICK_X_NEGATIVE},
-    {"LeftStickYPositive", CONTROLLER_AXIS::LEFT_STICK_Y_POSITIVE},
-    {"LeftStickYNegative", CONTROLLER_AXIS::LEFT_STICK_Y_NEGATIVE},
-    {"RightStickXPositive", CONTROLLER_AXIS::RIGHT_STICK_X_POSITIVE},
-    {"RightStickXNegative", CONTROLLER_AXIS::RIGHT_STICK_X_NEGATIVE},
-    {"RightStickYPositive", CONTROLLER_AXIS::RIGHT_STICK_Y_POSITIVE},
-    {"RightStickYNegative", CONTROLLER_AXIS::RIGHT_STICK_Y_NEGATIVE}};
-
-std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
-    {"A", SDL_CONTROLLER_BUTTON_A},
-    {"B", SDL_CONTROLLER_BUTTON_B},
-    {"X", SDL_CONTROLLER_BUTTON_X},
-    {"Y", SDL_CONTROLLER_BUTTON_Y},
-    {"Back", SDL_CONTROLLER_BUTTON_BACK},
-    {"Guide", SDL_CONTROLLER_BUTTON_GUIDE},
-    {"Start", SDL_CONTROLLER_BUTTON_START},
-    {"LeftStick", SDL_CONTROLLER_BUTTON_LEFTSTICK},
-    {"RightStick", SDL_CONTROLLER_BUTTON_RIGHTSTICK},
-    {"LeftShoulder", SDL_CONTROLLER_BUTTON_LEFTSHOULDER},
-    {"RightShoulder", SDL_CONTROLLER_BUTTON_RIGHTSHOULDER},
-    {"DPadUp", SDL_CONTROLLER_BUTTON_DPAD_UP},
-    {"DPadDown", SDL_CONTROLLER_BUTTON_DPAD_DOWN},
-    {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
-    {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
-
 void InputSystem::load(const nlohmann::json& data)
 {
-    if (data.find("inputConfig") == data.end()) return;
-
     InputConfig _inputConfig;
 
-    const auto& inputConfigs = data["inputConfig"];
-
-    for (const auto& inputConfig : inputConfigs)
+    for (const auto& inputConfig : data)
     {
         int inputConfigID = inputConfig["id"].get<int>();
         const auto& inputConfigData = inputConfig["inputConfig"];
@@ -91,16 +60,43 @@ void InputSystem::load(const nlohmann::json& data)
             }
         }
 
-        inputs[inputConfigID] = _inputConfig;
+        Logger::getInstance().debug("InputSystem: Loaded input config " + std::to_string(inputConfigID));
+        configs[inputConfigID] = _inputConfig;
     }
 }
 
 void InputSystem::removeInput(int inputConfigID)
 {
-    inputs.erase(inputConfigID);
+    configs.erase(inputConfigID);
 }
 
 InputConfig& InputSystem::getInput(int inputConfigID)
 {
-    return inputs[inputConfigID];
+    return configs[inputConfigID];
+}
+
+void InputSystem::updateInputs()
+{
+    SDL_PumpEvents();
+
+    for (auto& [_, state] : currentStates) {
+        state = false;
+    }
+
+    const Uint8* state = SDL_GetKeyboardState(nullptr);
+    for (auto& [input, action] : configs[0].buttons) {
+        if (state[input]) {
+            currentStates[action] = true;
+        }
+    }
+
+    for (auto& [input, action] : configs[0].mouseButtons) {
+        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
+            currentStates[action] = true;
+        }
+    }
+}
+
+bool InputSystem::isInputActive(const std::string& action) {
+    return currentStates[action];
 }
