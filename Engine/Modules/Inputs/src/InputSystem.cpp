@@ -2,9 +2,6 @@
 
 #include <SDL2/SDL.h>
 
-#include <fstream>
-#include <nlohmann/json.hpp>
-
 std::unordered_map<std::string, CONTROLLER_AXIS> axisMap = {
     {"LeftStickXPositive", CONTROLLER_AXIS::LEFT_STICK_X_POSITIVE},
     {"LeftStickXNegative", CONTROLLER_AXIS::LEFT_STICK_X_NEGATIVE},

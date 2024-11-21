@@ -1,7 +1,5 @@
 #include "SpriteSystem.hpp"
 
-#include <nlohmann/json.hpp>
-
 void SpriteSystem::loadSprite(int spriteID, int textureID, int width, int height, int originX,
                               int originY)
 {

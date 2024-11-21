@@ -1,7 +1,6 @@
 #include "TextureSystem.hpp"
 #include <stdexcept>
 #include "Log.hpp"
-#include <nlohmann/json.hpp>
 
 void TextureSystem::loadTexture(int textureID, const std::string path)
 {
