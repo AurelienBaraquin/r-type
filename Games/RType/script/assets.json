@@ -1,5 +1,14 @@
 {
     "sceneTag": "assets",
+    "entities": [
+      {
+        "_name_": "Caca",
+        "tags" : ["coucou"],
+        "components": {
+          "Position": { "x": 700, "y": 300, "z": 0 }
+        }
+      }
+    ],
     "animations": [
         {
           "animationID": 0,

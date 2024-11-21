@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <nlohmann/json.hpp>
+#include <filesystem>
 
 class ComponentFunction {
 public:
@@ -52,13 +53,51 @@ public:
 
         std::map<std::string, std::vector<ComponentFunction>> entityFunctions;
 
+        if (data.contains("scenes")) {
+            for (const auto& sceneFile : data["scenes"]) {
+                std::filesystem::path scenePath = std::filesystem::path(jsonFilePath).parent_path() / sceneFile;
+                loadScene(scenePath.string(), entityFunctions);
+            }
+        }
+
+        loadEntities(data, entityFunctions);
+
+        return entityFunctions;
+    }
+
+private:
+    const ComponentRegistry& registry;
+
+    void loadScene(const std::string& sceneFile, std::map<std::string, std::vector<ComponentFunction>>& entityFunctions) {
+        std::ifstream scene(sceneFile);
+        if (!scene.is_open()) {
+            std::cerr << "Warning: Could not open scene file: " << sceneFile << "\n";
+            return;
+        }
+
+        nlohmann::json sceneData;
+        scene >> sceneData;
+        loadEntities(sceneData, entityFunctions);
+    }
+
+    void loadEntities(const nlohmann::json& data, std::map<std::string, std::vector<ComponentFunction>>& entityFunctions) {
         for (const auto& entity : data["entities"]) {
             std::vector<ComponentFunction> functions;
 
             std::string entityName = entity.value("_name_", "Unnamed Entity");
+            if (!entity.contains("components")) {
+                std::cerr << "Warning: Entity " << entityName << " is missing 'components'.\n";
+                continue;
+            }
 
             for (const auto& component : entity["components"].items()) {
                 const std::string& componentName = component.key();
+
+                if (registry.getFunctions(componentName).empty()) {
+                    std::cerr << "Warning: Component '" << componentName << "' in entity '" << entityName
+                              << "' is not registered in the ComponentRegistry.\n";
+                    continue;
+                }
 
                 const auto& componentFunctions = registry.getFunctions(componentName);
                 functions.insert(functions.end(), componentFunctions.begin(), componentFunctions.end());
@@ -66,12 +105,7 @@ public:
 
             entityFunctions[entityName] = functions;
         }
-
-        return entityFunctions;
     }
-
-private:
-    const ComponentRegistry& registry;
 };
 
 class DocumentationGenerator {
@@ -89,7 +123,7 @@ public:
         }
 
         *out << "# Lua Functions and Variables by Entity\n\n";
-        *out << "> **Note:** EVERY function is called with the entity \"e\" as the first parameter.\n\n";
+        *out << "> **Note:** EVERY function is called with the entity `e` as the first parameter.\n\n";
 
         for (const auto& [entity, functions] : entityFunctions) {
             *out << "## Entity: " << entity << "\n";
