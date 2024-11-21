@@ -8,6 +8,7 @@
 #include "Entity.hpp"
 #include "Script.hpp"
 
+
 class ScriptSystem
 {
    public:
@@ -15,10 +16,20 @@ class ScriptSystem
 
     void registerBinding(const std::string& name, BindingFunction func);
     void applyBindings(sol::state& luaState);
-    sol::state& getScript(const std::string& scriptPath);
-    void removeScript(const std::string& scriptPath);
+    sol::state& getScript(Entity entity, const std::string& scriptPath);
+    void removeScript(Entity entity, const std::string& scriptPath);
 
    private:
-    std::unordered_map<std::string, sol::state> scripts;
+    struct PairHash {
+        template <typename T1, typename T2>
+        std::size_t operator()(const std::pair<T1, T2>& pair) const {
+            std::size_t hash1 = std::hash<T1>{}(pair.first);
+            std::size_t hash2 = std::hash<T2>{}(pair.second);
+            return hash1 ^ (hash2 << 1);
+        }
+    };
+
+    // Entityid, ScriptPath -> Lua state
+    std::unordered_map<std::pair<Entity, std::string>, sol::state, PairHash> scripts;
     std::unordered_map<std::string, std::vector<BindingFunction>> bindings;
 };

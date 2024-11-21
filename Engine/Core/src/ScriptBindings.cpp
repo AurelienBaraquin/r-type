@@ -85,7 +85,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 auto* script = registry.getComponent<Components::Script>(entity);
                 if (!script) return false;
 
-                sol::state& luaState = scriptSystem.getScript(script->scriptPath);
+                sol::state& luaState = scriptSystem.getScript(entity, script->scriptPath);
                 bool res = luaState["setSpeed"].valid();
                 return res;
             };
@@ -96,7 +96,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             {
                 auto* script = registry.getComponent<Components::Script>(entity);
                 if (!script) throw std::runtime_error("Script component not found");
-                sol::state& luaState = scriptSystem.getScript(script->scriptPath);
+                sol::state& luaState = scriptSystem.getScript(entity, script->scriptPath);
                 if (luaState[method].valid())
                 {
                     std::vector<sol::object> args;

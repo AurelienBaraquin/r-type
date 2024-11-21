@@ -23,7 +23,7 @@ void Physics::callCollideFunction(Registry& registry, Entity entity, Entity enti
 
     if (script)
     {
-        sol::state& luaState = _scriptSystem.getScript(script->scriptPath);
+        sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
         if (luaState["onCollide"].valid())
         {
             luaState["onCollide"](entity2);

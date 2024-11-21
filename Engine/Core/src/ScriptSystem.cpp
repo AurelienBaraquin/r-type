@@ -16,20 +16,20 @@ void ScriptSystem::applyBindings(sol::state& luaState)
     }
 }
 
-sol::state& ScriptSystem::getScript(const std::string& scriptPath)
+sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath)
 {
-    if (scripts.find(scriptPath) == scripts.end())
+    if (scripts.find({entity, scriptPath}) == scripts.end())
     {
-        scripts[scriptPath] = sol::state();
-        scripts[scriptPath].open_libraries(sol::lib::base, sol::lib::math);
-        applyBindings(scripts[scriptPath]);
-        scripts[scriptPath].script_file(scriptPath);
+        scripts[{entity, scriptPath}] = sol::state();
+        scripts[{entity, scriptPath}].open_libraries(sol::lib::base, sol::lib::math);
+        applyBindings(scripts[{entity, scriptPath}]);
+        scripts[{entity, scriptPath}].script_file(scriptPath);
     }
 
-    return scripts[scriptPath];
+    return scripts[{entity, scriptPath}];
 }
 
-void ScriptSystem::removeScript(const std::string& scriptPath)
+void ScriptSystem::removeScript(Entity entity, const std::string& scriptPath)
 {
-    scripts.erase(scriptPath);
+    scripts.erase({entity, scriptPath});
 }
