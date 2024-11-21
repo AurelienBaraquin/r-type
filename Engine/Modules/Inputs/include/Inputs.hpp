@@ -14,10 +14,15 @@ class Inputs : public ISystem, public ILoader
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    void load(const std::string& filePath) override
+    // ILoader interface
+    void load(const nlohmann::json& data) override
     {
-        _InputSystem.load(filePath);
     }
+    std::vector<ILoader*> getLoaders() override
+    {
+        return {dynamic_cast<ILoader*>(&_InputSystem)};
+    }
+    std::string getPart() override { return "inputs"; }
 
    private:
     InputSystem _InputSystem;

@@ -8,7 +8,7 @@
 #include "Log.hpp"
 #include "Registry.hpp"
 
-class SceneLoader : public ILoader
+class SceneLoader
 {
    public:
     SceneLoader(ComponentFactory& factory, Registry& registry, LoaderManager& loaderManager)
@@ -16,48 +16,8 @@ class SceneLoader : public ILoader
     {
     }
 
-    void load(const std::string& filePath) override
-    {
-        Logger::getInstance().info("Loading scene: " + filePath);
-
-        std::ifstream file(filePath);
-        nlohmann::json sceneData;
-        file >> sceneData;
-
-        std::string sceneTag = sceneData["sceneTag"];
-
-        for (const auto& entityData : sceneData["entities"])
-        {
-            Entity entity = registry.createEntity();
-            const auto& components = entityData["components"];
-
-            for (auto& [componentName, componentData] : components.items())
-            {
-                factory.addComponent(entity, componentName, componentData, registry);
-            }
-
-            const auto& tags = entityData["tags"];
-
-            for (const auto& tag : tags)
-            {
-                registry.addTag(entity, tag);
-            }
-
-            registry.addTag(entity, sceneTag + "_scene");
-        }
-
-        if (sceneData.find("scenes") != sceneData.end())
-        {
-            for (const auto& scene : sceneData["scenes"])
-            {
-                std::filesystem::path scenePath =
-                    std::filesystem::path(filePath).parent_path() / scene;
-                SceneLoader(factory, registry, loaderManager).load(scenePath.string());
-            }
-        }
-
-        loaderManager.load(filePath);
-    }
+    void loadEntity(const nlohmann::json& entityData, const std::string& sceneTag);
+    void loadScene(const std::string& filePath);
 
     void clear()
     {
@@ -65,6 +25,7 @@ class SceneLoader : public ILoader
     }
 
    private:
+    std::string path;
     ComponentFactory& factory;
     Registry& registry;
     LoaderManager& loaderManager;

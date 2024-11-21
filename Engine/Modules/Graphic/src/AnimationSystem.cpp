@@ -7,17 +7,9 @@ void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame>
     animations[animationID] = frames;
 }
 
-void AnimationSystem::load(const std::string& filePath)
+void AnimationSystem::load(const nlohmann::json& data)
 {
-    std::ifstream file(filePath);
-    nlohmann::json data;
-    file >> data;
-
-    if (data.find("animations") == data.end()) return;
-
-    const auto& animationsData = data["animations"];
-
-    for (const auto& animationData : animationsData)
+    for (const auto& animationData : data)
     {
         int animationID = animationData["animationID"].get<int>();
         std::vector<AnimationFrame> frames;

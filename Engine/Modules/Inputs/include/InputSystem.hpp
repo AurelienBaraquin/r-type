@@ -31,7 +31,10 @@ struct InputConfig
 class InputSystem : public ILoader
 {
    public:
-    void load(const std::string& configFile) override;
+    // ILoader interface
+    void load(const nlohmann::json& data) override;
+    std::string getPart() override { return "inputConfig"; }
+
     void removeInput(int inputConfigID);
     InputConfig& getInput(int inputConfigID);
 

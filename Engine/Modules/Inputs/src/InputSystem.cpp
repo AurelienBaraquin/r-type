@@ -29,12 +29,8 @@ std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
     {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
 
-void InputSystem::load(const std::string& configFile)
+void InputSystem::load(const nlohmann::json& data)
 {
-    std::ifstream file(configFile);
-    nlohmann::json data;
-    file >> data;
-
     if (data.find("inputConfig") == data.end()) return;
 
     InputConfig _inputConfig;

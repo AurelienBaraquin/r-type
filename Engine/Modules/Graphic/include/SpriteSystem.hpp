@@ -12,7 +12,8 @@ class SpriteSystem : public ILoader
     void loadSprite(int spriteID, int textureID, int width, int height, int originX, int originY);
 
     // Loader interface
-    void load(const std::string& filePath) override;
+    void load(const nlohmann::json& data) override;
+    std::string getPart() override { return "sprites"; }
 
     void removeSprite(int spriteID);
     BrutSprite getSprite(int spriteID);

@@ -23,17 +23,9 @@ void TextureSystem::loadTexture(int textureID, const std::string path)
     textures[textureID] = texture;
 }
 
-void TextureSystem::load(const std::string& filePath)
+void TextureSystem::load(const nlohmann::json& data)
 {
-    std::ifstream file(filePath);
-    nlohmann::json data;
-    file >> data;
-
-    if (data.find("textures") == data.end()) return;
-
-    const auto& texturesData = data["textures"];
-
-    for (const auto& textureData : texturesData)
+    for (const auto& textureData : data)
     {
         int textureID = textureData["textureID"].get<int>();
         std::string path = textureData["path"].get<std::string>();

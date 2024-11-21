@@ -6,17 +6,9 @@ void SpriteSystem::loadSprite(int spriteID, int textureID, int width, int height
     sprites[spriteID] = {textureID, width, height, originX, originY};
 }
 
-void SpriteSystem::load(const std::string& filePath)
+void SpriteSystem::load(const nlohmann::json& data)
 {
-    std::ifstream file(filePath);
-    nlohmann::json data;
-    file >> data;
-
-    if (data.find("sprites") == data.end()) return;
-
-    const auto& spritesData = data["sprites"];
-
-    for (const auto& spriteData : spritesData)
+    for (const auto& spriteData : data)
     {
         int spriteID = spriteData["spriteID"].get<int>();
 

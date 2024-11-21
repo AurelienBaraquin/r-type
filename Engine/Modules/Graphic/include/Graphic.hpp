@@ -37,12 +37,16 @@ class Graphic : public ISystem, public ILoader
         return _AnimationSystem;
     }
 
-    void load(const std::string& filePath) override
+    // ILoader interface
+    void load(const nlohmann::json& data) override
     {
-        _AnimationSystem.load(filePath);
-        _SpriteSystem.load(filePath);
-        _TextureSystem.load(filePath);
     }
+    std::vector<ILoader*> getLoaders() override
+    {
+        return {dynamic_cast<ILoader*>(&_TextureSystem), dynamic_cast<ILoader*>(&_SpriteSystem),
+                dynamic_cast<ILoader*>(&_AnimationSystem)};
+    }
+    std::string getPart() override { return "graphic"; }
 
    private:
     std::string _title;

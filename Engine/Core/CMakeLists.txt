@@ -6,7 +6,8 @@ add_library(Core STATIC src/Core.cpp
     src/ScriptBindings.cpp
     src/ScriptSystem.cpp
     src/ComponentFactory.cpp
-    src/Event.cpp)
+    src/Event.cpp
+    src/Scene.cpp)
 
 target_link_libraries(Core PRIVATE sol2::sol2 lua::lua nlohmann_json::nlohmann_json)
 

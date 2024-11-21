@@ -15,7 +15,11 @@ class TextureSystem : public ILoader
     }
 
     void loadTexture(int textureID, const std::string path);
-    void load(const std::string& filePath) override;
+
+    // Loader interface
+    void load(const nlohmann::json& data) override;
+    std::string getPart() override { return "textures"; }
+
     void remove(int textureID);
     SDL_Texture* get(int textureID) const;
 
