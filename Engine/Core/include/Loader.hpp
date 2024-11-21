@@ -1,9 +1,9 @@
 #pragma once
 
 #include <fstream>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
-#include <nlohmann/json.hpp>
 
 #include "Log.hpp"
 
@@ -15,7 +15,10 @@ class ILoader
 
     virtual void load(const nlohmann::json& data) = 0;
     virtual std::string getPart() = 0;
-    virtual std::vector<ILoader*> getLoaders() { return {}; }
+    virtual std::vector<ILoader*> getLoaders()
+    {
+        return {};
+    }
 };
 
 class LoaderManager

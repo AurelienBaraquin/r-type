@@ -44,8 +44,7 @@ void SceneLoader::loadScene(const std::string& filePath)
     {
         for (const auto& scene : sceneData["scenes"])
         {
-            std::filesystem::path scenePath =
-                std::filesystem::path(path).parent_path() / scene;
+            std::filesystem::path scenePath = std::filesystem::path(path).parent_path() / scene;
             SceneLoader(factory, registry, loaderManager).loadScene(scenePath.string());
         }
     }

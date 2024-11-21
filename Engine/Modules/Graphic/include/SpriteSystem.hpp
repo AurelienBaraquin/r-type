@@ -13,7 +13,10 @@ class SpriteSystem : public ILoader
 
     // Loader interface
     void load(const nlohmann::json& data) override;
-    std::string getPart() override { return "sprites"; }
+    std::string getPart() override
+    {
+        return "sprites";
+    }
 
     void removeSprite(int spriteID);
     BrutSprite getSprite(int spriteID);

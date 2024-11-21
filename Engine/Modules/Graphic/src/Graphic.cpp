@@ -6,7 +6,7 @@
 #include "Transform.hpp"
 
 Graphic::Graphic(std::string title, int width, int height)
-        : _title(title), _width(width), _height(height)
+    : _title(title), _width(width), _height(height)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {

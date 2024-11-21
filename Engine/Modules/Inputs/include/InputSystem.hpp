@@ -60,7 +60,10 @@ class InputSystem : public ILoader
    public:
     // ILoader interface
     void load(const nlohmann::json& data) override;
-    std::string getPart() override { return "inputConfigs"; }
+    std::string getPart() override
+    {
+        return "inputConfigs";
+    }
 
     void removeInput(int inputConfigID);
     InputConfig& getInput(int inputConfigID);

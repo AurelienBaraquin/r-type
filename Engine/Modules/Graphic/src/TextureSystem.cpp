@@ -1,5 +1,7 @@
 #include "TextureSystem.hpp"
+
 #include <stdexcept>
+
 #include "Log.hpp"
 
 void TextureSystem::loadTexture(int textureID, const std::string path)

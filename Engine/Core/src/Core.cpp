@@ -44,7 +44,7 @@ void Engine::updateScript()
         auto* script = _registry.getComponent<Components::Script>(entity);
 
         sol::state& luaState = _ScriptSystem.getScript(script->scriptPath);
-        
+
         if (luaState["update"])
         {
             luaState["update"](entity);

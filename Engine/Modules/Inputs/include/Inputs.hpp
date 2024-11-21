@@ -22,7 +22,10 @@ class Inputs : public ISystem, public ILoader
     {
         return {dynamic_cast<ILoader*>(&_InputSystem)};
     }
-    std::string getPart() override { return "inputs"; }
+    std::string getPart() override
+    {
+        return "inputs";
+    }
 
    private:
     InputSystem _InputSystem;

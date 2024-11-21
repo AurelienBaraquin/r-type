@@ -78,19 +78,24 @@ void InputSystem::updateInputs(int inputConfigID)
 {
     SDL_PumpEvents();
 
-    for (auto& [_, state] : currentStates) {
+    for (auto& [_, state] : currentStates)
+    {
         state = false;
     }
 
     const Uint8* state = SDL_GetKeyboardState(nullptr);
-    for (auto& [input, action] : configs[inputConfigID].buttons) {
-        if (state[input]) {
+    for (auto& [input, action] : configs[inputConfigID].buttons)
+    {
+        if (state[input])
+        {
             currentStates[action] = true;
         }
     }
 
-    for (auto& [input, action] : configs[inputConfigID].mouseButtons) {
-        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
+    for (auto& [input, action] : configs[inputConfigID].mouseButtons)
+    {
+        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input))
+        {
             currentStates[action] = true;
         }
     }

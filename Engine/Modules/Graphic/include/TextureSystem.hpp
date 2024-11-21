@@ -1,10 +1,11 @@
 #pragma once
 
-#include <unordered_map>
-#include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+
 #include <Loader.hpp>
+#include <string>
+#include <unordered_map>
 
 class TextureSystem : public ILoader
 {
@@ -18,7 +19,10 @@ class TextureSystem : public ILoader
 
     // Loader interface
     void load(const nlohmann::json& data) override;
-    std::string getPart() override { return "textures"; }
+    std::string getPart() override
+    {
+        return "textures";
+    }
 
     void remove(int textureID);
     SDL_Texture* get(int textureID) const;

@@ -46,7 +46,10 @@ class Graphic : public ISystem, public ILoader
         return {dynamic_cast<ILoader*>(&_TextureSystem), dynamic_cast<ILoader*>(&_SpriteSystem),
                 dynamic_cast<ILoader*>(&_AnimationSystem)};
     }
-    std::string getPart() override { return "graphic"; }
+    std::string getPart() override
+    {
+        return "graphic";
+    }
 
    private:
     std::string _title;

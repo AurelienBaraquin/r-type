@@ -23,7 +23,7 @@ void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 }
             };
         });
-    
+
     ScriptSystem.registerBinding(
         "isInputActive",
         [&registry = registry, this](sol::state& luaState)
