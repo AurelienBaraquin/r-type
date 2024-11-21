@@ -11,11 +11,12 @@
 
 namespace Components
 {
-    struct BoxCollider {
-        cpBody* body;
-        cpShape* shape;
-        float width;
-        float height;
-        std::vector<Entity> collidedEntities;
-    };
+struct BoxCollider
+{
+    cpBody* body;
+    cpShape* shape;
+    float width;
+    float height;
+    std::vector<Entity> collidedEntities;
+};
 }  // namespace Components

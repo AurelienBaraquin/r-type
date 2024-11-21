@@ -7,8 +7,8 @@
 
 #include "ComponentFactory.hpp"
 #include "Loader.hpp"
-#include "Registry.hpp"
 #include "Log.hpp"
+#include "Registry.hpp"
 
 class SceneLoader : public ILoader
 {

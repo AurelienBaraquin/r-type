@@ -5,8 +5,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "Registry.hpp"
 #include "Log.hpp"
+#include "Registry.hpp"
 
 class ComponentFactory
 {

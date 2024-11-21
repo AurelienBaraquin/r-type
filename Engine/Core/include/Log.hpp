@@ -1,39 +1,45 @@
 #pragma once
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <mutex>
 #include <sstream>
 #include <string>
-#include <mutex>
 #include <unordered_map>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-class Logger {
-public:
-    enum class LogLevel {
+class Logger
+{
+   public:
+    enum class LogLevel
+    {
         INFO,
         WARNING,
         ERROR,
         DEBUG
     };
 
-    static Logger& getInstance() {
+    static Logger& getInstance()
+    {
         static Logger instance;
         return instance;
     }
 
-    void setLogFile(const std::string& filename) {
+    void setLogFile(const std::string& filename)
+    {
         std::lock_guard<std::mutex> lock(mutex_);
-        if (logFile_.is_open()) {
+        if (logFile_.is_open())
+        {
             logFile_.close();
         }
         logFile_.open(filename, std::ios::out | std::ios::app);
     }
 
-    void log(LogLevel level, const std::string& message) {
+    void log(LogLevel level, const std::string& message)
+    {
         std::lock_guard<std::mutex> lock(mutex_);
 
         std::ostringstream oss;
@@ -46,52 +52,93 @@ public:
         resetConsoleColor();
 
         // File Output
-        if (logFile_.is_open()) {
+        if (logFile_.is_open())
+        {
             logFile_ << formattedMessage;
         }
     }
 
-    void info(const std::string& message) { log(LogLevel::INFO, message); }
-    void warning(const std::string& message) { log(LogLevel::WARNING, message); }
-    void error(const std::string& message) { log(LogLevel::ERROR, message); }
-    void debug(const std::string& message) { log(LogLevel::DEBUG, message); }
+    void info(const std::string& message)
+    {
+        log(LogLevel::INFO, message);
+    }
+    void warning(const std::string& message)
+    {
+        log(LogLevel::WARNING, message);
+    }
+    void error(const std::string& message)
+    {
+        log(LogLevel::ERROR, message);
+    }
+    void debug(const std::string& message)
+    {
+        log(LogLevel::DEBUG, message);
+    }
 
-private:
+   private:
     std::ofstream logFile_;
     std::mutex mutex_;
 
     Logger() = default;
 
-    std::string getLevelString(LogLevel level) const {
-        switch (level) {
-            case LogLevel::INFO: return "[INFO]";
-            case LogLevel::WARNING: return "[WARNING]";
-            case LogLevel::ERROR: return "[ERROR]";
-            case LogLevel::DEBUG: return "[DEBUG]";
-            default: return "[UNKNOWN]";
+    std::string getLevelString(LogLevel level) const
+    {
+        switch (level)
+        {
+            case LogLevel::INFO:
+                return "[INFO]";
+            case LogLevel::WARNING:
+                return "[WARNING]";
+            case LogLevel::ERROR:
+                return "[ERROR]";
+            case LogLevel::DEBUG:
+                return "[DEBUG]";
+            default:
+                return "[UNKNOWN]";
         }
     }
 
-    void setConsoleColor(LogLevel level) {
+    void setConsoleColor(LogLevel level)
+    {
 #ifdef _WIN32
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        switch (level) {
-            case LogLevel::INFO: SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN); break;
-            case LogLevel::WARNING: SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN); break;
-            case LogLevel::ERROR: SetConsoleTextAttribute(hConsole, FOREGROUND_RED); break;
-            case LogLevel::DEBUG: SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED); break;
+        switch (level)
+        {
+            case LogLevel::INFO:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN);
+                break;
+            case LogLevel::WARNING:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN);
+                break;
+            case LogLevel::ERROR:
+                SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+                break;
+            case LogLevel::DEBUG:
+                SetConsoleTextAttribute(hConsole,
+                                        FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                break;
         }
 #else
-        switch (level) {
-            case LogLevel::INFO: std::cout << "\033[32m"; break;  // Green
-            case LogLevel::WARNING: std::cout << "\033[33m"; break; // Yellow
-            case LogLevel::ERROR: std::cout << "\033[31m"; break;  // Red
-            case LogLevel::DEBUG: std::cout << "\033[36m"; break;  // Cyan
+        switch (level)
+        {
+            case LogLevel::INFO:
+                std::cout << "\033[32m";
+                break;  // Green
+            case LogLevel::WARNING:
+                std::cout << "\033[33m";
+                break;  // Yellow
+            case LogLevel::ERROR:
+                std::cout << "\033[31m";
+                break;  // Red
+            case LogLevel::DEBUG:
+                std::cout << "\033[36m";
+                break;  // Cyan
         }
 #endif
     }
 
-    void resetConsoleColor() {
+    void resetConsoleColor()
+    {
 #ifdef _WIN32
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);

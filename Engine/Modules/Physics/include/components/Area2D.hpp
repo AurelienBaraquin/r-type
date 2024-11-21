@@ -8,10 +8,11 @@
 
 namespace Components
 {
-    struct Area2D {
-        int width;
-        int height;
-        Entity firstCollidedEntity;
-        std::vector<Entity> collidedEntities;
-    };
+struct Area2D
+{
+    int width;
+    int height;
+    Entity firstCollidedEntity;
+    std::vector<Entity> collidedEntities;
+};
 }  // namespace Components

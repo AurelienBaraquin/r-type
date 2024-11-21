@@ -79,33 +79,37 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         "Script",
         [&registry = registry, &scriptSystem = _ScriptSystem](sol::state& luaState)
         {
-            luaState["hasMethod"] = [&registry,&scriptSystem, &luaState](Entity entity, const std::string& method)
+            luaState["hasMethod"] =
+                [&registry, &scriptSystem, &luaState](Entity entity, const std::string& method)
             {
                 auto* script = registry.getComponent<Components::Script>(entity);
-                if (!script)
-                    return false;
+                if (!script) return false;
 
                 sol::state& luaState = scriptSystem.getScript(script->scriptPath);
                 bool res = luaState["setSpeed"].valid();
                 return res;
             };
 
-            luaState["callMethod"] = [&registry, &luaState, &scriptSystem](Entity entity, const std::string& method, sol::variadic_args va)
+            luaState["callMethod"] =
+                [&registry, &luaState, &scriptSystem](Entity entity, const std::string& method,
+                                                      sol::variadic_args va)
             {
                 auto* script = registry.getComponent<Components::Script>(entity);
                 if (!script) throw std::runtime_error("Script component not found");
                 sol::state& luaState = scriptSystem.getScript(script->scriptPath);
-                if (luaState[method].valid()) {
-
+                if (luaState[method].valid())
+                {
                     std::vector<sol::object> args;
                     args.push_back(sol::make_object(luaState, entity));
 
-                    for (auto arg : va) {
+                    for (auto arg : va)
+                    {
                         args.push_back(arg);
                     }
                     luaState[method](sol::as_args(args));
                 }
-                else {
+                else
+                {
                     throw std::runtime_error("Method not found");
                 }
             };

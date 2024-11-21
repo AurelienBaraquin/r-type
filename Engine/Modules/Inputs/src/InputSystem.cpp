@@ -56,7 +56,8 @@ void InputSystem::load(const std::string& configFile)
                 if (device == "id") continue;
                 if (device == "keyboard")
                 {
-                    SDL_Scancode scancode = SDL_GetScancodeFromName(code.get<std::string>().c_str());
+                    SDL_Scancode scancode =
+                        SDL_GetScancodeFromName(code.get<std::string>().c_str());
                     if (scancode == SDL_SCANCODE_UNKNOWN)
                         throw std::runtime_error("Unknown scancode: " + code.get<std::string>());
                     _inputConfig.buttons[scancode] = str;
@@ -79,14 +80,14 @@ void InputSystem::load(const std::string& configFile)
                     {
                         if (axisMap.find(code.get<std::string>()) == axisMap.end())
                             throw std::runtime_error("Unknown controller axis: " +
-                                                    code.get<std::string>());
+                                                     code.get<std::string>());
                         _inputConfig.controllerAxis[axisMap[code.get<std::string>()]] = str;
                     }
                     else
                     {
                         if (buttonMap.find(code.get<std::string>()) == buttonMap.end())
                             throw std::runtime_error("Unknown controller button: " +
-                                                    code.get<std::string>());
+                                                     code.get<std::string>());
                         _inputConfig.controllerButtons[buttonMap[code.get<std::string>()]] = str;
                     }
                 }

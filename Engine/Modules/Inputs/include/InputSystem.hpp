@@ -2,11 +2,11 @@
 
 #include <SDL2/SDL.h>
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
-#include "Loader.hpp"
 #include "Input.hpp"
+#include "Loader.hpp"
 
 enum class CONTROLLER_AXIS
 {
