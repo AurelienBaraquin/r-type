@@ -21,6 +21,7 @@ tasks:
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON
       - cmake --build build --preset conan-release
+      - mkdir -p Release
       - cp ./build/build/Release/Engine/Tools/DocGen/DocGen ./Release/DocGen
       - cp ./build/build/Release/Games/RType/RType          ./Release/RType
   
