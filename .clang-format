@@ -1,7 +1,11 @@
 ---
 Language: Cpp
 BasedOnStyle: Google
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: false
+  AfterClass: true
 ColumnLimit: 100
 IndentWidth: 4
 AllowShortFunctionsOnASingleLine: None
