@@ -30,10 +30,8 @@ class EventManager
     {
         auto typeIndex = std::type_index(typeid(EventType));
 
-        if (subscribers.find(typeIndex) != subscribers.end())
-        {
-            for (const auto& callback : subscribers[typeIndex])
-            {
+        if (subscribers.find(typeIndex) != subscribers.end()) {
+            for (const auto& callback : subscribers[typeIndex]) {
                 callback(event);
             }
         }
@@ -45,8 +43,7 @@ class EventManager
 
 extern std::unique_ptr<EventManager> eventManager;
 
-namespace Events
-{
+namespace Events {
 class Shutdown : public Event
 {
 };

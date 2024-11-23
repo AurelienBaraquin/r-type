@@ -4,8 +4,7 @@
 
 void Engine::startup()
 {
-    for (auto& [type, system] : _systemManager)
-    {
+    for (auto& [type, system] : _systemManager) {
         system->registerScriptBindings(_ScriptSystem, _registry);
     }
     registerScriptBindings(_ScriptSystem, _registry);
@@ -18,14 +17,12 @@ void Engine::loop()
 {
     bool running = true;
 
-    eventManager->subscribe<Events::Shutdown>([&running](std::shared_ptr<Event> event)
-                                              { running = false; });
+    eventManager->subscribe<Events::Shutdown>(
+        [&running](std::shared_ptr<Event> event) { running = false; });
 
-    while (running)
-    {
+    while (running) {
         updateScript();
-        for (auto& [type, system] : _systemManager)
-        {
+        for (auto& [type, system] : _systemManager) {
             system->update(1.0f, _registry, _ScriptSystem);
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
@@ -39,14 +36,12 @@ void Engine::shutdown()
 
 void Engine::updateScript()
 {
-    for (auto entity : _registry.view<Components::Script>())
-    {
+    for (auto entity : _registry.view<Components::Script>()) {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
         sol::state& luaState = _ScriptSystem.getScript(entity, script->scriptPath);
 
-        if (luaState["update"])
-        {
+        if (luaState["update"]) {
             luaState["update"](entity);
         }
     }

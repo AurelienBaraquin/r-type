@@ -8,8 +8,7 @@
 #include "Input.hpp"
 #include "Loader.hpp"
 
-enum class CONTROLLER_AXIS
-{
+enum class CONTROLLER_AXIS {
     LEFT_STICK_X_POSITIVE,
     LEFT_STICK_X_NEGATIVE,
     LEFT_STICK_Y_POSITIVE,
@@ -47,8 +46,7 @@ static std::unordered_map<std::string, SDL_GameControllerButton> buttonMap = {
     {"DPadLeft", SDL_CONTROLLER_BUTTON_DPAD_LEFT},
     {"DPadRight", SDL_CONTROLLER_BUTTON_DPAD_RIGHT}};
 
-struct InputConfig
-{
+struct InputConfig {
     std::unordered_map<SDL_Scancode, std::string> buttons;
     std::unordered_map<Uint8, std::string> mouseButtons;
     std::unordered_map<SDL_GameControllerButton, std::string> controllerButtons;

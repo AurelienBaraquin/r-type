@@ -21,11 +21,9 @@ void Physics::callCollideFunction(Registry& registry, Entity entity, Entity enti
 {
     auto* script = registry.getComponent<Components::Script>(entity);
 
-    if (script)
-    {
+    if (script) {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
-        if (luaState["onCollide"].valid())
-        {
+        if (luaState["onCollide"].valid()) {
             luaState["onCollide"](entity2);
         }
     }
@@ -33,13 +31,11 @@ void Physics::callCollideFunction(Registry& registry, Entity entity, Entity enti
 
 void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
-    for (auto entity : registry.view<Components::Position, Components::Area2D>())
-    {
+    for (auto entity : registry.view<Components::Position, Components::Area2D>()) {
         auto* position = registry.getComponent<Components::Position>(entity);
         auto* area2D = registry.getComponent<Components::Area2D>(entity);
 
-        for (auto entity2 : registry.view<Components::Position, Components::Area2D>())
-        {
+        for (auto entity2 : registry.view<Components::Position, Components::Area2D>()) {
             if (entity == entity2) continue;
             auto* position2 = registry.getComponent<Components::Position>(entity2);
             auto* area2D2 = registry.getComponent<Components::Area2D>(entity2);
@@ -49,8 +45,7 @@ void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem&
 
             if (SDL_HasIntersection(&rect1, &rect2) &&
                 std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(),
-                          entity2) == area2D->collidedEntities.end())
-            {
+                          entity2) == area2D->collidedEntities.end()) {
                 area2D->collidedEntities.push_back(entity2);
                 area2D2->collidedEntities.push_back(entity);
                 callCollideFunction(registry, entity, entity2, scriptSystem);
@@ -58,8 +53,7 @@ void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem&
             }
             if (!SDL_HasIntersection(&rect1, &rect2) &&
                 std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(),
-                          entity2) != area2D->collidedEntities.end())
-            {
+                          entity2) != area2D->collidedEntities.end()) {
                 area2D->collidedEntities.erase(std::remove(area2D->collidedEntities.begin(),
                                                            area2D->collidedEntities.end(), entity2),
                                                area2D->collidedEntities.end());

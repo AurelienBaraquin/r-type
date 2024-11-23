@@ -13,8 +13,7 @@ class EntityManager
     void clear()
     {
         nextEntityId = 0;
-        while (!availableEntities.empty())
-        {
+        while (!availableEntities.empty()) {
             availableEntities.pop();
         }
     }

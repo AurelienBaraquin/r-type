@@ -1,32 +1,38 @@
 #pragma once
 
-#include <iostream>
+#include <filesystem>
 #include <fstream>
-#include <string>
-#include <vector>
+#include <iostream>
 #include <map>
 #include <nlohmann/json.hpp>
-#include <filesystem>
+#include <string>
+#include <vector>
 
-class ComponentFunction {
-public:
-    ComponentFunction(const std::string& name,
-                      const std::vector<std::string>& params = {},
+class ComponentFunction
+{
+   public:
+    ComponentFunction(const std::string& name, const std::vector<std::string>& params = {},
                       const std::vector<std::string>& returns = {})
-        : name(name), parameters(params), returns(returns) {}
+        : name(name), parameters(params), returns(returns)
+    {
+    }
 
     std::string name;
     std::vector<std::string> parameters;
     std::vector<std::string> returns;
 };
 
-class ComponentRegistry {
-public:
-    void registerComponent(const std::string& componentName, const std::vector<ComponentFunction>& functions) {
+class ComponentRegistry
+{
+   public:
+    void registerComponent(const std::string& componentName,
+                           const std::vector<ComponentFunction>& functions)
+    {
         componentFunctions[componentName] = functions;
     }
 
-    const std::vector<ComponentFunction>& getFunctions(const std::string& componentName) const {
+    const std::vector<ComponentFunction>& getFunctions(const std::string& componentName) const
+    {
         if (componentFunctions.find(componentName) != componentFunctions.end()) {
             return componentFunctions.at(componentName);
         }
@@ -34,15 +40,20 @@ public:
         return empty;
     }
 
-private:
+   private:
     std::map<std::string, std::vector<ComponentFunction>> componentFunctions;
 };
 
-class EntityAnalyzer {
-public:
-    EntityAnalyzer(const ComponentRegistry& registry) : registry(registry) {}
+class EntityAnalyzer
+{
+   public:
+    EntityAnalyzer(const ComponentRegistry& registry) : registry(registry)
+    {
+    }
 
-    std::map<std::string, std::vector<ComponentFunction>> analyzeEntities(const std::string& jsonFilePath) {
+    std::map<std::string, std::vector<ComponentFunction>> analyzeEntities(
+        const std::string& jsonFilePath)
+    {
         std::ifstream file(jsonFilePath);
         if (!file.is_open()) {
             throw std::runtime_error("Failed to open JSON file: " + jsonFilePath);
@@ -55,7 +66,8 @@ public:
 
         if (data.contains("scenes")) {
             for (const auto& sceneFile : data["scenes"]) {
-                std::filesystem::path scenePath = std::filesystem::path(jsonFilePath).parent_path() / sceneFile;
+                std::filesystem::path scenePath =
+                    std::filesystem::path(jsonFilePath).parent_path() / sceneFile;
                 loadScene(scenePath.string(), entityFunctions);
             }
         }
@@ -65,10 +77,12 @@ public:
         return entityFunctions;
     }
 
-private:
+   private:
     const ComponentRegistry& registry;
 
-    void loadScene(const std::string& sceneFile, std::map<std::string, std::vector<ComponentFunction>>& entityFunctions) {
+    void loadScene(const std::string& sceneFile,
+                   std::map<std::string, std::vector<ComponentFunction>>& entityFunctions)
+    {
         std::ifstream scene(sceneFile);
         if (!scene.is_open()) {
             std::cerr << "Warning: Could not open scene file: " << sceneFile << "\n";
@@ -80,7 +94,9 @@ private:
         loadEntities(sceneData, entityFunctions);
     }
 
-    void loadEntities(const nlohmann::json& data, std::map<std::string, std::vector<ComponentFunction>>& entityFunctions) {
+    void loadEntities(const nlohmann::json& data,
+                      std::map<std::string, std::vector<ComponentFunction>>& entityFunctions)
+    {
         for (const auto& entity : data["entities"]) {
             std::vector<ComponentFunction> functions;
 
@@ -94,13 +110,14 @@ private:
                 const std::string& componentName = component.key();
 
                 if (registry.getFunctions(componentName).empty()) {
-                    std::cerr << "Warning: Component '" << componentName << "' in entity '" << entityName
-                              << "' is not registered in the ComponentRegistry.\n";
+                    std::cerr << "Warning: Component '" << componentName << "' in entity '"
+                              << entityName << "' is not registered in the ComponentRegistry.\n";
                     continue;
                 }
 
                 const auto& componentFunctions = registry.getFunctions(componentName);
-                functions.insert(functions.end(), componentFunctions.begin(), componentFunctions.end());
+                functions.insert(functions.end(), componentFunctions.begin(),
+                                 componentFunctions.end());
             }
 
             entityFunctions[entityName] = functions;
@@ -108,10 +125,12 @@ private:
     }
 };
 
-class DocumentationGenerator {
-public:
+class DocumentationGenerator
+{
+   public:
     void generate(const std::map<std::string, std::vector<ComponentFunction>>& entityFunctions,
-                  const std::string& outputPath) {
+                  const std::string& outputPath)
+    {
         std::ostream* out;
         std::ofstream file;
 
@@ -123,7 +142,8 @@ public:
         }
 
         *out << "# Lua Functions and Variables by Entity\n\n";
-        *out << "> **Note:** EVERY function is called with the entity `e` as the first parameter.\n\n";
+        *out << "> **Note:** EVERY function is called with the entity `e` as the first "
+                "parameter.\n\n";
 
         for (const auto& [entity, functions] : entityFunctions) {
             *out << "## Entity: " << entity << "\n";

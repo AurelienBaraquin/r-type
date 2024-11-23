@@ -9,13 +9,11 @@ void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame>
 
 void AnimationSystem::load(const nlohmann::json& data)
 {
-    for (const auto& animationData : data)
-    {
+    for (const auto& animationData : data) {
         int animationID = animationData["animationID"].get<int>();
         std::vector<AnimationFrame> frames;
 
-        for (const auto& frameData : animationData["frames"])
-        {
+        for (const auto& frameData : animationData["frames"]) {
             frames.push_back({frameData["textureID"].get<int>(), frameData["width"].get<int>(),
                               frameData["height"].get<int>(), frameData["originX"].get<int>(),
                               frameData["originY"].get<int>()});
@@ -45,8 +43,7 @@ void AnimationSystem::playAnimation(int animationID, Components::Animation& anim
 
 void AnimationSystem::updateAnimation(Components::Animation& animation, float deltaTime)
 {
-    if (animations.find(animation.animationID) == animations.end())
-    {
+    if (animations.find(animation.animationID) == animations.end()) {
         Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
         return;
     }
@@ -55,16 +52,13 @@ void AnimationSystem::updateAnimation(Components::Animation& animation, float de
     auto& currentFrame = frames[animation.currentFrame];
 
     animation.elapsedTime += deltaTime;
-    if (animation.elapsedTime >= animation.frameTime)
-    {
+    if (animation.elapsedTime >= animation.frameTime) {
         animation.elapsedTime = 0;
         animation.currentFrame++;
-        if (animation.currentFrame >= frames.size())
-        {
+        if (animation.currentFrame >= frames.size()) {
             if (animation.loop)
                 animation.currentFrame = 0;
-            else
-            {
+            else {
                 animation.currentFrame = frames.size() - 1;
                 stopAnimation(animation);
             }

@@ -15,8 +15,7 @@ class ComponentFactory
 
     void registerComponent(const std::string& componentName, ComponentLoader loader)
     {
-        if (componentLoaders.find(componentName) != componentLoaders.end())
-        {
+        if (componentLoaders.find(componentName) != componentLoaders.end()) {
             Logger::getInstance().error("Component " + componentName + " already registered");
             return;
         }
@@ -27,12 +26,9 @@ class ComponentFactory
                       const nlohmann::json& componentData, Registry& registry)
     {
         auto it = componentLoaders.find(componentName);
-        if (it != componentLoaders.end())
-        {
+        if (it != componentLoaders.end()) {
             it->second(entity, componentData, registry);
-        }
-        else
-        {
+        } else {
             Logger::getInstance().error("Component " + componentName + " not found");
         }
     }

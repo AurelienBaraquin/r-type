@@ -30,16 +30,14 @@ class Registry
 
     void removeAllTags(Entity entity)
     {
-        for (auto& [tag, entities] : _tags)
-        {
+        for (auto& [tag, entities] : _tags) {
             entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
         }
     }
 
     void removeEntityByTag(Tag tag)
     {
-        for (auto entity : _tags[tag])
-        {
+        for (auto entity : _tags[tag]) {
             destroyEntity(entity);
         }
     }
@@ -69,10 +67,8 @@ class Registry
     std::vector<Entity> view()
     {
         std::vector<Entity> result;
-        for (const auto& [entity, mask] : entityMasks)
-        {
-            if ((mask & componentMask<Components...>()) == componentMask<Components...>())
-            {
+        for (const auto& [entity, mask] : entityMasks) {
+            if ((mask & componentMask<Components...>()) == componentMask<Components...>()) {
                 result.push_back(entity);
             }
         }
@@ -105,8 +101,7 @@ class Registry
     ComponentPool<T>* getOrCreatePool()
     {
         auto it = componentPools.find(typeid(T));
-        if (it == componentPools.end())
-        {
+        if (it == componentPools.end()) {
             auto pool = std::make_unique<ComponentPool<T>>();
             componentPools[typeid(T)] = std::move(pool);
         }

@@ -41,8 +41,7 @@ void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
     SDL_Point center = {dstRect.w / 2, dstRect.h / 2};
 
     SDL_Texture* texture = _TextureSystem.get(sprite->textureID);
-    if (!texture)
-    {
+    if (!texture) {
         Logger::getInstance().error("Failed to get texture : " + std::to_string(sprite->textureID));
         return;
     }

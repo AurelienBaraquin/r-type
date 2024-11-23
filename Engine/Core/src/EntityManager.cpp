@@ -2,14 +2,11 @@
 
 Entity EntityManager::createEntity()
 {
-    if (!availableEntities.empty())
-    {
+    if (!availableEntities.empty()) {
         Entity id = availableEntities.front();
         availableEntities.pop();
         return id;
-    }
-    else
-    {
+    } else {
         return nextEntityId++;
     }
 }

@@ -15,13 +15,7 @@
 class Logger
 {
    public:
-    enum class LogLevel
-    {
-        INFO,
-        WARNING,
-        ERROR,
-        DEBUG
-    };
+    enum class LogLevel { INFO, WARNING, ERROR, DEBUG };
 
     static Logger& getInstance()
     {
@@ -32,8 +26,7 @@ class Logger
     void setLogFile(const std::string& filename)
     {
         std::lock_guard<std::mutex> lock(mutex_);
-        if (logFile_.is_open())
-        {
+        if (logFile_.is_open()) {
             logFile_.close();
         }
         logFile_.open(filename, std::ios::out | std::ios::app);
@@ -53,8 +46,7 @@ class Logger
         resetConsoleColor();
 
         // File Output
-        if (logFile_.is_open())
-        {
+        if (logFile_.is_open()) {
             logFile_ << formattedMessage;
         }
     }
@@ -84,8 +76,7 @@ class Logger
 
     std::string getLevelString(LogLevel level) const
     {
-        switch (level)
-        {
+        switch (level) {
             case LogLevel::INFO:
                 return "[INFO]";
             case LogLevel::WARNING:
@@ -103,8 +94,7 @@ class Logger
     {
 #ifdef _WIN32
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        switch (level)
-        {
+        switch (level) {
             case LogLevel::INFO:
                 SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN);
                 break;
@@ -120,8 +110,7 @@ class Logger
                 break;
         }
 #else
-        switch (level)
-        {
+        switch (level) {
             case LogLevel::INFO:
                 std::cout << "\033[32m";
                 break;  // Green

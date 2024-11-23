@@ -1,9 +1,7 @@
 #pragma once
 
-namespace Components
-{
-struct Animation
-{
+namespace Components {
+struct Animation {
     int animationID;
     int currentFrame;
     float frameTime;

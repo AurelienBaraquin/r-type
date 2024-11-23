@@ -8,10 +8,8 @@
 
 #include "Entity.hpp"
 
-namespace Components
-{
-struct Area2D
-{
+namespace Components {
+struct Area2D {
     int width;
     int height;
     Entity firstCollidedEntity;

@@ -20,8 +20,7 @@ class Engine : public ISystem
     template <typename T, typename... Args>
     T& addModule(Args&&... args)
     {
-        if (_systemManager.hasSystem<T>())
-        {
+        if (_systemManager.hasSystem<T>()) {
             Logger::getInstance().error("System already registered");
             return _systemManager.getSystem<T>();
         }
@@ -29,8 +28,7 @@ class Engine : public ISystem
         auto& system = _systemManager.getSystem<T>();
         system.registerComponentFactory(_componentFactory);
 
-        if (std::is_base_of<ILoader, T>::value)
-        {
+        if (std::is_base_of<ILoader, T>::value) {
             _loaderManager.addLoader(dynamic_cast<ILoader*>(&system));
         }
 

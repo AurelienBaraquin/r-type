@@ -9,10 +9,8 @@
 #include "Entity.hpp"
 #include "Physics.hpp"
 
-namespace Components
-{
-struct BoxCollider
-{
+namespace Components {
+struct BoxCollider {
     cpBody* body;
     cpShape* shape;
     float width;

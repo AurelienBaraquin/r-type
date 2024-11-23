@@ -7,8 +7,7 @@
 void TextureSystem::loadTexture(int textureID, const std::string path)
 {
     SDL_Surface* surface = IMG_Load(path.c_str());
-    if (!surface)
-    {
+    if (!surface) {
         Logger::getInstance().error("Failed to load texture: " + std::string(IMG_GetError()));
         return;
     }
@@ -16,8 +15,7 @@ void TextureSystem::loadTexture(int textureID, const std::string path)
     SDL_Texture* texture = SDL_CreateTextureFromSurface(_renderer, surface);
     SDL_FreeSurface(surface);
 
-    if (!texture)
-    {
+    if (!texture) {
         Logger::getInstance().error("Failed to create texture: " + std::string(SDL_GetError()));
         return;
     }
@@ -27,8 +25,7 @@ void TextureSystem::loadTexture(int textureID, const std::string path)
 
 void TextureSystem::load(const nlohmann::json& data)
 {
-    for (const auto& textureData : data)
-    {
+    for (const auto& textureData : data) {
         int textureID = textureData["textureID"].get<int>();
         std::string path = textureData["path"].get<std::string>();
 
@@ -39,8 +36,7 @@ void TextureSystem::load(const nlohmann::json& data)
 void TextureSystem::remove(int textureID)
 {
     auto it = textures.find(textureID);
-    if (it != textures.end())
-    {
+    if (it != textures.end()) {
         SDL_DestroyTexture(it->second);
         textures.erase(it);
     }
@@ -49,8 +45,7 @@ void TextureSystem::remove(int textureID)
 SDL_Texture* TextureSystem::get(int textureID) const
 {
     auto it = textures.find(textureID);
-    if (it != textures.end())
-    {
+    if (it != textures.end()) {
         return it->second;
     }
     return nullptr;

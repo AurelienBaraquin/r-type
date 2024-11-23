@@ -8,9 +8,7 @@
 void Physics::registerComponentFactory(ComponentFactory& componentFactory)
 {
     componentFactory.registerComponent(
-        "BoxCollider",
-        [this](Entity entity, const nlohmann::json& data, Registry& registry)
-        {
+        "BoxCollider", [this](Entity entity, const nlohmann::json& data, Registry& registry) {
             struct Components::BoxCollider boxCollider;
 
             boxCollider.width = data["width"].get<float>();
@@ -23,9 +21,7 @@ void Physics::registerComponentFactory(ComponentFactory& componentFactory)
             registry.addComponent<Components::BoxCollider>(entity, std::move(boxCollider));
         });
     componentFactory.registerComponent(
-        "Area2D",
-        [this](Entity entity, const nlohmann::json& data, Registry& registry)
-        {
+        "Area2D", [this](Entity entity, const nlohmann::json& data, Registry& registry) {
             struct Components::Area2D area2d;
 
             area2d.width = data["width"].get<int>();

@@ -7,10 +7,8 @@ void ScriptSystem::registerBinding(const std::string& name, BindingFunction func
 
 void ScriptSystem::applyBindings(sol::state& luaState)
 {
-    for (auto& [name, funcs] : bindings)
-    {
-        for (auto& func : funcs)
-        {
+    for (auto& [name, funcs] : bindings) {
+        for (auto& func : funcs) {
             func(luaState);
         }
     }
@@ -18,8 +16,7 @@ void ScriptSystem::applyBindings(sol::state& luaState)
 
 sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath)
 {
-    if (scripts.find({entity, scriptPath}) == scripts.end())
-    {
+    if (scripts.find({entity, scriptPath}) == scripts.end()) {
         scripts[{entity, scriptPath}] = sol::state();
         scripts[{entity, scriptPath}].open_libraries(sol::lib::base, sol::lib::math);
         applyBindings(scripts[{entity, scriptPath}]);

@@ -2,37 +2,28 @@
 
 void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
 {
-    ScriptSystem.registerBinding(
-        "Input",
-        [&registry = registry](sol::state& luaState)
-        {
-            luaState["getInputConfig"] = [&registry, &luaState](Entity entity)
-            {
-                auto* input = registry.getComponent<Components::Input>(entity);
-                if (!input) throw std::runtime_error("Input component not found");
-                return luaState.create_table_with("inputConfigID", input->inputConfigID);
-            };
+    ScriptSystem.registerBinding("Input", [&registry = registry](sol::state& luaState) {
+        luaState["getInputConfig"] = [&registry, &luaState](Entity entity) {
+            auto* input = registry.getComponent<Components::Input>(entity);
+            if (!input) throw std::runtime_error("Input component not found");
+            return luaState.create_table_with("inputConfigID", input->inputConfigID);
+        };
 
-            luaState["setInputConfig"] = [&registry, &luaState](Entity entity, sol::table data)
-            {
-                auto* input = registry.getComponent<Components::Input>(entity);
-                if (!input) throw std::runtime_error("Input component not found");
-                if (input)
-                {
-                    input->inputConfigID = data["inputConfigID"].get_or(input->inputConfigID);
-                }
-            };
-        });
+        luaState["setInputConfig"] = [&registry, &luaState](Entity entity, sol::table data) {
+            auto* input = registry.getComponent<Components::Input>(entity);
+            if (!input) throw std::runtime_error("Input component not found");
+            if (input) {
+                input->inputConfigID = data["inputConfigID"].get_or(input->inputConfigID);
+            }
+        };
+    });
 
-    ScriptSystem.registerBinding(
-        "isInputActive",
-        [&registry = registry, this](sol::state& luaState)
-        {
-            luaState["isInputActive"] = [&registry, this](Entity entity, const std::string& action)
-            {
-                auto* input = registry.getComponent<Components::Input>(entity);
-                if (!input) throw std::runtime_error("Input component not found");
-                return _InputSystem.isInputActive(input->inputConfigID, action);
-            };
-        });
+    ScriptSystem.registerBinding("isInputActive", [&registry = registry,
+                                                   this](sol::state& luaState) {
+        luaState["isInputActive"] = [&registry, this](Entity entity, const std::string& action) {
+            auto* input = registry.getComponent<Components::Input>(entity);
+            if (!input) throw std::runtime_error("Input component not found");
+            return _InputSystem.isInputActive(input->inputConfigID, action);
+        };
+    });
 }

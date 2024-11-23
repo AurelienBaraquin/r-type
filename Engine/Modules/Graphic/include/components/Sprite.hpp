@@ -1,15 +1,12 @@
 #pragma once
 
-namespace Components
-{
-struct Sprite
-{
+namespace Components {
+struct Sprite {
     int spriteID;
 };
 }  // namespace Components
 
-struct BrutSprite
-{
+struct BrutSprite {
     int textureID;
     int width;
     int height;

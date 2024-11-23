@@ -8,8 +8,7 @@ void SpriteSystem::loadSprite(int spriteID, int textureID, int width, int height
 
 void SpriteSystem::load(const nlohmann::json& data)
 {
-    for (const auto& spriteData : data)
-    {
+    for (const auto& spriteData : data) {
         int spriteID = spriteData["spriteID"].get<int>();
 
         const auto& data = spriteData["data"];

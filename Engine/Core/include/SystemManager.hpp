@@ -14,8 +14,7 @@ class SystemManager
     T& getSystem()
     {
         auto it = _systems.find(typeid(T));
-        if (it == _systems.end())
-        {
+        if (it == _systems.end()) {
             throw std::runtime_error("System not found");
         }
         return *static_cast<T*>(it->second.get());
@@ -33,8 +32,7 @@ class SystemManager
     void removeSystem()
     {
         auto it = _systems.find(typeid(T));
-        if (it != _systems.end())
-        {
+        if (it != _systems.end()) {
             _systems.erase(it);
         }
     }

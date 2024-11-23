@@ -1,19 +1,15 @@
 #pragma once
 
-namespace Components
-{
-struct Position
-{
+namespace Components {
+struct Position {
     int x, y, z;
 };
 
-struct Scale
-{
+struct Scale {
     int x, y;
 };
 
-struct Rotation
-{
+struct Rotation {
     float angle;
 };
 }  // namespace Components

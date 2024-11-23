@@ -29,10 +29,8 @@ class LoaderManager
 
     void load(const nlohmann::json& data)
     {
-        for (auto& loader : _loaders)
-        {
-            if (data.find(loader->getPart()) != data.end())
-            {
+        for (auto& loader : _loaders) {
+            if (data.find(loader->getPart()) != data.end()) {
                 loader->load(data[loader->getPart()]);
             }
         }
@@ -41,8 +39,7 @@ class LoaderManager
     void addLoader(ILoader* loader)
     {
         _loaders.push_back(loader);
-        for (auto& subLoader : loader->getLoaders())
-        {
+        for (auto& subLoader : loader->getLoaders()) {
             addLoader(subLoader);
         }
     }
