@@ -21,3 +21,7 @@ endif()
 if (INPUTS)
     add_subdirectory(Modules/Inputs)
 endif()
+
+if (NETWORK)
+    add_subdirectory(Modules/Network)
+endif()
