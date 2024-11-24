@@ -10,17 +10,18 @@
 #include "Transform.hpp"
 
 
-void Physics::callCollideFunction(Registry& registry, Entity entity, Entity entity2,
-                                  ScriptSystem& _scriptSystem)
+void Physics::callFunction(Registry& registry,
+                           Entity entity, Entity entity2,
+                           std::string function, ScriptSystem& _scriptSystem)
 {
     auto* script = registry.getComponent<Components::Script>(entity);
 
     if (script)
     {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
-        if (luaState["onCollide"].valid())
+        if (luaState[function].valid())
         {
-            luaState["onCollide"](entity2);
+            luaState[function](entity2);
         }
     }
 }
@@ -39,6 +40,12 @@ bool hasIntersection(Components::Position& position1, Components::Area2D& area2D
     }
 }
 
+template<typename Container, typename T>
+bool isIn(const Container& container, const T& value)
+{
+    return std::find(container.begin(), container.end(), value) != container.end();
+}
+
 void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
                               ScriptSystem& scriptSystem)
 {
@@ -48,26 +55,30 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
     auto* position2 = registry.getComponent<Components::Position>(entity2);
     auto* area2D2 = registry.getComponent<Components::Area2D>(entity2);
 
-    if (hasIntersection(*position, *area2D, *position2, *area2D2) &&
-        std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(),
-                  entity2) == area2D->collidedEntities.end())
-    {
-        area2D->collidedEntities.push_back(entity2);
-        area2D2->collidedEntities.push_back(entity);
-        callCollideFunction(registry, entity, entity2, scriptSystem);
-        callCollideFunction(registry, entity2, entity, scriptSystem);
+    bool intersect = hasIntersection(*position, *area2D, *position2, *area2D2);
+
+    if (intersect) {
+        if (!isIn(area2D->collidedEntities, entity2)) {
+            area2D->collidedEntities.push_back(entity2);
+            area2D2->collidedEntities.push_back(entity);
+            callFunction(registry, entity, entity2, "onCollide", scriptSystem);
+            callFunction(registry, entity2, entity, "onCollide", scriptSystem);
+        }
+
     }
-    if (hasIntersection(*position, *area2D, *position2, *area2D2) &&
-        std::find(area2D->collidedEntities.begin(), area2D->collidedEntities.end(),
-                  entity2) != area2D->collidedEntities.end())
-    {
+
+    if (!intersect) {
+        if (isIn(area2D->collidedEntities, entity2)) {
+
         area2D->collidedEntities.erase(std::remove(area2D->collidedEntities.begin(),
                                                    area2D->collidedEntities.end(), entity2),
                                        area2D->collidedEntities.end());
-        area2D2->collidedEntities.erase(
-                std::remove(area2D2->collidedEntities.begin(), area2D2->collidedEntities.end(),
-                            entity),
-                area2D2->collidedEntities.end());
+        area2D2->collidedEntities.erase(std::remove(area2D2->collidedEntities.begin(), area2D2->collidedEntities.end(),
+                            entity),area2D2->collidedEntities.end());
+
+        callFunction(registry, entity, entity2, "onEndCollide", scriptSystem);
+        callFunction(registry, entity2, entity, "onEndCollide", scriptSystem);
+        }
     }
 }
 

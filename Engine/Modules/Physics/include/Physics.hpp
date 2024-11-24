@@ -18,8 +18,9 @@ class Physics : public ISystem
     Physics() = default;
     ~Physics() override;
     void update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) override;
-    void callCollideFunction(Registry &registry, Entity entity, Entity entity2,
-                             ScriptSystem &_scriptSystem);
+    void callFunction(Registry &registry,
+                      Entity entity, Entity entity2,
+                        std::string function, ScriptSystem &_scriptSystem);
     void registerComponentFactory(ComponentFactory &componentFactory) override;
     void updateCollision(Registry &registry, Entity entity, Entity entity2,
                          ScriptSystem &_scriptSystem);
