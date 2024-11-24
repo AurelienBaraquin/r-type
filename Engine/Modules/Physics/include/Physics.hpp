@@ -3,7 +3,6 @@
 //
 
 #pragma once
-#include <SDL2/SDL.h>
 #include <chipmunk/chipmunk.h>
 
 #include <memory>
@@ -22,7 +21,8 @@ class Physics : public ISystem
     void callCollideFunction(Registry &registry, Entity entity, Entity entity2,
                              ScriptSystem &_scriptSystem);
     void registerComponentFactory(ComponentFactory &componentFactory) override;
-
+    void updateCollision(Registry &registry, Entity entity, Entity entity2,
+                         ScriptSystem &_scriptSystem);
    private:
     cpSpace *_space;
     static cpBool BeginCollision(cpArbiter *arb, cpSpace *space, void *data);
