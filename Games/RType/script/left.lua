@@ -1,9 +1,12 @@
 speed = 1
 
-function update(e)
-    local position = getPosition(e)
+function init(self)
+end
+
+function update(delta)
+    local position = getPosition(self)
     position.x = position.x - speed
-    setPosition(e, position)
+    setPosition(self, position)
 end
 
 function onCollide(other)

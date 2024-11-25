@@ -1,5 +1,5 @@
 speed = 5
-function update(e)
+function update(delta)
     local position = getPosition(e)
 
     local rot = getRotation(e)
