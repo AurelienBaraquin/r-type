@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
         "Sprite",
         {ComponentFunction("getSprite", {}, {"textureID", "width", "height", "originX", "originY"}),
          ComponentFunction("setSprite", {"textureID", "width", "height", "originX", "originY"})});
+    registry.registerComponent("Input", {ComponentFunction("isInputActive", {"input"}, {"bool"})});
 
     EntityAnalyzer analyzer(registry);
     auto entityFunctions = analyzer.analyzeEntities(args[1]);
