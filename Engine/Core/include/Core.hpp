@@ -74,5 +74,5 @@ class Engine : public ISystem
     LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
-    std::chrono::steady_clock::time_point _lastTime;
+    std::chrono::_V2::system_clock::time_point _lastTime;
 };
