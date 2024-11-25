@@ -35,7 +35,7 @@ class Engine : public ISystem
         return system;
     }
 
-    EntityBuilder addEntity()
+    EntityBuilder addEntity() // useless ?
     {
         return EntityBuilder(_registry.createEntity(), _registry);
     }
@@ -64,7 +64,7 @@ class Engine : public ISystem
     void loop();
     void shutdown();
 
-    void updateScript();
+    void updateScript(float deltaTime);
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override
     {
     }
@@ -74,4 +74,5 @@ class Engine : public ISystem
     LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
+    std::chrono::steady_clock::time_point _lastTime;
 };

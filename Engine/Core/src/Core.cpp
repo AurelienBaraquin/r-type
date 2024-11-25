@@ -19,9 +19,12 @@ void Engine::loop()
 
     eventManager->subscribe<Events::Shutdown>(
         [&running](std::shared_ptr<Event> event) { running = false; });
-
+    _lastTime = std::chrono::high_resolution_clock::now();
     while (running) {
-        updateScript();
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - _lastTime).count();
+        _lastTime = currentTime;
+        updateScript(deltaTime);
         for (auto& [type, system] : _systemManager) {
             system->update(1.0f, _registry, _ScriptSystem);
         }
@@ -34,13 +37,18 @@ void Engine::shutdown()
     _systemManager.clear();
 }
 
-void Engine::updateScript()
+void Engine::updateScript(float deltaTime)
 {
     for (auto entity : _registry.view<Components::Script>()) {
         auto* script = _registry.getComponent<Components::Script>(entity);
 
         sol::state& luaState = _ScriptSystem.getScript(entity, script->scriptPath);
-
+        if (!script->initialized) {
+            if (luaState["init"]) {
+                luaState["init"](entity);
+            }
+            script->initialized = true;
+        }
         if (luaState["update"]) {
             luaState["update"](entity);
         }
