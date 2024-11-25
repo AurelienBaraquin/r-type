@@ -1,37 +1,43 @@
 speed = 5
+self = nil
+function init(e)
+    self = e
+    print("init")
+end
+
 function update(delta)
-    local position = getPosition(e)
+    local position = getPosition(self)
 
-    local rot = getRotation(e)
+    local rot = getRotation(self)
     rot.angle = rot.angle + speed/5
-    setRotation(e, rot)
+    setRotation(self, rot)
 
-    if isInputActive(e, "MoveUp") then
+    if isInputActive(self, "MoveUp") then
         position.y = position.y - speed
     end
-    if isInputActive(e, "MoveDown") then
+    if isInputActive(self, "MoveDown") then
         position.y = position.y + speed
     end
-    if isInputActive(e, "MoveLeft") then
+    if isInputActive(self, "MoveLeft") then
         position.x = position.x - speed
     end
-    if isInputActive(e, "MoveRight") then
+    if isInputActive(self, "MoveRight") then
         position.x = position.x + speed
     end
-    if isInputActive(e, "Shoot") then
+    if isInputActive(self, "Shoot") then
         position.y = 10
     end
 
-    setPosition(e, position)
+    setPosition(self, position)
 end
 
 function onCollide(other)
-    local position = getPosition(e)
+    local position = getPosition(self)
     position.x = position.x + 1
-    setPosition(e, position)
+    setPosition(self, position)
 end
 
-function setSpeed(e, newSpeed)
+function setSpeed(self, newSpeed)
     if newSpeed ~= nil then
         speed = newSpeed
     end
