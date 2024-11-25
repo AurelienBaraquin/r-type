@@ -25,7 +25,7 @@ function update(e)
     setPosition(e, position)
 end
 
-function onCollide(e)
+function onCollide(other)
     local position = getPosition(e)
     position.x = position.x + 1
     setPosition(e, position)

@@ -86,5 +86,24 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                     throw std::runtime_error("Method not found");
                 }
             };
+
+            luaState["hasTag"] = [&registry](
+                    Entity entity, std::string tag) {
+                std::vector<Entity> list = registry.getEntitiesByTag(tag);
+                if (std::find(list.begin(), list.end(), entity) != list.end()) {
+                    return true;
+                }
+                return false;
+            };
+
+            luaState["addTag"] = [&registry](
+                    Entity entity, std::string tag) {
+                registry.addTag(entity, tag);
+            };
+
+            luaState["removeTag"] = [&registry](
+                    Entity entity, std::string tag) {
+                registry.removeTag(entity, tag);
+            };
         });
 }
