@@ -9,7 +9,7 @@ add_library(Core STATIC src/Core.cpp
     src/Event.cpp
     src/Scene.cpp)
 
-target_link_libraries(Core PRIVATE sol2::sol2 lua::lua nlohmann_json::nlohmann_json)
+target_link_libraries(Core PUBLIC sol2::sol2 lua::lua nlohmann_json::nlohmann_json)
 
 target_include_directories(Core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include

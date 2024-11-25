@@ -8,6 +8,7 @@
 Graphic::Graphic(std::string title, int width, int height)
     : _title(title), _width(width), _height(height)
 {
+    SDL_SetMainReady();
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw std::runtime_error("Failed to initialize SDL: " + std::string(SDL_GetError()));
     }
