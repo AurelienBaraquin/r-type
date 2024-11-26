@@ -20,6 +20,7 @@ function update(e)
     end
     if isInputActive(e, "Shoot") then
         position.y = 10
+        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
     end
 
     setPosition(e, position)
