@@ -13,4 +13,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Engine::Graphic
     Engine::Physics
     Engine::Inputs
+    Engine::Audio
 )

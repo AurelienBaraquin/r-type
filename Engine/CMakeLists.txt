@@ -25,3 +25,7 @@ endif()
 if (NETWORK)
     add_subdirectory(Modules/Network)
 endif()
+
+if (AUDIO)
+    add_subdirectory(Modules/Audio)
+endif()
