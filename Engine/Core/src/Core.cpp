@@ -19,11 +19,13 @@ void Engine::loop()
 
     eventManager->subscribe<Events::Shutdown>(
         [&running](std::shared_ptr<Event> event) { running = false; });
-    _lastTime = std::chrono::high_resolution_clock::now();
+//    _lastTime = std::chrono::high_resolution_clock::now();
     while (running) {
-        auto currentTime = std::chrono::high_resolution_clock::now();
-        float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - _lastTime).count();
-        _lastTime = currentTime;
+//        auto currentTime = std::chrono::high_resolution_clock::now();
+//        float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - _lastTime).count();
+//        _lastTime = currentTime;
+        float deltaTime = 1.0f / 60.0f; // TEMPORARY
+        //TO DO changer le deltatime
         updateScript(deltaTime);
         for (auto& [type, system] : _systemManager) {
             system->update(1.0f, _registry, _ScriptSystem);
@@ -50,7 +52,7 @@ void Engine::updateScript(float deltaTime)
             script->initialized = true;
         }
         if (luaState["update"]) {
-            luaState["update"](entity);
+            luaState["update"](deltaTime);
         }
     }
 }
