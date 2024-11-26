@@ -51,6 +51,18 @@ Scene is where are stocked entities, it's define entities components, sprite, po
 }
 ```
 
+# Scripts
+it's recommended that all scripts should have the following structure:
+```lua
+self = nil
+function init(e) -- initalize once 
+    self = e
+end
+
+function update(dt) -- update every frame
+    -- do something
+end
+```
 # Components
 
 ## Transform components

@@ -58,8 +58,8 @@ TODO: Add installation instructions
 
 ```bash
 git clone https://github.com/EpitechPromo2027/B-CPP-500-MPL-5-2-rtype-guillaume1.tran.git
-cd B-CPP-500-MPL-5-2-rtype-guillaume1.tran
-task i
+    cd B-CPP-500-MPL-5-2-rtype-guillaume1.tran
+    task i
 task b
 task rtype
 ```
@@ -214,6 +214,11 @@ To add the module to the game, add the following line to your cmake game file:
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Engine::MyModule
 )
+```
+
+### Step 5: add it to the taskfile.yml
+```
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON
 ```
 
 # Adding a library to the engine
