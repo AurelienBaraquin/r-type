@@ -1,10 +1,5 @@
 {
   "sceneTag": "MainScene",
-  "backgroundMusic": {
-    "musicFile": "Games/RType/assets/sounds/background_music.ogg",
-    "volume": 0.5,
-    "loop": true
-  },
   "entities": [
     {
       "_name_": "Player",
