@@ -31,18 +31,6 @@
         "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 2.0, "elapsedTime": 0.0, "loop": true, "playing": true },
         "Script": { "scriptPath": "Games/RType/script/right.lua" }
       }
-    },
-    {
-      "_name_": "AudioSystem",
-      "tags": ["audio"],
-      "components": {
-        "AudioSource": {
-          "filePath": "Games/RType/assets/sounds/background_music.ogg",
-          "volume": 0.5,
-          "loop": true
-        },
-        "Script": { "scriptPath": "Games/RType/script/audio.lua" }
-      }
     }
   ],
   "scenes": [
