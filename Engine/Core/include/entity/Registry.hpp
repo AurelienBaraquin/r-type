@@ -68,12 +68,30 @@ class Registry
         return pool ? pool->get(entity) : nullptr;
     }
 
+    template <typename T>
+    bool hasComponent(Entity entity)
+    {
+        return entityMasks[entity].test(getComponentTypeId<T>());
+    }
+
     template <typename... Components>
     std::vector<Entity> view()
     {
         std::vector<Entity> result;
         for (const auto& [entity, mask] : entityMasks) {
             if ((mask & componentMask<Components...>()) == componentMask<Components...>()) {
+                result.push_back(entity);
+            }
+        }
+        return result;
+    }
+
+    template <typename... Components>
+    std::vector<Entity> view(const std::vector<Entity>& entities)
+    {
+        std::vector<Entity> result;
+        for (const auto& entity : entities) {
+            if ((entityMasks[entity] & componentMask<Components...>()) == componentMask<Components...>()) {
                 result.push_back(entity);
             }
         }

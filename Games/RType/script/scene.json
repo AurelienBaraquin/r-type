@@ -17,7 +17,7 @@
       "_name_": "Enemy",
       "tags" : ["enemy"],
       "components": {
-        "Position": { "x": 100, "y": 200, "z": 0 },
+        "Position": { "x": 100, "y": 200, "z": 1 },
         "Scale": { "x": 1, "y": 1 },
         "Rotation": { "angle": 0 },
         "Sprite": { "spriteID": 0 },
