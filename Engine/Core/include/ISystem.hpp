@@ -5,6 +5,10 @@
 #include "Registry.hpp"
 #include "ScriptSystem.hpp"
 
+class NotThreadable
+{
+};
+
 class ISystem
 {
    public:

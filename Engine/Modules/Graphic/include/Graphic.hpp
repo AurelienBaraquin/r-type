@@ -12,7 +12,7 @@
 #include "TextureSystem.hpp"
 #include "Transform.hpp"
 
-class Graphic : public ISystem, public ILoader
+class Graphic : public ISystem, public ILoader, public NotThreadable
 {
    public:
     Graphic(std::string title, int width, int height);
