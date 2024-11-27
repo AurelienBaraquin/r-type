@@ -17,6 +17,11 @@ class Registry
         return _tags[tag];
     }
 
+    bool hasTag(Entity entity, Tag tag)
+    {
+        return std::find(_tags[tag].begin(), _tags[tag].end(), entity) != _tags[tag].end();
+    }
+
     void addTag(Entity entity, Tag tag)
     {
         _tags[tag].push_back(entity);

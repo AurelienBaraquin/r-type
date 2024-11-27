@@ -89,11 +89,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
 
             luaState["hasTag"] = [&registry](
                     Entity entity, std::string tag) {
-                std::vector<Entity> list = registry.getEntitiesByTag(tag);
-                if (std::find(list.begin(), list.end(), entity) != list.end()) {
-                    return true;
-                }
-                return false;
+                return registry.hasTag(entity, tag);
             };
 
             luaState["addTag"] = [&registry](
