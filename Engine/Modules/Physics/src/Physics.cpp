@@ -44,10 +44,11 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
 {
     auto* position = registry.getComponent<Components::Position>(entity);
     auto* area2D = registry.getComponent<Components::Area2D>(entity);
+    if (!position || !area2D) return;
 
     auto* position2 = registry.getComponent<Components::Position>(entity2);
     auto* area2D2 = registry.getComponent<Components::Area2D>(entity2);
-
+    if (!position2 || !area2D2) return;
     bool intersect = hasIntersection(*position, *area2D, *position2, *area2D2);
 
     if (intersect) {
@@ -55,7 +56,6 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
             area2D->collidedEntities.push_back(entity2);
             area2D2->collidedEntities.push_back(entity);
             callFunction(registry, entity, entity2, "onCollide", scriptSystem);
-            callFunction(registry, entity2, entity, "onCollide", scriptSystem);
         }
     }
 
@@ -69,22 +69,24 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
                                             area2D2->collidedEntities.end());
 
             callFunction(registry, entity, entity2, "onEndCollide", scriptSystem);
-            callFunction(registry, entity2, entity, "onEndCollide", scriptSystem);
         }
     }
 }
 
 void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
+    std::cout << "------" << std::endl;
     for (auto entity : registry.view<Components::Position, Components::Area2D>()) {
         auto* position = registry.getComponent<Components::Position>(entity);
         auto* area2D = registry.getComponent<Components::Area2D>(entity);
 
         for (auto entity2 : registry.view<Components::Position, Components::Area2D>()) {
+            std::cout << entity << " " << entity2 << std::endl;
             if (entity == entity2) continue;
             updateCollision(registry, entity, entity2, scriptSystem);
         }
     }
+
     //    cpSpaceStep(_space, deltaTime);
     //    for (auto entity : registry.view<Components::BoxCollider, Components::Position>()) //TO DO
     //    add rotation
