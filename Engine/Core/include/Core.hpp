@@ -6,6 +6,9 @@
 #include "Loader.hpp"
 #include "Scene.hpp"
 #include "SystemManager.hpp"
+#include <thread>
+#include <mutex>
+#include <atomic>
 
 class Engine : public ISystem
 {
@@ -30,6 +33,10 @@ class Engine : public ISystem
 
         if (std::is_base_of<ILoader, T>::value) {
             _loaderManager.addLoader(dynamic_cast<ILoader*>(&system));
+        }
+
+        if (std::is_base_of<NotThreadable, T>::value) {
+            _notThreadableModules.push_back(&system);
         }
 
         return system;
@@ -71,8 +78,10 @@ class Engine : public ISystem
 
     ScriptSystem _ScriptSystem;
     SystemManager _systemManager;
+    std::vector<ISystem*> _notThreadableModules;
     LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
-    //    std::chrono::system_clock::time_point _lastTime;
+
+    std::vector<std::thread> _threads;
 };

@@ -23,7 +23,7 @@
         "Sprite": { "spriteID": 0 },
         "Area2D": { "width": 32, "height": 32 },
         "Input": { "inputConfigID": 0 },
-        "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 2.0, "elapsedTime": 0.0, "loop": true, "playing": true },
+        "Animation": { "animationID": 0, "currentFrame": 0, "frameTime": 0.1, "elapsedTime": 0.0, "loop": true, "playing": true },
         "Script": { "scriptPath": "Games/RType/script/right.lua" }
       }
     }

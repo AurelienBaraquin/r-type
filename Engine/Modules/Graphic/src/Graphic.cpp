@@ -47,7 +47,7 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
-    std::vector<Entity> drawnEntities;
+    RegistryLock lock(registry);
 
     std::vector<Entity> entitiesToDraw;
     for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale,
@@ -67,9 +67,6 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     });
 
     for (auto entity : entitiesToDraw) {
-        if (std::find(drawnEntities.begin(), drawnEntities.end(), entity) != drawnEntities.end())
-            continue;
-
         if (registry.hasComponent<Components::Animation>(entity)) {
             auto animation = registry.getComponent<Components::Animation>(entity);
             auto position = registry.getComponent<Components::Position>(entity);
@@ -97,8 +94,6 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
             drawTextureEx(&brutSprite, position, rotation, scale);
         }
-
-        drawnEntities.push_back(entity);
     }
     SDL_RenderPresent(_renderer);
 }
