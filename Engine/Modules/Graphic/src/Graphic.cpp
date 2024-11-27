@@ -49,44 +49,56 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
     std::vector<Entity> drawnEntities;
 
-    for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale,
-                                     Components::Rotation>()) {
-        if (std::find(drawnEntities.begin(), drawnEntities.end(), entity) != drawnEntities.end())
-            continue;
-
-        auto animation = registry.getComponent<Components::Animation>(entity);
-        auto position = registry.getComponent<Components::Position>(entity);
-        auto scale = registry.getComponent<Components::Scale>(entity);
-        auto rotation = registry.getComponent<Components::Rotation>(entity);
-
-        _AnimationSystem.updateAnimation(*animation, deltaTime);
-
-        if (!animation->playing) continue;
-
-        auto frames = _AnimationSystem.getAnimation(animation->animationID);
-        auto currentFrame = frames[animation->currentFrame];
-
-        auto sprite = BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
-                                 currentFrame.originX, currentFrame.originY};
-
-        drawTextureEx(&sprite, position, rotation, scale);
-
-        drawnEntities.push_back(entity);
-    }
-
+    std::vector<Entity> entitiesToDraw;
     for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale,
                                      Components::Rotation>()) {
+        entitiesToDraw.push_back(entity);
+    }
+    for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale,
+                                     Components::Rotation>()) {
+        entitiesToDraw.push_back(entity);
+    }
+
+    // sort entities by z
+    std::sort(entitiesToDraw.begin(), entitiesToDraw.end(), [&registry](Entity a, Entity b) {
+        auto positionA = registry.getComponent<Components::Position>(a);
+        auto positionB = registry.getComponent<Components::Position>(b);
+        return positionA->z < positionB->z;
+    });
+
+    for (auto entity : entitiesToDraw) {
         if (std::find(drawnEntities.begin(), drawnEntities.end(), entity) != drawnEntities.end())
             continue;
 
-        auto sprite = registry.getComponent<Components::Sprite>(entity);
-        auto position = registry.getComponent<Components::Position>(entity);
-        auto scale = registry.getComponent<Components::Scale>(entity);
-        auto rotation = registry.getComponent<Components::Rotation>(entity);
+        if (registry.hasComponent<Components::Animation>(entity)) {
+            auto animation = registry.getComponent<Components::Animation>(entity);
+            auto position = registry.getComponent<Components::Position>(entity);
+            auto scale = registry.getComponent<Components::Scale>(entity);
+            auto rotation = registry.getComponent<Components::Rotation>(entity);
 
-        auto brutSprite = _SpriteSystem.getSprite(sprite->spriteID);
+            _AnimationSystem.updateAnimation(*animation, deltaTime);
 
-        drawTextureEx(&brutSprite, position, rotation, scale);
+            if (!animation->playing) continue;
+
+            auto frames = _AnimationSystem.getAnimation(animation->animationID);
+            auto currentFrame = frames[animation->currentFrame];
+
+            auto sprite = BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
+                                     currentFrame.originX, currentFrame.originY};
+
+            drawTextureEx(&sprite, position, rotation, scale);
+        } else if (registry.hasComponent<Components::Sprite>(entity)) {
+            auto sprite = registry.getComponent<Components::Sprite>(entity);
+            auto position = registry.getComponent<Components::Position>(entity);
+            auto scale = registry.getComponent<Components::Scale>(entity);
+            auto rotation = registry.getComponent<Components::Rotation>(entity);
+
+            auto brutSprite = _SpriteSystem.getSprite(sprite->spriteID);
+
+            drawTextureEx(&brutSprite, position, rotation, scale);
+        }
+
+        drawnEntities.push_back(entity);
     }
     SDL_RenderPresent(_renderer);
 }

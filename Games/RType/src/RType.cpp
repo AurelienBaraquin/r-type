@@ -1,8 +1,8 @@
 #include "RType.hpp"
 
+#include "Audio.hpp"
 #include "Inputs.hpp"
 #include "Physics.hpp"
-#include "Audio.hpp"
 
 int main()
 {

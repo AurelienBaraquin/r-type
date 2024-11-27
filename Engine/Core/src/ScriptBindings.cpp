@@ -87,22 +87,15 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 }
             };
 
-            luaState["hasTag"] = [&registry](
-                    Entity entity, std::string tag) {
-                std::vector<Entity> list = registry.getEntitiesByTag(tag);
-                if (std::find(list.begin(), list.end(), entity) != list.end()) {
-                    return true;
-                }
-                return false;
+            luaState["hasTag"] = [&registry](Entity entity, std::string tag) {
+                return registry.hasTag(entity, tag);
             };
 
-            luaState["addTag"] = [&registry](
-                    Entity entity, std::string tag) {
+            luaState["addTag"] = [&registry](Entity entity, std::string tag) {
                 registry.addTag(entity, tag);
             };
 
-            luaState["removeTag"] = [&registry](
-                    Entity entity, std::string tag) {
+            luaState["removeTag"] = [&registry](Entity entity, std::string tag) {
                 registry.removeTag(entity, tag);
             };
 

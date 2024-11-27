@@ -25,8 +25,8 @@ class Audio : public ISystem
     void playSoundEffect(const std::string& filePath, float volume = 1.0f);
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override;
 
-    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)override;
-    void registerComponentFactory(ComponentFactory& componentFactory)override;
+    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
+    void registerComponentFactory(ComponentFactory& componentFactory) override;
 
    private:
     sf::Music music;

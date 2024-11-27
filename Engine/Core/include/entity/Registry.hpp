@@ -17,6 +17,11 @@ class Registry
         return _tags[tag];
     }
 
+    bool hasTag(Entity entity, Tag tag)
+    {
+        return std::find(_tags[tag].begin(), _tags[tag].end(), entity) != _tags[tag].end();
+    }
+
     void addTag(Entity entity, Tag tag)
     {
         _tags[tag].push_back(entity);
@@ -63,12 +68,30 @@ class Registry
         return pool ? pool->get(entity) : nullptr;
     }
 
+    template <typename T>
+    bool hasComponent(Entity entity)
+    {
+        return entityMasks[entity].test(getComponentTypeId<T>());
+    }
+
     template <typename... Components>
     std::vector<Entity> view()
     {
         std::vector<Entity> result;
         for (const auto& [entity, mask] : entityMasks) {
             if ((mask & componentMask<Components...>()) == componentMask<Components...>()) {
+                result.push_back(entity);
+            }
+        }
+        return result;
+    }
+
+    template <typename... Components>
+    std::vector<Entity> view(const std::vector<Entity>& entities)
+    {
+        std::vector<Entity> result;
+        for (const auto& entity : entities) {
+            if ((entityMasks[entity] & componentMask<Components...>()) == componentMask<Components...>()) {
                 result.push_back(entity);
             }
         }

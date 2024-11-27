@@ -35,7 +35,7 @@ class Engine : public ISystem
         return system;
     }
 
-    EntityBuilder addEntity() // useless ?
+    EntityBuilder addEntity()  // useless ?
     {
         return EntityBuilder(_registry.createEntity(), _registry);
     }
@@ -74,5 +74,5 @@ class Engine : public ISystem
     LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
-//    std::chrono::system_clock::time_point _lastTime;
+    //    std::chrono::system_clock::time_point _lastTime;
 };
