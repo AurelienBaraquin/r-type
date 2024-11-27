@@ -41,6 +41,11 @@ tasks:
     cmds:
       - ./build/build/Release/Games/RType/RType
 
+  debugMac:
+    desc: "Run the RType target in debug mode on Mac"
+    cmds:
+      - lldb ./build/build/Release/Games/RType/RType
+
   test:
     desc: "Run the test target with coverage and generate HTML report"
     cmds:
