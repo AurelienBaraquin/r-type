@@ -105,5 +105,10 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                     Entity entity, std::string tag) {
                 registry.removeTag(entity, tag);
             };
+
+            luaState["destroyEntity"] = [&registry](
+                    Entity entity) {
+                registry.destroyEntity(entity);
+            };
         });
 }

@@ -1,3 +1,5 @@
+-- ENEMY SCRIPT
+
 speed = 5
 self = nil
 function init(e)
@@ -33,6 +35,8 @@ function update(delta)
 end
 
 function onCollide(other)
+    print(other)
+    destroyEntity(other)
     local position = getPosition(self)
     position.x = position.x + 1
     setPosition(self, position)
