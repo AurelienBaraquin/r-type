@@ -64,7 +64,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 if (!script) return false;
 
                 sol::state& luaState = scriptSystem.getScript(entity, script->scriptPath);
-                bool res = luaState["setSpeed"].valid();
+                bool res = luaState[method].valid();
                 return res;
             };
 
