@@ -1,9 +1,5 @@
 #include "RType.hpp"
 
-#include "Audio.hpp"
-#include "Inputs.hpp"
-#include "Physics.hpp"
-
 int main()
 {
     Engine engine;

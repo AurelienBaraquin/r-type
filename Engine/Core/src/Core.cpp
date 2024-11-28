@@ -35,7 +35,7 @@ void Engine::loop()
         for (auto* system : _notThreadableModules) {
             system->update(deltaTime, _registry, _ScriptSystem);
         }
-        updateScript(deltaTime);
+        async([this, &deltaTime]() { updateScript(deltaTime); });
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
     }
 
