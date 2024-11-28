@@ -4,7 +4,7 @@
 #include "Event.hpp"
 #include "Registry.hpp"
 #include "ScriptSystem.hpp"
-#include "async.hpp"
+#include "Async.hpp"
 
 class NotThreadable
 {
