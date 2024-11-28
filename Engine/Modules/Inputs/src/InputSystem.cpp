@@ -65,22 +65,24 @@ void InputSystem::updateInputs(int inputConfigID)
 {
     SDL_PumpEvents();
 
-    for (auto& [_, state] : currentStates) {
-        state = false;
-    }
-
-    const Uint8* state = SDL_GetKeyboardState(nullptr);
-    for (auto& [input, action] : configs[inputConfigID].buttons) {
-        if (state[input]) {
-            currentStates[action] = true;
+    async([this, inputConfigID]() {
+        for (auto& [_, state] : currentStates) {
+            state = false;
         }
-    }
 
-    for (auto& [input, action] : configs[inputConfigID].mouseButtons) {
-        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
-            currentStates[action] = true;
+        const Uint8* state = SDL_GetKeyboardState(nullptr);
+        for (auto& [input, action] : configs[inputConfigID].buttons) {
+            if (state[input]) {
+                currentStates[action] = true;
+            }
         }
-    }
+
+        for (auto& [input, action] : configs[inputConfigID].mouseButtons) {
+            if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
+                currentStates[action] = true;
+            }
+        }
+    });
 }
 
 bool InputSystem::isInputActive(int inputConfigID, const std::string& action)
