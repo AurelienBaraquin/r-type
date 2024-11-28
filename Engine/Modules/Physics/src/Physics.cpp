@@ -75,13 +75,11 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
 
 void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
-    std::cout << "------" << std::endl;
     for (auto entity : registry.view<Components::Position, Components::Area2D>()) {
         auto* position = registry.getComponent<Components::Position>(entity);
         auto* area2D = registry.getComponent<Components::Area2D>(entity);
 
         for (auto entity2 : registry.view<Components::Position, Components::Area2D>()) {
-            std::cout << entity << " " << entity2 << std::endl;
             if (entity == entity2) continue;
             updateCollision(registry, entity, entity2, scriptSystem);
         }

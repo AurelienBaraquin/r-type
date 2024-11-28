@@ -29,6 +29,7 @@ function update(delta)
     if isInputActive(self, "Shoot") then
         position.y = 10
         playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
+        playAnimation(self, 1)
     end
 
     setPosition(self, position)

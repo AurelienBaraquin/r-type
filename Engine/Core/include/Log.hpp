@@ -7,6 +7,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "async.hpp"
+
 #ifdef _WIN32
 #include <windows.h>
 #undef ERROR

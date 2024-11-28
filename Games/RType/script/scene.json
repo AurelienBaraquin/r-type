@@ -6,7 +6,7 @@
       "tags" : ["player"],
       "components": {
         "Position": { "x": 400, "y": 200, "z": 0 },
-        "Scale": { "x": 1, "y": 1 },
+        "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Sprite": { "spriteID": 0 },
         "Area2D": { "width": 32, "height": 32 },
@@ -18,7 +18,7 @@
       "tags" : ["enemy"],
       "components": {
         "Position": { "x": 100, "y": 200, "z": 1 },
-        "Scale": { "x": 1, "y": 1 },
+        "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Sprite": { "spriteID": 0 },
         "Area2D": { "width": 32, "height": 32 },
@@ -29,7 +29,6 @@
     }
   ],
   "scenes": [
-    "assets.json",
-    "audio.json"
+    "assets.json"
   ]
 }

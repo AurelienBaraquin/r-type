@@ -33,6 +33,26 @@ Graphic::Graphic(std::string title, int width, int height)
 
 void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
+    RegistryLock lock(registry);
+
+    std::future<std::vector<Entity>> entitiesToDrawFutur = async([&registry = registry]() {
+        std::vector<Entity> entities;
+        for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale,
+                                         Components::Rotation>()) {
+            entities.push_back(entity);
+        }
+        for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale,
+                                         Components::Rotation>()) {
+            entities.push_back(entity);
+        }
+        std::sort(entities.begin(), entities.end(), [&registry](Entity a, Entity b) {
+            auto positionA = registry.getComponent<Components::Position>(a);
+            auto positionB = registry.getComponent<Components::Position>(b);
+            return positionA->z < positionB->z;
+        });
+        return entities;
+    });
+
     while (SDL_PollEvent(&_event)) {
         if (_event.type == SDL_QUIT) {
             eventManager->publish<Events::Shutdown>(std::make_shared<Events::Shutdown>());
@@ -47,24 +67,7 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
-    RegistryLock lock(registry);
-
-    std::vector<Entity> entitiesToDraw;
-    for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale,
-                                     Components::Rotation>()) {
-        entitiesToDraw.push_back(entity);
-    }
-    for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale,
-                                     Components::Rotation>()) {
-        entitiesToDraw.push_back(entity);
-    }
-
-    // sort entities by z
-    std::sort(entitiesToDraw.begin(), entitiesToDraw.end(), [&registry](Entity a, Entity b) {
-        auto positionA = registry.getComponent<Components::Position>(a);
-        auto positionB = registry.getComponent<Components::Position>(b);
-        return positionA->z < positionB->z;
-    });
+    auto entitiesToDraw = entitiesToDrawFutur.get();
 
     for (auto entity : entitiesToDraw) {
         if (registry.hasComponent<Components::Animation>(entity)) {

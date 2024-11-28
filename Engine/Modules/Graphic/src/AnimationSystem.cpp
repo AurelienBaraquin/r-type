@@ -35,35 +35,50 @@ std::vector<AnimationFrame> AnimationSystem::getAnimation(int animationID)
 
 void AnimationSystem::playAnimation(int animationID, Components::Animation& animation)
 {
-    animation.animationID = animationID;
-    animation.currentFrame = 0;
-    animation.elapsedTime = 0;
-    animation.playing = true;
+    if (animation.animationID == animationID) return;
+    async([this, animationID, &animation]() {
+        if (animations.find(animationID) == animations.end()) {
+            Logger::getInstance().error("Animation not found" + std::to_string(animationID));
+            return;
+        }
+
+        animation.animationID = animationID;
+        animation.currentFrame = 0;
+        animation.elapsedTime = 0;
+        animation.playing = true;
+    });
 }
 
 void AnimationSystem::updateAnimation(Components::Animation& animation, float deltaTime)
 {
-    if (animations.find(animation.animationID) == animations.end()) {
-        Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
-        return;
-    }
+    if (!animation.playing) return;
+    async([this, &animation, deltaTime]() {
+        if (animations.find(animation.animationID) == animations.end()) {
+            Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
+            return;
+        }
 
-    auto& frames = animations[animation.animationID];
-    auto& currentFrame = frames[animation.currentFrame];
+        auto& frames = animations[animation.animationID];
+        auto& currentFrame = frames[animation.currentFrame];
 
-    animation.elapsedTime += deltaTime;
-    if (animation.elapsedTime >= animation.frameTime) {
-        animation.elapsedTime = 0;
-        animation.currentFrame++;
-        if (animation.currentFrame >= frames.size()) {
-            if (animation.loop)
-                animation.currentFrame = 0;
-            else {
-                animation.currentFrame = frames.size() - 1;
-                stopAnimation(animation);
+        animation.elapsedTime += deltaTime;
+        if (animation.elapsedTime >= animation.frameTime) {
+            animation.elapsedTime = 0;
+            animation.currentFrame++;
+            if (animation.currentFrame >= frames.size()) {
+                if (animation.baseAnimationID != animation.animationID) {
+                    animation.animationID = animation.baseAnimationID;
+                    return;
+                }
+                if (animation.loop)
+                    animation.currentFrame = 0;
+                else {
+                    animation.currentFrame = frames.size() - 1;
+                    stopAnimation(animation);
+                }
             }
         }
-    }
+    });
 }
 
 void AnimationSystem::stopAnimation(Components::Animation& animation)

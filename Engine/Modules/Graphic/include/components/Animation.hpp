@@ -8,5 +8,7 @@ struct Animation {
     float elapsedTime;
     bool loop;
     bool playing;
+
+    int baseAnimationID = animationID;
 };
 }  // namespace Components
