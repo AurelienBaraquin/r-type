@@ -13,7 +13,13 @@ using AnimationFrame = BrutSprite;
 class AnimationSystem : public ILoader
 {
    public:
-    void loadAnimation(int animationID, std::vector<AnimationFrame> frames);
+
+    struct AnimationComp {
+        std::vector<AnimationFrame> frames;
+        float frameTime;
+    };
+
+    void loadAnimation(int animationID, std::vector<AnimationFrame> frames, float frameTime);
 
     // Loader interface
     void load(const nlohmann::json& data) override;
@@ -30,5 +36,5 @@ class AnimationSystem : public ILoader
     void stopAnimation(Components::Animation& animation);
 
    private:
-    std::unordered_map<int, std::vector<AnimationFrame>> animations;
+    std::unordered_map<int, AnimationComp> _animations;
 };

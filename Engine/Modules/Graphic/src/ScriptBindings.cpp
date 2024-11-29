@@ -24,7 +24,7 @@ void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regis
             if (!animation) throw std::runtime_error("Animation component not found");
             return luaState.create_table_with(
                 "animationID", animation->animationID, "currentFrame", animation->currentFrame,
-                "elapsedTime", animation->elapsedTime, "frameTime", animation->frameTime, "playing",
+                "elapsedTime", animation->elapsedTime, "playing",
                 animation->playing, "loop", animation->loop);
         };
 
@@ -35,7 +35,6 @@ void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regis
                 animation->animationID = data["animationID"].get_or(animation->animationID);
                 animation->currentFrame = data["currentFrame"].get_or(animation->currentFrame);
                 animation->elapsedTime = data["elapsedTime"].get_or(animation->elapsedTime);
-                animation->frameTime = data["frameTime"].get_or(animation->frameTime);
                 animation->playing = data["playing"].get_or(animation->playing);
                 animation->loop = data["loop"].get_or(animation->loop);
             }
