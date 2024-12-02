@@ -4,7 +4,7 @@
 #include "InputSystem.hpp"
 #include "Loader.hpp"
 
-class Inputs : public ISystem, public ILoader
+class Inputs : public ISystem, public ILoader, public NotThreadable
 {
    public:
     Inputs() = default;

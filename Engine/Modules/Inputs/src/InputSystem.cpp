@@ -63,8 +63,6 @@ InputConfig& InputSystem::getInput(int inputConfigID)
 
 void InputSystem::updateInputs(int inputConfigID)
 {
-    SDL_PumpEvents();
-
     async([this, inputConfigID]() {
         for (auto& [_, state] : currentStates) {
             state = false;
