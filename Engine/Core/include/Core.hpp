@@ -49,7 +49,7 @@ class Engine : public ISystem
 
     void loadScene(const std::string& filePath)
     {
-        SceneLoader(_componentFactory, _registry, _loaderManager).loadScene(filePath);
+        SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager).loadScene(filePath);
     }
 
     void run()
@@ -82,6 +82,7 @@ class Engine : public ISystem
     LoaderManager _loaderManager;
     ComponentFactory _componentFactory;
     Registry _registry;
+    EntityTemplateManager _entityTemplateManager;
 
     std::vector<std::thread> _threads;
 };

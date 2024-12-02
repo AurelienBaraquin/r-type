@@ -7,12 +7,13 @@
 #include "Loader.hpp"
 #include "Log.hpp"
 #include "Registry.hpp"
+#include "EntityTemplateManager.hpp"
 
 class SceneLoader
 {
    public:
-    SceneLoader(ComponentFactory& factory, Registry& registry, LoaderManager& loaderManager)
-        : factory(factory), registry(registry), loaderManager(loaderManager)
+    SceneLoader(ComponentFactory& factory, Registry& registry, LoaderManager& loaderManager, EntityTemplateManager& entityTemplateManager)
+        : factory(factory), registry(registry), loaderManager(loaderManager), _entityTemplateManager(entityTemplateManager)
     {
     }
 
@@ -29,4 +30,5 @@ class SceneLoader
     ComponentFactory& factory;
     Registry& registry;
     LoaderManager& loaderManager;
+    EntityTemplateManager _entityTemplateManager;
 };
