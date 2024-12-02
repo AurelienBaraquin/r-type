@@ -110,7 +110,8 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         };
 
         luaState["createEntity"] = [this](std::string templateName) {
-            return this->_entityTemplateManager.createEntity(templateName, this->_registry, this->_componentFactory);
+            return this->_entityTemplateManager.createEntity(templateName, this->_registry,
+                                                             this->_componentFactory);
         };
     });
 }

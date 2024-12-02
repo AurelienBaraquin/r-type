@@ -8,7 +8,8 @@ void SceneLoader::loadEntity(const nlohmann::json& entityData, const std::string
     }
 
     if (entityData.find("FromTemplate") != entityData.end()) {
-        Entity entity = _entityTemplateManager.createEntity(entityData["FromTemplate"]["name"], registry, factory);
+        Entity entity = _entityTemplateManager.createEntity(entityData["FromTemplate"]["name"],
+                                                            registry, factory);
         if (entityData.find("tags") != entityData.end()) {
             for (const auto& tag : entityData["tags"]) {
                 registry.addTag(entity, tag);
@@ -55,7 +56,8 @@ void SceneLoader::loadScene(const std::string& filePath)
     if (sceneData.find("scenes") != sceneData.end()) {
         for (const auto& scene : sceneData["scenes"]) {
             std::filesystem::path scenePath = std::filesystem::path(path).parent_path() / scene;
-            SceneLoader(factory, registry, loaderManager, _entityTemplateManager).loadScene(scenePath.string());
+            SceneLoader(factory, registry, loaderManager, _entityTemplateManager)
+                .loadScene(scenePath.string());
         }
     }
 

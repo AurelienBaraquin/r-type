@@ -49,7 +49,8 @@ class Engine : public ISystem
 
     void loadScene(const std::string& filePath)
     {
-        SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager).loadScene(filePath);
+        SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager)
+            .loadScene(filePath);
     }
 
     void run()
