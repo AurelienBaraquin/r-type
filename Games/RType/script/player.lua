@@ -11,7 +11,7 @@ function update(delta)
     local position = getPosition(self)
 
     local rot = getRotation(self)
-    rot.angle = rot.angle + speed/5
+    rot.angle = rot.angle + speed / 5
     setRotation(self, rot)
 
     if isInputActive(self, "MoveUp") then
@@ -27,12 +27,11 @@ function update(delta)
         position.x = position.x + speed
     end
     if isInputActive(self, "Shoot") then
-        x,y = getMousePosition(self, mouse_pos)
+        x, y = getMousePosition(self, mouse_pos)
         position.x = x
         position.y = y
---         positioplaySoundEffectn.y = 10
---         ("Games/RType/assets/sounds/shoot.ogg", 100.0)
---         playAnimation(self, 1)
+        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
+        playAnimation(self, 1)
     end
     setPosition(self, position)
 end
