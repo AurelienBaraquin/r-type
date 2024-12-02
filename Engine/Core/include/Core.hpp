@@ -42,7 +42,7 @@ class Engine : public ISystem
         return system;
     }
 
-    EntityBuilder addEntity()  // useless ?
+    EntityBuilder addEntity()
     {
         return EntityBuilder(_registry.createEntity(), _registry);
     }
