@@ -60,4 +60,14 @@ void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regis
                 _AnimationSystem.stopAnimation(*animation);
             };
         });
+    ScriptSystem.registerBinding(
+        "Animation",
+        [&registry = registry,&_mousePosition = _mousePosition ](sol::state& luaState) {
+            luaState["getMousePosition"] = [&registry, &_mousePosition = _mousePosition](Entity entity) {
+
+                return _mousePosition;
+            };
+        });
+
+
 }

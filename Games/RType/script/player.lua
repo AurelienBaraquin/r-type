@@ -27,11 +27,13 @@ function update(delta)
         position.x = position.x + speed
     end
     if isInputActive(self, "Shoot") then
-        position.y = 10
-        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
-        playAnimation(self, 1)
+        x,y = getMousePosition(self, mouse_pos)
+        position.x = x
+        position.y = y
+--         positioplaySoundEffectn.y = 10
+--         ("Games/RType/assets/sounds/shoot.ogg", 100.0)
+--         playAnimation(self, 1)
     end
-
     setPosition(self, position)
 end
 

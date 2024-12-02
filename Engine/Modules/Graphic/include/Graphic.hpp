@@ -57,6 +57,8 @@ class Graphic : public ISystem, public ILoader, public NotThreadable
     int _width;
     int _height;
 
+    std::tuple<int, int> _mousePosition;
+
     SDL_Window* _window = nullptr;
     SDL_Renderer* _renderer = nullptr;
     SDL_Event _event;
