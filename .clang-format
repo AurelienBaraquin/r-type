@@ -1,4 +1,5 @@
 ---
+# Formatting rules for C++
 Language: Cpp
 BasedOnStyle: Google
 BreakBeforeBraces: Custom
