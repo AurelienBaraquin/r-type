@@ -1,17 +1,31 @@
 project(RType)
 
-add_executable(${PROJECT_NAME}
+set(RTYPE_COMMON_SOURCES
     src/RType.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
+function(create_rtype_target target_name definition)
+    add_executable(${target_name} ${RTYPE_COMMON_SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    Engine
-    Engine::Graphic
-    Engine::Physics
-    Engine::Inputs
-    Engine::Audio
-)
+    target_compile_definitions(${target_name} PRIVATE ${definition})
+
+    target_include_directories(${target_name} PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+
+    target_link_libraries(${target_name} PRIVATE
+        Engine
+        Engine::Graphic
+        Engine::Physics
+        Engine::Inputs
+        Engine::Audio
+    )
+endfunction()
+
+if (SERVER)
+    create_rtype_target(rtype_server SERVER)
+endif()
+
+if (CLIENT)
+    create_rtype_target(rtype_client CLIENT)
+endif()
