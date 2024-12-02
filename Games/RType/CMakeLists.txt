@@ -23,9 +23,9 @@ function(create_rtype_target target_name definition)
 endfunction()
 
 if (SERVER)
-    create_rtype_target(rtype_server SERVER)
+    create_rtype_target(r-type_server SERVER)
 endif()
 
 if (CLIENT)
-    create_rtype_target(rtype_client CLIENT)
+    create_rtype_target(r-type_client CLIENT)
 endif()

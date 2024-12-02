@@ -21,18 +21,12 @@ tasks:
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
-      - mkdir -p Release
-      - cp ./build/build/Release/Engine/Tools/DocGen/DocGen ./Release/DocGen
-      - cp ./build/build/Release/Games/RType/RType          ./Release/RType
 
   sb:
     desc: "Build the project for Rtype server with conan-release preset"
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
       - cmake --build build --preset conan-release
-      - mkdir -p Release
-      - cp ./build/build/Release/Engine/Tools/DocGen/DocGen ./Release/DocGen
-      - cp ./build/build/Release/Games/RType/RType          ./Release/RType
 
   build:
     desc: "Build the project with conan-release preset"
@@ -51,10 +45,15 @@ tasks:
       - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON
       - cmake --build build --preset conan-release
 
-  rtype:
+  crtype:
     desc: "Run the RType target"
     cmds:
-      - ./build/build/Release/Games/RType/RType
+      - ./build/build/Release/Games/RType/r-type_client
+
+  srtype:
+    desc: "Run the RType target"
+    cmds:
+      - ./build/build/Release/Games/RType/r-type_server
 
   debugMac:
     desc: "Run the RType target in debug mode on Mac"
