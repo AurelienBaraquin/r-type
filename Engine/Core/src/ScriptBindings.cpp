@@ -7,14 +7,15 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
 
     _ScriptSystem.registerBinding("Position", [&registry = registry](sol::state& luaState) {
         luaState["getPosition"] = [&registry, &luaState](Entity entity) {
+
             auto* position = registry.getComponent<Components::Position>(entity);
-            if (!position) throw std::runtime_error("Position component not found");
+            if (!position) throw std::runtime_error("Position component not found at entity " + std::to_string(entity));
             return luaState.create_table_with("x", position->x, "y", position->y, "z", position->z);
         };
 
         luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
-            if (!position) throw std::runtime_error("Position component not found");
+            if (!position) throw std::runtime_error("SetPosition: Position component not found at entity " + std::to_string(entity));
             if (position) {
                 position->x = data["x"].get_or(position->x);
                 position->y = data["y"].get_or(position->y);
@@ -57,7 +58,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
     });
 
     _ScriptSystem.registerBinding(
-        "Script", [&registry = registry, &scriptSystem = _ScriptSystem](sol::state& luaState) {
+        "Script", [&registry = registry, &scriptSystem = _ScriptSystem, this](sol::state& luaState) {
             luaState["hasMethod"] = [&registry, &scriptSystem, &luaState](
                                         Entity entity, const std::string& method) {
                 auto* script = registry.getComponent<Components::Script>(entity);
@@ -98,10 +99,16 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             luaState["removeTag"] = [&registry](Entity entity, std::string tag) {
                 registry.removeTag(entity, tag);
             };
-
+            //TODO guigui: add to the doc
             luaState["destroyEntity"] = [&registry](
                     Entity entity) {
                 registry.destroyEntity(entity);
             };
+
+            luaState["loadScene"] = [&registry, this](
+                    const std::string& filePath) {
+                Engine::loadScene(filePath);
+            };
+
         });
 }
