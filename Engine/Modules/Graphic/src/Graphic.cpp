@@ -62,6 +62,9 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
                 eventManager->publish<Events::Shutdown>(std::make_shared<Events::Shutdown>());
             }
         }
+        if (_event.type == SDL_MOUSEMOTION) {
+                _mousePosition = std::make_tuple(_event.motion.x, _event.motion.y);
+        }
     }
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
