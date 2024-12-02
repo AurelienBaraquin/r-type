@@ -1,27 +1,28 @@
 #include "Registry.hpp"
 
+#include "Log.hpp"
+
 Entity Registry::createEntity(std::vector<Tag> tags)
 {
+    Entity entity;
     if (inRegionLock) {
         std::unique_lock lock(mutex);
-        Entity entity = entityManager.createEntity();
+        entity = entityManager.createEntity();
         entityMasks[entity] = ComponentMask();
 
         for (const auto& tag : tags) {
             _tags[tag].push_back(entity);
         }
-
-        return entity;
     } else {
-        Entity entity = entityManager.createEntity();
+        entity = entityManager.createEntity();
         entityMasks[entity] = ComponentMask();
 
         for (const auto& tag : tags) {
             _tags[tag].push_back(entity);
         }
-
-        return entity;
     }
+
+    return entity;
 }
 
 void Registry::destroyEntity(Entity entity)

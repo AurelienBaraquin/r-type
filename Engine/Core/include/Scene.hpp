@@ -34,5 +34,5 @@ class SceneLoader
     ComponentFactory& factory;
     Registry& registry;
     LoaderManager& loaderManager;
-    EntityTemplateManager _entityTemplateManager;
+    EntityTemplateManager& _entityTemplateManager;
 };

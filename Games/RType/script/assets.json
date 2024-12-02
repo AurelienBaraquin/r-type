@@ -55,6 +55,16 @@
             "originX": 0,
             "originY": 0
           }
+        },
+        {
+          "spriteID": 1,
+          "data": {
+            "textureID": 2,
+            "width": 34,
+            "height": 36,
+            "originX": 0,
+            "originY": 0
+          }
         }
       ],
     "scenes": [
@@ -68,6 +78,10 @@
         {
             "textureID": 1,
             "path": "Games/RType/assets/r-typesheet14.gif"
+        },
+        {
+            "textureID": 2,
+            "path": "Games/RType/assets/r-typesheet5.gif"
         }
     ]
 }

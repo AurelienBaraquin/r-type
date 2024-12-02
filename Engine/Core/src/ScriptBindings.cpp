@@ -90,6 +90,17 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 throw std::runtime_error("Method not found");
             }
         };
+    });
+
+    _ScriptSystem.registerBinding("Entity", [&registry = registry](sol::state& luaState) {
+        luaState["getEntitiesByTag"] = [&registry](std::string tag) {
+            auto entities = registry.getEntitiesByTag(tag);
+            std::vector<Entity> result;
+            for (auto entity : entities) {
+                result.push_back(entity);
+            }
+            return result;
+        };
 
         luaState["hasTag"] = [&registry](Entity entity, std::string tag) {
             return registry.hasTag(entity, tag);
@@ -102,16 +113,14 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         luaState["removeTag"] = [&registry](Entity entity, std::string tag) {
             registry.removeTag(entity, tag);
         };
-        // TODO guigui: add to the doc
+
         luaState["destroyEntity"] = [&registry](Entity entity) { registry.destroyEntity(entity); };
+    });
 
-        luaState["loadScene"] = [&registry, this](const std::string& filePath) {
-            Engine::loadScene(filePath);
-        };
-
-        luaState["createEntity"] = [this](std::string templateName) {
-            return this->_entityTemplateManager.createEntity(templateName, this->_registry,
-                                                             this->_componentFactory);
+    _ScriptSystem.registerBinding("Template", [&registry = this->_registry, &_entityTemplateManager = this->_entityTemplateManager,
+        &factory = this->_componentFactory](sol::state& luaState) {
+        luaState["createEntity"] = [&_entityTemplateManager, &registry, &factory](std::string templateName) {
+            return _entityTemplateManager.createEntity(templateName, registry, factory);
         };
     });
 }

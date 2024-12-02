@@ -19,8 +19,12 @@ class EntityTemplateManager
     Entity createEntity(const std::string& templateName, Registry& registry,
                         ComponentFactory& factory)
     {
+        if (_entityTemplates.find(templateName) == _entityTemplates.end()) {
+            Logger::getInstance().error("Entity template not found: " + templateName);
+            return Entity();
+        }
+    
         Entity entity = registry.createEntity();
-        Logger::getInstance().info("Creating entity from template: " + templateName);
         const auto& components = _entityTemplates[templateName]["components"];
 
         for (auto& [componentName, componentData] : components.items()) {

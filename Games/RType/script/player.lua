@@ -27,18 +27,15 @@ function update(delta)
         position.x = position.x + speed
     end
     if isInputActive(self, "Shoot") then
-        x, y = getMousePosition(self, mouse_pos)
-        position.x = x
-        position.y = y
-        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
         playAnimation(self, 1)
+        bullet = createEntity("Bullet")
+        setPosition(bullet, position)
     end
     setPosition(self, position)
 end
 
 function onCollide(other)
     print(other)
-    destroyEntity(other)
     local position = getPosition(self)
     position.x = position.x + 1
     setPosition(self, position)

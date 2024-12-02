@@ -16,6 +16,20 @@
       }
     },
     {
+      "Template": {
+        "name": "Bullet",
+        "tags" : ["bullet"],
+        "components": {
+          "Position": { "x": 0, "y": 0, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Sprite": { "spriteID": 1 },
+          "Area2D": { "width": 16, "height": 16 },
+          "Script": { "scriptPath": "Games/RType/script/bullet.lua" }
+        }
+      }
+    },
+    {
       "_name_": "Enemy",
       "tags": ["enemy"],
       "components": {
