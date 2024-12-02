@@ -23,7 +23,7 @@ class EntityTemplateManager
             Logger::getInstance().error("Entity template not found: " + templateName);
             return Entity();
         }
-    
+
         Entity entity = registry.createEntity();
         const auto& components = _entityTemplates[templateName]["components"];
 

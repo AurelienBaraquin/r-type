@@ -117,10 +117,13 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         luaState["destroyEntity"] = [&registry](Entity entity) { registry.destroyEntity(entity); };
     });
 
-    _ScriptSystem.registerBinding("Template", [&registry = this->_registry, &_entityTemplateManager = this->_entityTemplateManager,
-        &factory = this->_componentFactory](sol::state& luaState) {
-        luaState["createEntity"] = [&_entityTemplateManager, &registry, &factory](std::string templateName) {
-            return _entityTemplateManager.createEntity(templateName, registry, factory);
-        };
-    });
+    _ScriptSystem.registerBinding(
+        "Template",
+        [&registry = this->_registry, &_entityTemplateManager = this->_entityTemplateManager,
+         &factory = this->_componentFactory](sol::state& luaState) {
+            luaState["createEntity"] = [&_entityTemplateManager, &registry,
+                                        &factory](std::string templateName) {
+                return _entityTemplateManager.createEntity(templateName, registry, factory);
+            };
+        });
 }
