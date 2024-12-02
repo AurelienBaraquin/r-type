@@ -12,24 +12,24 @@ tasks:
       - conan install . --output-folder=build --build=missing -s compiler.cppstd=17
 
   b:
-    desc: "Build the project with conan-release preset"
+    desc: "Build r-type client and server with conan-release preset"
     cmds:
       - task build
 
   cb:
-    desc: "Build the project for Rtype client with conan-release preset"
+    desc: "Build rtype client with conan-release preset"
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
 
   sb:
-    desc: "Build the project for Rtype server with conan-release preset"
+    desc: "Build rtype server with conan-release preset"
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
       - cmake --build build --preset conan-release
 
   build:
-    desc: "Build the project with conan-release preset"
+    desc: "Build r-type client and server conan-release preset"
     cmds:
       - task cb
       - task sb
@@ -40,25 +40,31 @@ tasks:
       - task buildw
 
   buildw:
-    desc: "Build the project with conan-default preset for windows"
+    desc: "Build the r-type client and server with conan-default preset for windows"
     cmds:
-      - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON
+      - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
+      - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
 
   crtype:
-    desc: "Run the RType target"
+    desc: "Run the r-type client target"
     cmds:
       - ./build/build/Release/Games/RType/r-type_client
 
   srtype:
-    desc: "Run the RType target"
+    desc: "Run the r-type server target"
     cmds:
       - ./build/build/Release/Games/RType/r-type_server
 
-  debugMac:
-    desc: "Run the RType target in debug mode on Mac"
+  cdebugMac:
+    desc: "Run the RType client target in debug mode on Mac"
     cmds:
-      - lldb ./build/build/Release/Games/RType/RType
+      - lldb ./build/build/Release/Games/RType/r-type_client
+
+  sdebugMac:
+    desc: "Run the RType server target in debug mode on Mac"
+    cmds:
+      - lldb ./build/build/Release/Games/RType/r-type_server
 
   test:
     desc: "Run the test target with coverage and generate HTML report"
