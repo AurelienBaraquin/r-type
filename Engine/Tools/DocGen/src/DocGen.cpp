@@ -23,24 +23,34 @@ int main(int argc, char* argv[])
     }
 
     ComponentRegistry registry;
-    registry.registerComponent("Position", {ComponentFunction("getPosition", {}, {"x", "y", "z"}, "Get the position"),
-                                            ComponentFunction("setPosition", {"x", "y", "z"}, {}, "Set the position")});
-    registry.registerComponent("Rotation", {ComponentFunction("getRotation", {}, {"angle"}, "Get the rotation"),
-                                            ComponentFunction("setRotation", {"angle"}, {}, "Set the rotation")});
-    registry.registerComponent("Scale", {ComponentFunction("getScale", {}, {"x", "y"}, "Get the scale"),
-                                         ComponentFunction("setScale", {"x", "y"}, {}, "Set the scale (if scale is 0, the standard scale of the texture is used)")});
+    registry.registerComponent(
+        "Position", {ComponentFunction("getPosition", {}, {"x", "y", "z"}, "Get the position"),
+                     ComponentFunction("setPosition", {"x", "y", "z"}, {}, "Set the position")});
+    registry.registerComponent(
+        "Rotation", {ComponentFunction("getRotation", {}, {"angle"}, "Get the rotation"),
+                     ComponentFunction("setRotation", {"angle"}, {}, "Set the rotation")});
+    registry.registerComponent(
+        "Scale", {ComponentFunction("getScale", {}, {"x", "y"}, "Get the scale"),
+                  ComponentFunction(
+                      "setScale", {"x", "y"}, {},
+                      "Set the scale (if scale is 0, the standard scale of the texture is used)")});
     registry.registerComponent(
         "Sprite",
-        {ComponentFunction("getSprite", {}, {"textureID", "width", "height", "originX", "originY"}, "Get the sprite"),
-         ComponentFunction("setSprite", {"textureID", "width", "height", "originX", "originY"}, {}, "Set the sprite")});
-    registry.registerComponent("Input", {ComponentFunction("isInputActive", {"input"}, {"bool"}, "Check if an input is active and return true if it is")});
+        {ComponentFunction("getSprite", {}, {"textureID", "width", "height", "originX", "originY"},
+                           "Get the sprite"),
+         ComponentFunction("setSprite", {"textureID", "width", "height", "originX", "originY"}, {},
+                           "Set the sprite")});
+    registry.registerComponent(
+        "Input", {ComponentFunction("isInputActive", {"input"}, {"bool"},
+                                    "Check if an input is active and return true if it is")});
 
     registry.registerComponent("Script", {});
 
     registry.registerComponent("Area2D", {});
 
-    registry.registerComponent("Animation", {ComponentFunction("playAnimation", {"animationId"}, {}, "Play an animation"),
-                                           ComponentFunction("stopAnimation", {}, {}, "Stop the current animation")});
+    registry.registerComponent(
+        "Animation", {ComponentFunction("playAnimation", {"animationId"}, {}, "Play an animation"),
+                      ComponentFunction("stopAnimation", {}, {}, "Stop the current animation")});
 
     EntityAnalyzer analyzer(registry);
     auto entityFunctions = analyzer.analyzeEntities(args[1]);

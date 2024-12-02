@@ -16,15 +16,12 @@ SDL_Texture* LoadTextureFromMemory(SDL_Renderer* renderer, const unsigned char* 
     return texture;
 }
 
-void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position) {
+void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
+{
     SDL_Rect srcRect = {sprite->originX, sprite->originY, sprite->width, sprite->height};
 
-    SDL_Rect dstRect = {
-        static_cast<int>(position->x),
-        static_cast<int>(position->y),
-        sprite->width,
-        sprite->height
-    };
+    SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y), sprite->width,
+                        sprite->height};
 
     SDL_Texture* texture = _TextureSystem.get(sprite->textureID);
     if (!texture) return;
@@ -33,18 +30,15 @@ void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position) {
 }
 
 void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
-                            Components::Rotation* rotation, Components::Scale* scale) {
+                            Components::Rotation* rotation, Components::Scale* scale)
+{
     SDL_Rect srcRect = {sprite->originX, sprite->originY, sprite->width, sprite->height};
 
     int dstWidth = (scale->x <= 0) ? sprite->width : static_cast<int>(scale->x);
     int dstHeight = (scale->y <= 0) ? sprite->height : static_cast<int>(scale->y);
 
-    SDL_Rect dstRect = {
-        static_cast<int>(position->x),
-        static_cast<int>(position->y),
-        dstWidth,
-        dstHeight
-    };
+    SDL_Rect dstRect = {static_cast<int>(position->x), static_cast<int>(position->y), dstWidth,
+                        dstHeight};
 
     SDL_Point center = {dstRect.w / 2, dstRect.h / 2};
 

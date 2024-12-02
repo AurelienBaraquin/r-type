@@ -1,13 +1,16 @@
 #include "ScriptSystem.hpp"
-#include <mutex>
-#include <iostream>
 
-void ScriptSystem::registerBinding(const std::string& name, BindingFunction func) {
+#include <iostream>
+#include <mutex>
+
+void ScriptSystem::registerBinding(const std::string& name, BindingFunction func)
+{
     std::unique_lock lock(mutex);
     bindings[name].push_back(func);
 }
 
-void ScriptSystem::applyBindings(sol::state& luaState) {
+void ScriptSystem::applyBindings(sol::state& luaState)
+{
     for (const auto& [name, funcs] : bindings) {
         for (const auto& func : funcs) {
             func(luaState);
@@ -15,7 +18,8 @@ void ScriptSystem::applyBindings(sol::state& luaState) {
     }
 }
 
-sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath) {
+sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath)
+{
     {
         // Check if script already exists
         std::shared_lock lock(mutex);
@@ -32,12 +36,14 @@ sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath
     return luaState;
 }
 
-void ScriptSystem::removeScript(Entity entity, const std::string& scriptPath) {
+void ScriptSystem::removeScript(Entity entity, const std::string& scriptPath)
+{
     std::unique_lock lock(mutex);
     scripts.erase({entity, scriptPath});
 }
 
-void ScriptSystem::initializeScript(sol::state& luaState, const std::string& scriptPath) {
+void ScriptSystem::initializeScript(sol::state& luaState, const std::string& scriptPath)
+{
     luaState.open_libraries(sol::lib::base, sol::lib::math);
 
     // Apply bindings
@@ -47,7 +53,8 @@ void ScriptSystem::initializeScript(sol::state& luaState, const std::string& scr
     try {
         luaState.script_file(scriptPath);
     } catch (const std::exception& e) {
-        std::cerr << "Failed to load script: " << scriptPath << "\nError: " << e.what() << std::endl;
+        std::cerr << "Failed to load script: " << scriptPath << "\nError: " << e.what()
+                  << std::endl;
         throw;
     }
 }

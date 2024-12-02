@@ -2,7 +2,8 @@
 
 #include "Log.hpp"
 
-void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames, float frameTime)
+void AnimationSystem::loadAnimation(int animationID, std::vector<AnimationFrame> frames,
+                                    float frameTime)
 {
     _animations[animationID] = {frames, frameTime};
 }
@@ -56,7 +57,8 @@ void AnimationSystem::updateAnimation(Components::Animation& animation, float de
     if (!animation.playing) return;
     async([this, &animation, deltaTime]() {
         if (_animations.find(animation.animationID) == _animations.end()) {
-            Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
+            Logger::getInstance().error("Animation not found" +
+                                        std::to_string(animation.animationID));
             return;
         }
 
