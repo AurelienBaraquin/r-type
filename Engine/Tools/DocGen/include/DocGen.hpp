@@ -12,14 +12,15 @@ class ComponentFunction
 {
    public:
     ComponentFunction(const std::string& name, const std::vector<std::string>& params = {},
-                      const std::vector<std::string>& returns = {})
-        : name(name), parameters(params), returns(returns)
+                      const std::vector<std::string>& returns = {}, const std::string& description = "")
+        : name(name), parameters(params), returns(returns), description(description)
     {
     }
 
     std::string name;
     std::vector<std::string> parameters;
     std::vector<std::string> returns;
+    std::string description;
 };
 
 class ComponentRegistry
@@ -150,6 +151,9 @@ class DocumentationGenerator
 
             for (const auto& function : functions) {
                 *out << "- `" << function.name << "`\n";
+
+                if (!function.description.empty())
+                    *out << "  - **Description:** " << function.description << "\n";
 
                 if (!function.parameters.empty()) {
                     *out << "  - **Parameters:** ";

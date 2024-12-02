@@ -29,6 +29,7 @@
     }
   ],
   "scenes": [
-    "assets.json"
+    "assets.json",
+    "audio.json"
   ]
 }
