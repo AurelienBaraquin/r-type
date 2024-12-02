@@ -10,13 +10,13 @@ class CactusEngine(ConanFile):
     def requirements(self):
         self.requires("gtest/1.15.0")
         self.requires("sdl/2.28.3")
-        # self.requires("sdl_image/2.6.3")
+        self.requires("sdl_image/2.6.3")
         self.requires("sol2/3.3.1")
         self.requires("lua/5.4.6")
         self.requires("chipmunk2d/7.0.3")
         self.requires("cista/0.15")
         self.requires("nlohmann_json/3.11.3")
-        #self.requires("sfml/2.5.1")
+        self.requires("sfml/2.5.1")
         self.requires("flac/1.4.3", force=True)
 
     def layout(self):
