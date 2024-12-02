@@ -21,12 +21,16 @@ tasks:
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
+      - mkdir -p ./Release
+      - cp ./build/build/Release/Games/RType/r-type_client ./Release/r-type_client
 
   sb:
     desc: "Build rtype server with conan-release preset"
     cmds:
       - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=ON -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
       - cmake --build build --preset conan-release
+      - mkdir -p ./Release
+      - cp ./build/build/Release/Games/RType/r-type_server ./Release/r-type_server
 
   build:
     desc: "Build r-type client and server conan-release preset"
@@ -78,3 +82,9 @@ tasks:
       - echo "Coverage report generated in coverage-report/index.html"
 
     silent: false
+
+  clean:
+    desc: "Cleaning existing build and binaries"
+    cmds:
+      - rm -rf ./build
+      - rm -rf ./Release
