@@ -108,5 +108,9 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         luaState["loadScene"] = [&registry, this](const std::string& filePath) {
             Engine::loadScene(filePath);
         };
+
+        luaState["createEntity"] = [this](std::string templateName) {
+            return this->_entityTemplateManager.createEntity(templateName, this->_registry, this->_componentFactory);
+        };
     });
 }
