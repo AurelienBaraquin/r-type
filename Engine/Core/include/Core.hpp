@@ -1,14 +1,14 @@
 #pragma once
 
+#include <atomic>
+#include <mutex>
+#include <thread>
 #include <vector>
 
 #include "EntityBuilder.hpp"
 #include "Loader.hpp"
 #include "Scene.hpp"
 #include "SystemManager.hpp"
-#include <thread>
-#include <mutex>
-#include <atomic>
 
 class Engine : public ISystem
 {

@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Async.hpp"
 #include "ComponentFactory.hpp"
 #include "Event.hpp"
 #include "Registry.hpp"
 #include "ScriptSystem.hpp"
-#include "Async.hpp"
 
 class NotThreadable
 {

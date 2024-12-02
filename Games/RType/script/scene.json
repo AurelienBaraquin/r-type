@@ -17,7 +17,7 @@
     },
     {
       "_name_": "Enemy",
-      "tags" : ["enemy"],
+      "tags": ["enemy"],
       "components": {
         "Position": { "x": 100, "y": 200, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
@@ -25,8 +25,14 @@
         "Sprite": { "spriteID": 0 },
         "Area2D": { "width": 32, "height": 32 },
         "Input": { "inputConfigID": 0 },
-        "Animation": { "animationID": 0, "currentFrame": 0, "elapsedTime": 0.0, "loop": true, "playing": true },
-        "Script": { "scriptPath": "Games/RType/script/right.lua" }
+        "Animation": {
+          "animationID": 0,
+          "currentFrame": 0,
+          "elapsedTime": 0.0,
+          "loop": true,
+          "playing": true
+        },
+        "Script": { "scriptPath": "Games/RType/script/player.lua" }
       }
     },
     {
@@ -36,8 +42,5 @@
       }
     }
   ],
-  "scenes": [
-    "assets.json",
-    "audio.json"
-  ]
+  "scenes": ["assets.json", "audio.json"]
 }

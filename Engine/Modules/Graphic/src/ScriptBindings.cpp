@@ -22,10 +22,10 @@ void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regis
         luaState["getAnimation"] = [&registry, &luaState](Entity entity) {
             auto* animation = registry.getComponent<Components::Animation>(entity);
             if (!animation) throw std::runtime_error("Animation component not found");
-            return luaState.create_table_with(
-                "animationID", animation->animationID, "currentFrame", animation->currentFrame,
-                "elapsedTime", animation->elapsedTime, "playing",
-                animation->playing, "loop", animation->loop);
+            return luaState.create_table_with("animationID", animation->animationID, "currentFrame",
+                                              animation->currentFrame, "elapsedTime",
+                                              animation->elapsedTime, "playing", animation->playing,
+                                              "loop", animation->loop);
         };
 
         luaState["setAnimation"] = [&registry, &luaState](Entity entity, sol::table data) {
@@ -59,5 +59,11 @@ void Graphic::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regis
                 if (!animation) throw std::runtime_error("Animation component not found");
                 _AnimationSystem.stopAnimation(*animation);
             };
+        });
+    ScriptSystem.registerBinding(
+        "Animation",
+        [&registry = registry, &_mousePosition = _mousePosition](sol::state& luaState) {
+            luaState["getMousePosition"] = [&registry, &_mousePosition = _mousePosition](
+                                               Entity entity) { return _mousePosition; };
         });
 }

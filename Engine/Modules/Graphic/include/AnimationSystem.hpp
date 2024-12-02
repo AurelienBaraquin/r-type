@@ -13,7 +13,6 @@ using AnimationFrame = BrutSprite;
 class AnimationSystem : public ILoader
 {
    public:
-
     struct AnimationComp {
         std::vector<AnimationFrame> frames;
         float frameTime;

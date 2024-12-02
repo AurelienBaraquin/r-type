@@ -12,7 +12,8 @@ class ComponentFunction
 {
    public:
     ComponentFunction(const std::string& name, const std::vector<std::string>& params = {},
-                      const std::vector<std::string>& returns = {}, const std::string& description = "")
+                      const std::vector<std::string>& returns = {},
+                      const std::string& description = "")
         : name(name), parameters(params), returns(returns), description(description)
     {
     }

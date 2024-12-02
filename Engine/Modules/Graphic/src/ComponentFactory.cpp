@@ -11,6 +11,7 @@ void Graphic::registerComponentFactory(ComponentFactory& componentFactory)
         "Animation", [](Entity entity, const nlohmann::json& data, Registry& registry) {
             registry.addComponent<Components::Animation>(
                 entity, data["animationID"].get<int>(), data["currentFrame"].get<int>(),
-                data["elapsedTime"].get<float>(), data["loop"].get<bool>(), data["playing"].get<bool>());
+                data["elapsedTime"].get<float>(), data["loop"].get<bool>(),
+                data["playing"].get<bool>());
         });
 }

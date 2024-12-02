@@ -37,12 +37,12 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
     std::future<std::vector<Entity>> entitiesToDrawFutur = async([&registry = registry]() {
         std::vector<Entity> entities;
-        for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale,
-                                         Components::Rotation>()) {
+        for (auto entity : registry.view<Components::Sprite, Components::Position,
+                                         Components::Scale, Components::Rotation>()) {
             entities.push_back(entity);
         }
-        for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale,
-                                         Components::Rotation>()) {
+        for (auto entity : registry.view<Components::Animation, Components::Position,
+                                         Components::Scale, Components::Rotation>()) {
             entities.push_back(entity);
         }
         std::sort(entities.begin(), entities.end(), [&registry](Entity a, Entity b) {
@@ -61,6 +61,9 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
             if (_event.key.keysym.sym == SDLK_ESCAPE) {
                 eventManager->publish<Events::Shutdown>(std::make_shared<Events::Shutdown>());
             }
+        }
+        if (_event.type == SDL_MOUSEMOTION) {
+            _mousePosition = std::make_tuple(_event.motion.x, _event.motion.y);
         }
     }
 
@@ -83,8 +86,9 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
             auto frames = _AnimationSystem.getAnimation(animation->animationID);
             auto currentFrame = frames[animation->currentFrame];
 
-            auto sprite = BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
-                                     currentFrame.originX, currentFrame.originY};
+            auto sprite =
+                BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
+                           currentFrame.originX, currentFrame.originY};
 
             drawTextureEx(&sprite, position, rotation, scale);
         } else if (registry.hasComponent<Components::Sprite>(entity)) {
