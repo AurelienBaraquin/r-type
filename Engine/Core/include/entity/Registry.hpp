@@ -26,6 +26,28 @@ class Registry
         inRegionLock = false;
     }
 
+    std::vector<Tag> getTags(Entity entity) const
+    {
+        if (!inRegionLock) {
+            std::shared_lock lock(mutex);
+            std::vector<Tag> result;
+            for (const auto& [tag, entities] : _tags) {
+                if (std::find(entities.begin(), entities.end(), entity) != entities.end()) {
+                    result.push_back(tag);
+                }
+            }
+            return result;
+        } else {
+            std::vector<Tag> result;
+            for (const auto& [tag, entities] : _tags) {
+                if (std::find(entities.begin(), entities.end(), entity) != entities.end()) {
+                    result.push_back(tag);
+                }
+            }
+            return result;
+        }
+    }
+
     std::vector<Entity> getEntitiesByTag(Tag tag) const
     {
         if (!inRegionLock) {
