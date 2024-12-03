@@ -1,6 +1,8 @@
 self = nil
 speed = 1
+collide = nil
 function init(e)
+    collide = nil
     if e == nil then
         print("self is nil")
     end
@@ -19,7 +21,17 @@ function update(delta)
     if (position.x > 1500) then
         destroyEntity(self)
     end
+    if collide ~= nil then
+        destroyEntity(self)
+    end
 end
 
 function onCollide(other)
+    if hasTag(other, "enemy") then
+        print("bullet hit enemy")
+        collide = other
+        if hasMethod(other, "damage") then
+            callMethod(other, "damage", 1)
+        end
+    end
 end

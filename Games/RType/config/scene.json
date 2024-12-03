@@ -3,8 +3,8 @@
   "entities": [
     {
       "Template": {
-        "name": "Player",
-        "tags": ["player"],
+        "name": "Enemy",
+        "tags": ["enemy"],
         "components": {
           "Position": { "x": 400, "y": 200, "z": 0 },
           "Scale": { "x": 0, "y": 0 },
@@ -37,8 +37,8 @@
       }
     },
     {
-      "_name_": "Enemy",
-      "tags": ["enemy"],
+      "_name_": "Player",
+      "tags": ["player"],
       "components": {
         "Position": { "x": 100, "y": 200, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
@@ -58,7 +58,7 @@
     },
     {
       "FromTemplate": {
-        "name": "Player",
+        "name": "Enemy",
         "tags": ["audio"]
       }
     }

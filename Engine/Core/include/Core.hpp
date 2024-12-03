@@ -16,7 +16,7 @@
 //    luaState["update"](deltaTime);
 //}
 // dans updateScript
-class Engine : public ISystem, public NotThreadable
+class Engine : public ISystem
 {
    public:
     Engine()

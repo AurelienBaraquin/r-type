@@ -114,7 +114,9 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             registry.removeTag(entity, tag);
         };
 
-        luaState["destroyEntity"] = [&registry](Entity entity) { registry.destroyEntity(entity); };
+        luaState["destroyEntity"] = [&registry](Entity entity) {
+            registry.destroyEntity(entity);
+        };
     });
 
     _ScriptSystem.registerBinding(

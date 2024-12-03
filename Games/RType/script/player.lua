@@ -16,7 +16,7 @@ function update(delta)
 
     local rot = getRotation(self)
     rot.angle = rot.angle + speed / 5
-    setRotation(self, rot)
+--     setRotation(self, rot)
     if type(position) ~= "table" then
         print("position is not a table")
         return
