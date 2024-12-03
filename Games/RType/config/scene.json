@@ -15,6 +15,21 @@
         }
       }
     },
+
+    {
+      "Template": {
+        "name": "EnemyManager",
+        "tags": ["enemy_manager"],
+        "components": {
+          "Position": { "x": 0, "y": 0, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Area2D": { "width": 120, "height": 80 },
+          "Script": { "scriptPath": "Games/RType/script/left.lua" }
+        }
+      }
+    },
+
     {
       "Template": {
         "name": "Bullet",
@@ -56,9 +71,20 @@
         "Script": { "scriptPath": "Games/RType/script/player.lua" }
       }
     },
+
+    {
+      "_name_": "EnemyManager",
+      "tags": ["enemy_manager"],
+      "components": {
+        "Position": { "x": 0, "y": 0, "z": 0 },
+        "Script": { "scriptPath": "Games/RType/script/enemy_manager.lua" }
+      }
+    },
+
     {
       "FromTemplate": {
         "name": "Enemy",
+
         "tags": ["audio"]
       }
     }
