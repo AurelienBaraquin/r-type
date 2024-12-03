@@ -84,7 +84,7 @@ void InputSystem::updateInputs(int inputConfigID)
 bool InputSystem::isInputActive(int inputConfigID, const std::string& action, bool allowHold)
 {
     bool prev;
-    
+
     if (!allowHold) {
         prev = prevStates[action];
         prevStates[action] = currentStates[action];
@@ -92,8 +92,7 @@ bool InputSystem::isInputActive(int inputConfigID, const std::string& action, bo
 
     async([this, inputConfigID] { updateInputs(inputConfigID); });
 
-    if (allowHold)
-        return currentStates[action];
+    if (allowHold) return currentStates[action];
 
     return currentStates[action] && !prev;
 }

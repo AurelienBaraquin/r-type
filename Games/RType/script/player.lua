@@ -33,7 +33,7 @@ function update(delta)
     if isInputActive(self, "MoveRight") then
         position.x = position.x + speed
     end
-    if isInputActive(self, "Shoot") and shoot_timer <= 0 then
+    if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
         shoot_timer = shoot_rate
         playAnimation(self, 1)
         bullet = createEntity("Bullet")

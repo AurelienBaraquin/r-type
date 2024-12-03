@@ -175,6 +175,68 @@
           "originY": 0
         }
       ]
+    },
+    {
+      "animationID": 2,
+      "frameTime": 0.1,
+      "frames": [
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 0,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 34,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 68,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 102,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 136,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 170,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 204,
+          "originY": 0
+        },
+        {
+          "textureID": 2,
+          "width": 34,
+          "height": 36,
+          "originX": 238,
+          "originY": 0
+        }
+      ]
     }
   ],
   "sprites": [
