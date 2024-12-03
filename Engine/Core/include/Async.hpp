@@ -7,8 +7,8 @@
 #include <type_traits>
 
 template <typename Function, typename... Args>
-auto async(Function&& func, Args&&... args)
-    -> std::future<typename std::result_of<Function(Args...)>::type>
+auto async(Function&& func,
+           Args&&... args) -> std::future<typename std::result_of<Function(Args...)>::type>
 {
     using return_type = typename std::result_of<Function(Args...)>::type;
 

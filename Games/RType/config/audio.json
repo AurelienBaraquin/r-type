@@ -1,16 +1,14 @@
 {
-    "sceneTag": "Audio",
-    "entities": [
-        {
-            "_name_": "AudioSystem",
-            "tags": [
-                "audio"
-            ],
-            "components": {
-                "Script": {
-                    "scriptPath": "Games/RType/script/audio.lua"
-                }
-            }
+  "sceneTag": "Audio",
+  "entities": [
+    {
+      "_name_": "AudioSystem",
+      "tags": ["audio"],
+      "components": {
+        "Script": {
+          "scriptPath": "Games/RType/script/audio.lua"
         }
-    ]
+      }
+    }
+  ]
 }

@@ -3,7 +3,7 @@
   "inputConfigs": [
     {
       "id": 0,
-      "inputConfig" : {
+      "inputConfig": {
         "keyboard": {
           "MoveUp": "W",
           "MoveDown": "S",
