@@ -8,7 +8,7 @@ int main()
     engine.addModule<Physics>();
     engine.addModule<Audio>();
 
-    engine.loadScene("Games/RType/script/scene.json");
+    engine.loadScene("Games/RType/config/scene.json");
 
     engine.run();
 
