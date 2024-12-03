@@ -24,6 +24,13 @@
           "Scale": { "x": 0, "y": 0 },
           "Rotation": { "angle": 0 },
           "Sprite": { "spriteID": 1 },
+          "Animation": {
+            "animationID": 2,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+          },
           "Area2D": { "width": 16, "height": 16 },
           "Script": { "scriptPath": "Games/RType/script/bullet.lua" }
         }
