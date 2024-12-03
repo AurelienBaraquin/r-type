@@ -13,7 +13,7 @@ void Physics::callFunction(Registry& registry, Entity entity, Entity entity2, st
                            ScriptSystem& _scriptSystem)
 {
     auto* script = registry.getComponent<Components::Script>(entity);
-    if (script && script->scriptPath != "") {
+    if (script && script->scriptPath != "" && _scriptSystem.hasScript(entity, script->scriptPath)) {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
         if (luaState[function]) { // <--- crashes
             luaState[function](entity2);

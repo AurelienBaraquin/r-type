@@ -11,10 +11,6 @@ function update(delta)
 end
 
 function onCollide(other)
-    speed = 10
-    if hasMethod(other, "setSpeed") then
-        callMethod(other, "setSpeed", 10)
-    else
-        print("no method")
-    end
+    print("collided someone")
+
 end

@@ -10,7 +10,7 @@
           "Scale": { "x": 0, "y": 0 },
           "Rotation": { "angle": 0 },
           "Sprite": { "spriteID": 0 },
-          "Area2D": { "width": 32, "height": 32 },
+          "Area2D": { "width": 120, "height": 80 },
           "Script": { "scriptPath": "Games/RType/script/left.lua" }
         }
       }
@@ -37,7 +37,7 @@
         "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Sprite": { "spriteID": 0 },
-        "Area2D": { "width": 32, "height": 32 },
+        "Area2D": { "width": 120 , "height": 80 },
         "Input": { "inputConfigID": 0 },
         "Animation": {
           "animationID": 0,
