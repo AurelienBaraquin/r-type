@@ -79,6 +79,8 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
 
 void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
+    RegistryLock lock(registry);
+
     for (auto entity : registry.view<Components::Position, Components::Area2D>()) {
         auto* position = registry.getComponent<Components::Position>(entity);
         auto* area2D = registry.getComponent<Components::Area2D>(entity);
