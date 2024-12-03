@@ -18,20 +18,19 @@ function update(delta)
      position.x = position.x + 5
     setPosition(self, position)
 
-    if (position.x > 1500) then
-        destroyEntity(self)
-    end
-    if collide ~= nil then
-        destroyEntity(self)
+    if (position.x > 800) then
+
     end
 end
 
 function onCollide(other)
     if hasTag(other, "enemy") then
-        print("bullet hit enemy")
         collide = other
         if hasMethod(other, "damage") then
             callMethod(other, "damage", 1)
+        end
+        if self ~= nil then
+            destroyEntity(self)
         end
     end
 end
