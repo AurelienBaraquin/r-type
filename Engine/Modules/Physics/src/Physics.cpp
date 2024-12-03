@@ -15,7 +15,7 @@ void Physics::callFunction(Registry& registry, Entity entity, Entity entity2, st
     auto* script = registry.getComponent<Components::Script>(entity);
     if (script && script->scriptPath != "" && _scriptSystem.hasScript(entity, script->scriptPath)) {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
-        if (luaState[function]) { // <--- crashes
+        if (luaState[function]) {  // <--- crashes
             luaState[function](entity2);
         }
     }
@@ -67,7 +67,7 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
     }
 
     for (auto entity : entitiesToAdd) {
-            area2D->collidedEntities.push_back(entity);
+        area2D->collidedEntities.push_back(entity);
     }
 
     for (auto entity : entitiesToRemove) {
