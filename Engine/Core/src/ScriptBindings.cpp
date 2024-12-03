@@ -80,7 +80,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             sol::state& luaState = scriptSystem.getScript(entity, script->scriptPath);
             if (luaState[method].valid()) {
                 std::vector<sol::object> args;
-                args.push_back(sol::make_object(luaState, entity));
+//                args.push_back(sol::make_object(luaState, entity));
 
                 for (auto arg : va) {
                     args.push_back(arg);
@@ -114,7 +114,12 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             registry.removeTag(entity, tag);
         };
 
-        luaState["destroyEntity"] = [&registry](Entity entity) {
+        luaState["destroyEntity"] = [&registry](sol::object entityObj) {
+            if (!entityObj.valid() || entityObj.is<sol::lua_nil_t>()) {
+                return;
+            }
+
+            Entity entity = entityObj.as<Entity>();
             registry.destroyEntity(entity);
         };
     });
