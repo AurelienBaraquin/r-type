@@ -18,6 +18,9 @@ class ScriptSystem
     void applyBindings(sol::state& luaState);
     sol::state& getScript(Entity entity, const std::string& scriptPath);
     void removeScript(Entity entity, const std::string& scriptPath);
+    bool hasScript(Entity entity, const std::string& path) const {
+        return scripts.find({entity, path}) != scripts.end();
+    }
 
    private:
     struct PairHash {
