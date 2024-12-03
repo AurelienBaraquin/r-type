@@ -10,7 +10,13 @@
 #include "Scene.hpp"
 #include "SystemManager.hpp"
 
-class Engine : public ISystem
+// TODO
+// j'ai mis en notThreadable pour le moment car crash lors de
+//if (luaState["update"]) { <--- crash voir notion
+//    luaState["update"](deltaTime);
+//}
+// dans updateScript
+class Engine : public ISystem, public NotThreadable
 {
    public:
     Engine()

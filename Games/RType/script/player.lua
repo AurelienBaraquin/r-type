@@ -3,7 +3,7 @@
 speed = 5
 self = nil
 shoot_timer = 0
-shoot_rate = 2
+shoot_rate = 5
 
 
 function init(e)
@@ -49,7 +49,6 @@ function onCollide(other)
 --     local position = getPosition(self)
 --     position.x = position.x + 1
 --     setPosition(self, position)
-    print("collide")
 end
 
 function setSpeed(self, newSpeed)

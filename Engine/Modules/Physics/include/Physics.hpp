@@ -11,8 +11,13 @@
 #include "Core.hpp"
 #include "ISystem.hpp"
 #include "Registry.hpp"
-
-class Physics : public ISystem
+// TODO
+// j'ai mis en notThreadable pour le moment car crash lors de
+//if (luaState[function]) { // <--- crashes
+//    luaState[function](entity2);
+//}
+// dans updateScript
+class Physics : public ISystem, public NotThreadable
 {
    public:
     Physics() = default;
