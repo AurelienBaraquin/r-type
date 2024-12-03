@@ -13,10 +13,9 @@ void Physics::callFunction(Registry& registry, Entity entity, Entity entity2, st
                            ScriptSystem& _scriptSystem)
 {
     auto* script = registry.getComponent<Components::Script>(entity);
-
-    if (script) {
+    if (script && script->scriptPath != "") {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
-        if (luaState[function].valid()) {
+        if (luaState[function]) { // <--- crashes
             luaState[function](entity2);
         }
     }
@@ -51,25 +50,30 @@ void Physics::updateCollision(Registry& registry, Entity entity, Entity entity2,
     if (!position2 || !area2D2) return;
     bool intersect = hasIntersection(*position, *area2D, *position2, *area2D2);
 
+    std::vector<Entity> entitiesToAdd;
+    std::vector<Entity> entitiesToRemove;
+
     if (intersect) {
         if (!isIn(area2D->collidedEntities, entity2)) {
-            area2D->collidedEntities.push_back(entity2);
-            area2D2->collidedEntities.push_back(entity);
+            entitiesToAdd.push_back(entity2);
             callFunction(registry, entity, entity2, "onCollide", scriptSystem);
         }
     }
 
     if (!intersect) {
         if (isIn(area2D->collidedEntities, entity2)) {
-            area2D->collidedEntities.erase(std::remove(area2D->collidedEntities.begin(),
-                                                       area2D->collidedEntities.end(), entity2),
-                                           area2D->collidedEntities.end());
-            area2D2->collidedEntities.erase(std::remove(area2D2->collidedEntities.begin(),
-                                                        area2D2->collidedEntities.end(), entity),
-                                            area2D2->collidedEntities.end());
-
-            callFunction(registry, entity, entity2, "onEndCollide", scriptSystem);
+            entitiesToRemove.push_back(entity2);
         }
+    }
+
+    for (auto entity : entitiesToAdd) {
+            area2D->collidedEntities.push_back(entity);
+    }
+
+    for (auto entity : entitiesToRemove) {
+        area2D->collidedEntities.erase(
+            std::remove(area2D->collidedEntities.begin(), area2D->collidedEntities.end(), entity),
+            area2D->collidedEntities.end());
     }
 }
 
@@ -84,18 +88,6 @@ void Physics::Physics::update(float deltaTime, Registry& registry, ScriptSystem&
             updateCollision(registry, entity, entity2, scriptSystem);
         }
     }
-
-    //    cpSpaceStep(_space, deltaTime);
-    //    for (auto entity : registry.view<Components::BoxCollider, Components::Position>()) //TO DO
-    //    add rotation
-    //    {
-    //        Components::BoxCollider *boxCollider =
-    //        registry.getComponent<Components::BoxCollider>(entity); auto *position =
-    //        registry.getComponent<Components::Position>(entity);
-    //        cpBodySetPosition(boxCollider->body, cpv(position->x, position->y));
-    //        std::cout << cpBodyGetPosition(boxCollider->body).x << " " <<
-    //        cpBodyGetPosition(boxCollider->body).y << std::endl;
-    //    }
 }
 
 Physics::~Physics()
