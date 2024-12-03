@@ -27,28 +27,26 @@ Entity Registry::createEntity(std::vector<Tag> tags)
 
 void Registry::destroyEntity(Entity entity)
 {
-    if (inRegionLock) {
-        std::unique_lock lock(mutex);
-        entityManager.destroyEntity(entity);
-        entityMasks.erase(entity);
-
-        for (auto& [tag, entities] : _tags) {
-            entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-        }
-
-        for (auto& [type, pool] : componentPools) {
-            pool->remove(entity);
-        }
+    if (!inRegionLock) {
+            std::unique_lock lock(mutex);
+            internalDestroyEntity(entity);
     } else {
-        entityManager.destroyEntity(entity);
-        entityMasks.erase(entity);
+    }
+}
 
-        for (auto& [tag, entities] : _tags) {
-            entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-        }
+void Registry::internalDestroyEntity(Entity entity)
+{
+    if (entity == 0) { // debug
+        std::cout << "registry Destroying entity 0" << std::endl;
+    }
+    entityManager.destroyEntity(entity);
+    entityMasks.erase(entity);
 
-        for (auto& [type, pool] : componentPools) {
-            pool->remove(entity);
-        }
+    for (auto& [tag, entities] : _tags) {
+        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+    }
+
+    for (auto& [type, pool] : componentPools) {
+        pool->remove(entity);
     }
 }

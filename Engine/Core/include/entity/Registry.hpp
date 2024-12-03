@@ -13,7 +13,7 @@ class Registry
    public:
     Entity createEntity(std::vector<Tag> tags = {});
     void destroyEntity(Entity entity);
-
+    void internalDestroyEntity(Entity entity);
     void lock()
     {
         mutex.lock();
