@@ -2,6 +2,7 @@
 
 void Audio::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
+    RegistryLock lock(registry);
     for (auto entity : registry.view<AudioSource>()) {
         auto* audioSource = registry.getComponent<AudioSource>(entity);
 

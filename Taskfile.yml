@@ -83,6 +83,33 @@ tasks:
 
     silent: false
 
+  cb_tsan:
+    desc: "Build rtype client with ThreadSanitizer"
+    cmds:
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON -DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1"
+      - cmake --build build --preset conan-release
+      - mkdir -p ./Release_TSan
+      - cp ./build/build/Release/Games/RType/r-type_client ./Release_TSan/r-type_client_tsan
+
+  crtype_tsan:
+    desc: "Run the r-type client with ThreadSanitizer"
+    cmds:
+      - >
+        TSAN_OPTIONS="history_size=7 verbosity=1 log_path=tsan_output.log" ./Release_TSan/r-type_client_tsan 2>tsan_error.log
+
+  crtype_tsan_loop:
+    desc: "Run the r-type client with ThreadSanitizer in loop until crash"
+    cmds:
+      - >
+        while true; do
+          echo "Starting new run at $(date)" >> crash_log.txt;
+          TSAN_OPTIONS="history_size=7 verbosity=1 log_path=tsan_output.log" ./Release_TSan/r-type_client_tsan 2>>tsan_error.log;
+          if [ $? -ne 0 ]; then
+            echo "Crash detected at $(date)" >> crash_log.txt;
+            break;
+          fi;
+        done
+
   clean:
     desc: "Cleaning existing build and binaries"
     cmds:
