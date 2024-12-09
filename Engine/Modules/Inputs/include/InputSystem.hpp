@@ -69,8 +69,17 @@ class InputSystem : public ILoader
     void updateInputs(int inputConfigID);
     bool isInputActive(int inputConfigID, const std::string& action, bool allowHold = true);
 
+    void loadKeyboardConfig(const nlohmann::json& deviceData, InputConfig& _inputConfig);
+    void loadMouseConfig(const nlohmann::json& deviceData, InputConfig& _inputConfig);
+    void loadControllerConfig(const nlohmann::json& deviceData, InputConfig& _inputConfig);
+
    private:
     std::unordered_map<int, InputConfig> configs;
     std::unordered_map<std::string, bool> currentStates;
     std::unordered_map<std::string, bool> prevStates;
+    std::unordered_map<std::string, std::function<void(const nlohmann::json&, InputConfig&)>> deviceLoaders = {
+        {"keyboard", [this](const nlohmann::json& data, InputConfig& config) { loadKeyboardConfig(data, config); }},
+        {"mouse", [this](const nlohmann::json& data, InputConfig& config) { loadMouseConfig(data, config); }},
+        {"controller", [this](const nlohmann::json& data, InputConfig& config) { loadControllerConfig(data, config); }}
+    };
 };
