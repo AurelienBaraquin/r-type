@@ -2,5 +2,11 @@
 
 void Inputs::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
-    SDL_PumpEvents();
+    #ifdef CLIENT
+        SDL_PumpEvents();
+    #elif SERVER
+        // Get from network
+    #else
+        #error "Neither CLIENT nor SERVER is defined"
+    #endif
 }
