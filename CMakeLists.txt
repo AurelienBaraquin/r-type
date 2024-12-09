@@ -12,6 +12,14 @@ if(WIN32)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 endif(WIN32)
 
+if(CLIENT)
+    add_definitions(-DCLIENT)
+endif()
+
+if(SERVER)
+    add_definitions(-DSERVER)
+endif()
+
 find_package(GTest)
 find_package(lua)
 find_package(sol2)
