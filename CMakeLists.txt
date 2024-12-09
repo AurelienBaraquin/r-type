@@ -28,6 +28,7 @@ find_package(SDL2_image)
 find_package(SDL2)
 find_package(nlohmann_json)
 find_package(SFML 2.5 REQUIRED COMPONENTS audio)
+find_package(asio REQUIRED)
 
 add_subdirectory(Engine)
 add_subdirectory(Games)
