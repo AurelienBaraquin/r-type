@@ -30,50 +30,26 @@ Graphic::Graphic(std::string title, int width, int height)
 
     _TextureSystem.setRenderer(_renderer);
 }
+
 void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
-    struct EntityRenderData {
-        Entity entity;
-        bool hasAnimation;
-        std::unique_ptr<Components::Position> position;
-        std::unique_ptr<Components::Scale> scale;
-        std::unique_ptr<Components::Rotation> rotation;
-        std::unique_ptr<Components::Animation> animation;
-        std::unique_ptr<Components::Sprite> sprite;
-    };
+    RegistryLock lock(registry);
 
-    std::future<std::vector<EntityRenderData>> entitiesToDrawFutur = async([&registry]() {
-        RegistryLock lock(registry);
-        std::vector<EntityRenderData> entities;
-
-        auto addEntity = [&](Entity entity) {
-            EntityRenderData data;
-            data.entity = entity;
-            data.hasAnimation = registry.hasComponent<Components::Animation>(entity);
-            data.position = std::make_unique<Components::Position>(*registry.getComponent<Components::Position>(entity));
-            data.scale = std::make_unique<Components::Scale>(*registry.getComponent<Components::Scale>(entity));
-            data.rotation = std::make_unique<Components::Rotation>(*registry.getComponent<Components::Rotation>(entity));
-
-            if (data.hasAnimation) {
-                data.animation = std::make_unique<Components::Animation>(*registry.getComponent<Components::Animation>(entity));
-            } else {
-                data.sprite = std::make_unique<Components::Sprite>(*registry.getComponent<Components::Sprite>(entity));
-            }
-
-            entities.push_back(std::move(data));
-        };
-
-        for (auto entity : registry.view<Components::Sprite, Components::Position, Components::Scale, Components::Rotation>()) {
-            addEntity(entity);
+    std::future<std::vector<Entity>> entitiesToDrawFutur = async([&registry = registry]() {
+        std::vector<Entity> entities;
+        for (auto entity : registry.view<Components::Sprite, Components::Position,
+                                         Components::Scale, Components::Rotation>()) {
+            entities.push_back(entity);
         }
-        for (auto entity : registry.view<Components::Animation, Components::Position, Components::Scale, Components::Rotation>()) {
-            addEntity(entity);
+        for (auto entity : registry.view<Components::Animation, Components::Position,
+                                         Components::Scale, Components::Rotation>()) {
+            entities.push_back(entity);
         }
-
-        std::sort(entities.begin(), entities.end(), [](const EntityRenderData& a, const EntityRenderData& b) {
-            return a.position->z < b.position->z;
+        std::sort(entities.begin(), entities.end(), [&registry](Entity a, Entity b) {
+            auto positionA = registry.getComponent<Components::Position>(a);
+            auto positionB = registry.getComponent<Components::Position>(b);
+            return positionA->z < positionB->z;
         });
-
         return entities;
     });
 
@@ -96,22 +72,36 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
     auto entitiesToDraw = entitiesToDrawFutur.get();
 
-    for (auto& entityData : entitiesToDraw) {
-        if (entityData.hasAnimation) {
-            _AnimationSystem.updateAnimation(*entityData.animation, deltaTime);
+    for (auto entity : entitiesToDraw) {
+        if (registry.hasComponent<Components::Animation>(entity)) {
+            auto animation = registry.getComponent<Components::Animation>(entity);
+            auto position = registry.getComponent<Components::Position>(entity);
+            auto scale = registry.getComponent<Components::Scale>(entity);
+            auto rotation = registry.getComponent<Components::Rotation>(entity);
 
-            if (!entityData.animation->playing) continue;
+            _AnimationSystem.updateAnimation(*animation, deltaTime);
 
-            auto frames = _AnimationSystem.getAnimation(entityData.animation->animationID);
-            auto currentFrame = frames[entityData.animation->currentFrame];
-            auto sprite = BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height, currentFrame.originX, currentFrame.originY};
-            drawTextureEx(&sprite, entityData.position.get(), entityData.rotation.get(), entityData.scale.get());
-        } else {
-            auto brutSprite = _SpriteSystem.getSprite(entityData.sprite->spriteID);
-            drawTextureEx(&brutSprite, entityData.position.get(), entityData.rotation.get(), entityData.scale.get());
+            if (!animation->playing) continue;
+
+            auto frames = _AnimationSystem.getAnimation(animation->animationID);
+            auto currentFrame = frames[animation->currentFrame];
+
+            auto sprite =
+                BrutSprite{currentFrame.textureID, currentFrame.width, currentFrame.height,
+                           currentFrame.originX, currentFrame.originY};
+
+            drawTextureEx(&sprite, position, rotation, scale);
+        } else if (registry.hasComponent<Components::Sprite>(entity)) {
+            auto sprite = registry.getComponent<Components::Sprite>(entity);
+            auto position = registry.getComponent<Components::Position>(entity);
+            auto scale = registry.getComponent<Components::Scale>(entity);
+            auto rotation = registry.getComponent<Components::Rotation>(entity);
+
+            auto brutSprite = _SpriteSystem.getSprite(sprite->spriteID);
+
+            drawTextureEx(&brutSprite, position, rotation, scale);
         }
     }
-
     SDL_RenderPresent(_renderer);
 }
 
