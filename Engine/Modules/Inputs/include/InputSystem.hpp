@@ -73,4 +73,5 @@ class InputSystem : public ILoader
     std::unordered_map<int, InputConfig> configs;
     std::unordered_map<std::string, bool> currentStates;
     std::unordered_map<std::string, bool> prevStates;
+    SDL_GameController* controller = nullptr;
 };

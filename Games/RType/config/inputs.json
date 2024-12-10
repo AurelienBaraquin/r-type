@@ -19,7 +19,7 @@
           "MoveDown": "RightStickYNegative",
           "MoveLeft": "LeftStickXNegative",
           "MoveRight": "LeftStickXPositive",
-          "Shoot": "A"
+          "Shoot": "X"
         }
       }
     }
