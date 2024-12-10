@@ -19,7 +19,7 @@ function update(delta)
     setPosition(self, position)
 
     if (position.x > 800) then
-
+        destroyEntity(self)
     end
 end
 
