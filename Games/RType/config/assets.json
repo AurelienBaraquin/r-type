@@ -120,58 +120,37 @@
       "frames": [
         {
           "textureID": 1,
-          "width": 50,
-          "height": 50,
+          "width": 33,
+          "height": 17,
           "originX": 0,
           "originY": 0
         },
         {
           "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 50,
+          "width": 33,
+          "height": 17,
+          "originX": 33,
           "originY": 0
         },
         {
           "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 100,
+          "width": 33,
+          "height": 17,
+          "originX": 66,
           "originY": 0
         },
         {
           "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 150,
+          "width": 33,
+          "height": 17,
+          "originX": 99,
           "originY": 0
         },
         {
           "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 200,
-          "originY": 0
-        },
-        {
-          "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 250,
-          "originY": 0
-        },
-        {
-          "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 300,
-          "originY": 0
-        },
-        {
-          "textureID": 1,
-          "width": 50,
-          "height": 50,
-          "originX": 350,
+          "width": 33,
+          "height": 17,
+          "originX": 132,
           "originY": 0
         }
       ]
@@ -269,7 +248,7 @@
     },
     {
       "textureID": 1,
-      "path": "Games/RType/assets/r-typesheet14.gif"
+      "path": "Games/RType/assets/r-typesheet42.gif"
     },
     {
       "textureID": 2,

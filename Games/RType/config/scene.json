@@ -62,7 +62,7 @@
         "Area2D": { "width": 120 , "height": 80 },
         "Input": { "inputConfigID": 0 },
         "Animation": {
-          "animationID": 0,
+          "animationID": 1,
           "currentFrame": 0,
           "elapsedTime": 0.0,
           "loop": true,
