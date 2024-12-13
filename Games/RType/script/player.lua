@@ -36,8 +36,13 @@ function update(delta)
     if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
         shoot_timer = shoot_rate
         playAnimation(self, 1)
+        local bullet_position = {
+            x = position.x + 10,
+            y = position.y - 20,
+            z = position.z
+        }
         bullet = createEntity("Bullet")
-        setPosition(bullet, position)
+        setPosition(bullet, bullet_position)
         playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
     end
     if shoot_timer > 0 then
