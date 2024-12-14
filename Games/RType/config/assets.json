@@ -87,27 +87,27 @@
     },
     {
       "animationID": 3,
-      "frameTime": 0.2,
+      "frameTime": 0.5,
       "frames": [
         {
           "textureID": 3,
-          "width": 66,
-          "height": 70,
+          "width": 55,
+          "height": 58,
           "originX": 0,
           "originY": 0
         },
         {
           "textureID": 3,
-          "width": 66,
-          "height": 70,
-          "originX": 66,
+          "width": 55,
+          "height": 58,
+          "originX": 55,
           "originY": 0
         },
         {
           "textureID": 3,
-          "width": 66,
-          "height": 70,
-          "originX": 132,
+          "width": 55,
+          "height": 58,
+          "originX": 110,
           "originY": 0
         }
       ]
