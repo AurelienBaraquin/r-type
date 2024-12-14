@@ -1,5 +1,3 @@
--- ENEMY SCRIPT
-
 speed = 5
 self = nil
 shoot_timer = 0
@@ -16,7 +14,6 @@ function update(delta)
 
     local rot = getRotation(self)
     rot.angle = rot.angle + speed / 5
---     setRotation(self, rot)
     if type(position) ~= "table" then
         print("position is not a table")
         return
@@ -52,9 +49,6 @@ function update(delta)
 end
 
 function onCollide(other)
---     local position = getPosition(self)
---     position.x = position.x + 1
---     setPosition(self, position)
 end
 
 function setSpeed(self, newSpeed)
