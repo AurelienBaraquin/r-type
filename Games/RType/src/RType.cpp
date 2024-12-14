@@ -3,10 +3,14 @@
 int main()
 {
     Engine engine;
-    engine.addModule<Graphic>("R-Type", 800, 600);
+    #ifdef BUILD_GRAPHIC
+        engine.addModule<Graphic>("R-Type", 800, 600);
+    #endif
+    #ifdef BUILD_AUDIO
+        engine.addModule<Audio>();
+    #endif
     engine.addModule<Inputs>();
     engine.addModule<Physics>();
-    engine.addModule<Audio>();
     engine.addModule<Network>();
 
     engine.loadScene("Games/RType/config/scene.json");
