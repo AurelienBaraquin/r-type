@@ -7,10 +7,11 @@ int main()
     engine.addModule<Inputs>();
     engine.addModule<Physics>();
     engine.addModule<Audio>();
+    engine.addModule<Network>();
 
     engine.loadScene("Games/RType/config/scene.json");
 
     engine.run();
 
-    return 0;
+    return 0; 
 }

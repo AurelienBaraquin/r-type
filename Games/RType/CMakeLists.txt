@@ -19,6 +19,7 @@ function(create_rtype_target target_name definition)
         Engine::Physics
         Engine::Inputs
         Engine::Audio
+        Engine::Network
     )
 endfunction()
 
