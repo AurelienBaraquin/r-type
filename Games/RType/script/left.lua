@@ -12,6 +12,10 @@ function update(delta)
     local position = getPosition(self)
     position.x = position.x - speed
     setPosition(self, position)
+
+    if position.x < 50 then
+        destroyEntity(self)
+    end
 end
 
 function onCollide(other)

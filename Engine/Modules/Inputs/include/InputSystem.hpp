@@ -82,4 +82,5 @@ class InputSystem : public ILoader
         {"mouse", [this](const nlohmann::json& data, InputConfig& config) { loadMouseConfig(data, config); }},
         {"controller", [this](const nlohmann::json& data, InputConfig& config) { loadControllerConfig(data, config); }}
     };
+    SDL_GameController* controller = nullptr;
 };

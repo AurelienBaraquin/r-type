@@ -73,22 +73,105 @@ InputConfig& InputSystem::getInput(int inputConfigID)
     return configs[inputConfigID];
 }
 
+SDL_GameController *findController() {
+    for (int i = 0; i < SDL_NumJoysticks(); i++) {
+        if (SDL_IsGameController(i)) {
+            return SDL_GameControllerOpen(i);
+        }
+    }
+
+    return nullptr;
+}
+
 void InputSystem::updateInputs(int inputConfigID)
 {
+    // Réinitialiser les états actuels
     for (auto& [_, state] : currentStates) {
         state = false;
     }
 
-    const Uint8* state = SDL_GetKeyboardState(nullptr);
+    // Récupération de l'état du clavier
+    const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
     for (auto& [input, action] : configs[inputConfigID].buttons) {
-        if (state[input]) {
+        if (keyboardState[input]) {
             currentStates[action] = true;
         }
     }
 
-    for (auto& [input, action] : configs[inputConfigID].mouseButtons) {
-        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(input)) {
+    // Récupération de l'état de la souris
+    int x, y;
+    Uint32 mouseButtonsState = SDL_GetMouseState(&x, &y);
+    for (auto& [mouseButton, action] : configs[inputConfigID].mouseButtons) {
+        if (mouseButtonsState & SDL_BUTTON(mouseButton)) {
             currentStates[action] = true;
+        }
+    }
+
+    static auto controllerInited = false;
+
+    if (!controllerInited) {
+        controller = findController();
+        controllerInited = true;
+    }
+    if (controller) {
+        // Gestion des boutons de la manette
+        for (auto& [button, action] : configs[inputConfigID].controllerButtons) {
+            if (SDL_GameControllerGetButton(controller, button)) {
+                currentStates[action] = true;
+            }
+        }
+
+        // Gestion des axes de la manette
+        // Définition d’une deadzone : en dessous de cette valeur absolue, on considère l’axe comme inactif.
+        const Sint16 DEADZONE = 8000;
+
+        for (auto& [axis, action] : configs[inputConfigID].controllerAxis) {
+            SDL_GameControllerAxis sdlAxis;
+            bool checkPositive = false;
+            bool checkNegative = false;
+
+            switch (axis) {
+                case CONTROLLER_AXIS::LEFT_STICK_X_POSITIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_LEFTX;
+                    checkPositive = true;
+                    break;
+                case CONTROLLER_AXIS::LEFT_STICK_X_NEGATIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_LEFTX;
+                    checkNegative = true;
+                    break;
+                case CONTROLLER_AXIS::LEFT_STICK_Y_POSITIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_LEFTY;
+                    checkPositive = true;
+                    break;
+                case CONTROLLER_AXIS::LEFT_STICK_Y_NEGATIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_LEFTY;
+                    checkNegative = true;
+                    break;
+                case CONTROLLER_AXIS::RIGHT_STICK_X_POSITIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_RIGHTX;
+                    checkPositive = true;
+                    break;
+                case CONTROLLER_AXIS::RIGHT_STICK_X_NEGATIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_RIGHTX;
+                    checkNegative = true;
+                    break;
+                case CONTROLLER_AXIS::RIGHT_STICK_Y_POSITIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_RIGHTY;
+                    checkPositive = true;
+                    break;
+                case CONTROLLER_AXIS::RIGHT_STICK_Y_NEGATIVE:
+                    sdlAxis = SDL_CONTROLLER_AXIS_RIGHTY;
+                    checkNegative = true;
+                    break;
+            }
+
+            Sint16 value = SDL_GameControllerGetAxis(controller, sdlAxis);
+
+            // Si checkPositive est vrai, on considère l’axe actif si value > DEADZONE
+            // Si checkNegative est vrai, on considère l’axe actif si value < -DEADZONE
+            if ((checkPositive && value > DEADZONE) || (checkNegative && value < -DEADZONE)) {
+                currentStates[action] = true;
+            }
         }
     }
 }
