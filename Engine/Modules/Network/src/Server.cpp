@@ -1,8 +1,10 @@
-#include "Network.hpp"
 #include <asio.hpp>
 #include <iostream>
 
-int tryServer() {
+#include "Network.hpp"
+
+int tryServer()
+{
     try {
         asio::io_context ioContext;
         UdpServer server(ioContext, 12345);

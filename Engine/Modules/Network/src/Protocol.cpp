@@ -1,8 +1,10 @@
 #include "Protocol.hpp"
-#include <cstring> // for memcpy
+
+#include <cstring>  // for memcpy
 
 // Placeholder checksum function. In reality, implement a proper CRC32.
-static uint32_t simpleChecksum(const uint8_t* data, size_t length) {
+static uint32_t simpleChecksum(const uint8_t* data, size_t length)
+{
     // Very naive checksum example: sum all bytes
     uint32_t sum = 0;
     for (size_t i = 0; i < length; i++) {
@@ -11,7 +13,8 @@ static uint32_t simpleChecksum(const uint8_t* data, size_t length) {
     return sum;
 }
 
-std::vector<uint8_t> Packet::serialize() const {
+std::vector<uint8_t> Packet::serialize() const
+{
     // Compute checksum first
     uint32_t chksum = computeChecksum();
 
@@ -29,9 +32,10 @@ std::vector<uint8_t> Packet::serialize() const {
     return buffer;
 }
 
-bool Packet::deserialize(const uint8_t* data, size_t size) {
+bool Packet::deserialize(const uint8_t* data, size_t size)
+{
     if (size < sizeof(PacketHeader)) {
-        return false; // too small
+        return false;  // too small
     }
 
     PacketHeader hdr;
@@ -49,9 +53,9 @@ bool Packet::deserialize(const uint8_t* data, size_t size) {
     }
 
     // Verify checksum
-    header = hdr; // store temporarily
+    header = hdr;  // store temporarily
     uint32_t receivedChecksum = hdr.checksum;
-    header.checksum = 0; // clear for computation
+    header.checksum = 0;  // clear for computation
     uint32_t computed = computeChecksum();
 
     if (computed != receivedChecksum) {
@@ -61,7 +65,8 @@ bool Packet::deserialize(const uint8_t* data, size_t size) {
     return true;
 }
 
-uint32_t Packet::computeChecksum() const {
+uint32_t Packet::computeChecksum() const
+{
     // Compute checksum over header (with checksum=0) and payload
     PacketHeader hdr = header;
     hdr.checksum = 0;
@@ -74,4 +79,3 @@ uint32_t Packet::computeChecksum() const {
 
     return simpleChecksum(temp.data(), temp.size());
 }
-

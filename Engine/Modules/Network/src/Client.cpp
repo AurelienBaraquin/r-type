@@ -1,8 +1,10 @@
-#include "Network.hpp"
 #include <asio.hpp>
 #include <iostream>
 
-int tryClient() {
+#include "Network.hpp"
+
+int tryClient()
+{
     try {
         asio::io_context ioContext;
         asio::ip::udp::endpoint serverEndpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
@@ -20,8 +22,12 @@ int tryClient() {
             float vel[3];
         } pu;
         pu.playerID = 42;
-        pu.pos[0] = 1.0f; pu.pos[1] = 2.0f; pu.pos[2] = 3.0f;
-        pu.vel[0] = 0.0f; pu.vel[1] = 0.0f; pu.vel[2] = 0.0f;
+        pu.pos[0] = 1.0f;
+        pu.pos[1] = 2.0f;
+        pu.pos[2] = 3.0f;
+        pu.vel[0] = 0.0f;
+        pu.vel[1] = 0.0f;
+        pu.vel[2] = 0.0f;
 
         std::vector<uint8_t> payload(sizeof(PlayerUpdate));
         std::memcpy(payload.data(), &pu, sizeof(PlayerUpdate));
