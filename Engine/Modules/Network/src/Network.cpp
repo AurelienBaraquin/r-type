@@ -1,36 +1,17 @@
 #include "Network.hpp"
-#include "Registry.hpp"
-#include "ScriptSystem.hpp"
 
 Network::Network() {
-    // constructor implementation
 }
 
-void Network::load(const nlohmann::json& data) {
-    // load implementation
+void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) {
+    // Update network system
 }
 
-std::string Network::getPart() {
-    return "NetworkPart";
+void Network::registerComponentFactory(ComponentFactory &componentFactory) {
+    // Register network-related components
 }
 
-void Network::initialize() {
-    // initialize implementation
+void Network::registerScriptBindings(ScriptSystem &scriptSystem, Registry &registry) {
+    // Register network-related script bindings
 }
 
-#ifdef CLIENT
-
-void Network::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
-    std::cout << "Updating the client network system..." << std::endl;
-    // Provide the logic for updating the network system.
-    // This can be anything you need: handling network events, sending/receiving data, etc.
-}
-#endif
-
-#ifdef SERVER
-void Network::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
-    std::cout << "Updating the server network system..." << std::endl;
-    // Provide the logic for updating the network system.
-    // This can be anything you need: handling network events, sending/receiving data, etc.
-}
-#endif

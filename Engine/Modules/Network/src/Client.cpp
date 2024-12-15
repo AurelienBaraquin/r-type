@@ -1,37 +1,35 @@
 #include "Network.hpp"
 #include <asio.hpp>
+#include <iostream>
 
-#ifdef CLIENT
-    void sendMessage(asio::ip::udp::socket& socket, const asio::ip::udp::endpoint& receiver_endpoint, const std::string& message)
-    {
-        socket.send_to(asio::buffer(message), receiver_endpoint);
+int tryClient() {
+    try {
+        asio::io_context ioContext;
+        asio::ip::udp::endpoint serverEndpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
+        UdpClient client(ioContext, serverEndpoint);
+
+        // Create a Player Update packet
+        Packet p;
+        p.setMessageType(MessageType::PLAYER_UPDATE);
+        p.setSequence(1);
+
+        // Construct payload (example: playerID=42, pos=(1.0f,2.0f,3.0f), vel=(0.0f,0.0f,0.0f))
+        struct PlayerUpdate {
+            uint32_t playerID;
+            float pos[3];
+            float vel[3];
+        } pu;
+        pu.playerID = 42;
+        pu.pos[0] = 1.0f; pu.pos[1] = 2.0f; pu.pos[2] = 3.0f;
+        pu.vel[0] = 0.0f; pu.vel[1] = 0.0f; pu.vel[2] = 0.0f;
+
+        std::vector<uint8_t> payload(sizeof(PlayerUpdate));
+        std::memcpy(payload.data(), &pu, sizeof(PlayerUpdate));
+        p.setPayload(payload);
+
+        client.sendPacket(p);
+        std::cout << "Client: Packet sent.\n";
+    } catch (std::exception& e) {
+        std::cerr << "Client exception: " << e.what() << "\n";
     }
-
-    std::string receiveMessage(asio::ip::udp::socket& socket, asio::ip::udp::endpoint& sender_endpoint)
-    {
-        char data[1024];
-        size_t length = socket.receive_from(asio::buffer(data), sender_endpoint);
-        return std::string(data, length);
-    }
-
-    asio::ip::udp::endpoint resolveEndpoint(asio::io_context& io_context, const std::string& host, const std::string& port)
-    {
-        asio::ip::udp::resolver resolver(io_context);
-        return *resolver.resolve(asio::ip::udp::v4(), host, port).begin();
-    }
-
-    void Network::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
-    {
-        asio::io_context io_context;
-        asio::ip::udp::endpoint receiver_endpoint = resolveEndpoint(io_context, "localhost", "12345");
-
-        asio::ip::udp::socket socket(io_context);
-        socket.open(asio::ip::udp::v4());
-
-        std::string message = "Hello from client";
-        sendMessage(socket, receiver_endpoint, message);
-
-        asio::ip::udp::endpoint sender_endpoint;
-        std::string response = receiveMessage(socket, sender_endpoint);
-    }
-#endif
+}
