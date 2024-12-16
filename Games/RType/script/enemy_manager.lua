@@ -27,7 +27,7 @@ function spawnEnemy()
     local enemy = createEntity("Enemy")
     addTag(enemy, "MainScene")
     if enemy ~= nil then
-        setPosition(enemy, {x = 800, y = math.random(100, 200), z = 0})
+        setPosition(enemy, {x = 250, y = math.random(0, 100), z = 0})
         print("Enemy spawned at position:", 800, math.random(100, 200))
     else
         print("Failed to create Enemy entity")
@@ -39,7 +39,7 @@ function spawnBoss()
     addTag(boss, "MainScene")
 
     if boss ~= nil then
-        setPosition(boss, {x = 800, y = 100, z = 3})
+        setPosition(boss, {x = 800, y = 0, z = 3})
         print("Boss spawned at position:", 800, 100)
     else
         print("Failed to create Boss entity")

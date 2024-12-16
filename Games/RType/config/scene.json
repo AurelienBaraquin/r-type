@@ -80,7 +80,7 @@
       "_name_": "Player",
       "tags": ["player"],
       "components": {
-        "Position": { "x": 100, "y": 200, "z": 1 },
+        "Position": { "x": 0, "y": 0, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Area2D": { "width": 33 , "height": 17 },

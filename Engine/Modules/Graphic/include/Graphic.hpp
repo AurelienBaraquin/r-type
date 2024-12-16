@@ -32,6 +32,7 @@ public:
     std::string getPart() override { return "graphic"; }
 
 private:
+    Camera2D camera = { 0 };
     std::string _title;
     int _width;
     int _height;

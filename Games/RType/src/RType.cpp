@@ -3,7 +3,7 @@
 int main()
 {
     Engine engine;
-    engine.addModule<Graphic>("R-Type", 800, 600);
+    engine.addModule<Graphic>("R-Type", 384 * 2, 256 * 2);
     engine.addModule<Inputs>();
     engine.addModule<Physics>();
     engine.addModule<Audio>();
