@@ -1,13 +1,13 @@
 #pragma once
 
+#include <asio.hpp>
+#include <iostream>
+
 #include "ISystem.hpp"
 #include "Loader.hpp"
 #include "Protocol.hpp"
 #include "UdpClient.hpp"
 #include "UdpServer.hpp"
-
-#include <asio.hpp>
-#include <iostream>
 
 class Network : public ISystem, public ILoader
 {
@@ -23,13 +23,14 @@ class Network : public ISystem, public ILoader
     {
         return "network";
     }
-    private:
+
+   private:
     asio::io_context ioContext;
-    #ifdef SERVER
-        UdpServer server;
-    #elif CLIENT
-        UdpClient client;
-    #endif
+#ifdef SERVER
+    UdpServer server;
+#elif CLIENT
+    UdpClient client;
+#endif
 };
 
 void tryClient();

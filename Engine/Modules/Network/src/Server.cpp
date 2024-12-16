@@ -16,7 +16,7 @@ void tryServer()
         std::cout << "Server running on port 12345...\n";
 
         t.join();
-        
+
     } catch (std::exception& e) {
         std::cerr << "Server exception: " << e.what() << "\n";
     }
