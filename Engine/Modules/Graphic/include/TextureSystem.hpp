@@ -1,35 +1,19 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
-#include <Loader.hpp>
-#include <string>
+#include <raylib.h>
 #include <unordered_map>
+#include <string>
+#include <Loader.hpp>
 
-class TextureSystem : public ILoader
-{
-   public:
-    void setRenderer(SDL_Renderer* renderer)
-    {
-        _renderer = renderer;
-    }
-
-    void loadTexture(int textureID, const std::string path);
-
-    // Loader interface
-    void load(const nlohmann::json& data) override;
-    std::string getPart() override
-    {
-        return "textures";
-    }
-
+class TextureSystem : public ILoader {
+public:
+    void loadTexture(int textureID, const std::string& path);
     void remove(int textureID);
-    SDL_Texture* get(int textureID) const;
+    Texture2D get(int textureID) const;
 
-    void loadTexturesInRenderer();
+    void load(const nlohmann::json& data) override;
+    std::string getPart() override { return "textures"; }
 
-   private:
-    std::unordered_map<int, SDL_Texture*> textures;
-    SDL_Renderer* _renderer;
+private:
+    std::unordered_map<int, Texture2D> textures;
 };
