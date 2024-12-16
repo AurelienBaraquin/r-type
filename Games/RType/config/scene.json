@@ -113,5 +113,5 @@
       }
     }
   ],
-  "scenes": ["assets.json", "audio.json"]
+  "scenes": ["assets.json", "audio.json", "particles.json"]
 }

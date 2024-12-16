@@ -36,7 +36,10 @@ function damage(dmg)
     if hp <= 0 then
 
         if self == 0 or self ~= nil then
+            local explosion = createEntity("BulletExplosion")
+            setPosition(explosion, getPosition(self))
             destroyEntity(self)
+            
         end
     end
 end
