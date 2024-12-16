@@ -1,67 +1,41 @@
 #pragma once
 
-#define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
+#include <raylib.h>
 #include <string>
-
+#include <vector>
+#include <tuple>
 #include "AnimationSystem.hpp"
 #include "ISystem.hpp"
 #include "SpriteSystem.hpp"
 #include "TextureSystem.hpp"
 #include "Transform.hpp"
 
-class Graphic : public ISystem, public ILoader, public NotThreadable
-{
-   public:
-    Graphic(std::string title, int width, int height);
+class Graphic : public ISystem, public ILoader, public NotThreadable {
+public:
+    Graphic(const std::string& title, int width, int height);
 
     ~Graphic() override;
 
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override;
-    void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
+    void registerScriptBindings(ScriptSystem& scriptSystem, Registry& registry) override;
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
-    TextureSystem& manageTextures()
-    {
-        return _TextureSystem;
-    }
+    TextureSystem& manageTextures() { return _TextureSystem; }
+    SpriteSystem& manageSprites() { return _SpriteSystem; }
+    AnimationSystem& manageAnimations() { return _AnimationSystem; }
 
-    SpriteSystem& manageSprites()
-    {
-        return _SpriteSystem;
-    }
-
-    AnimationSystem& manageAnimations()
-    {
-        return _AnimationSystem;
-    }
-
-    // ILoader interface
-    void load(const nlohmann::json& data) override
-    {
-    }
-    std::vector<ILoader*> getLoaders() override
-    {
+    void load(const nlohmann::json& data) override {}
+    std::vector<ILoader*> getLoaders() override {
         return {dynamic_cast<ILoader*>(&_TextureSystem), dynamic_cast<ILoader*>(&_SpriteSystem),
                 dynamic_cast<ILoader*>(&_AnimationSystem)};
     }
-    std::string getPart() override
-    {
-        return "graphic";
-    }
+    std::string getPart() override { return "graphic"; }
 
-   private:
+private:
     std::string _title;
     int _width;
     int _height;
-
     std::tuple<int, int> _mousePosition;
-
-    SDL_Window* _window = nullptr;
-    SDL_Renderer* _renderer = nullptr;
-    SDL_Event _event;
 
     TextureSystem _TextureSystem;
     SpriteSystem _SpriteSystem;
