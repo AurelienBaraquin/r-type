@@ -6,7 +6,7 @@
 #include "ISystem.hpp"
 #include "Registry.hpp"
 #include "ScriptSystem.hpp"
-
+#include "ISystem.hpp"
 struct AudioSource {
     std::string filePath;
     float volume = 1.0f;
@@ -14,7 +14,7 @@ struct AudioSource {
     bool playOnUpdate = false;
 };
 
-class Audio : public ISystem
+class Audio : public ISystem, public NotThreadable
 {
    public:
     Audio();

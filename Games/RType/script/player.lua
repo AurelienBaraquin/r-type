@@ -1,4 +1,4 @@
-speed = 50
+speed = 3
 self = nil
 shoot_timer = 0
 shoot_rate = 5
