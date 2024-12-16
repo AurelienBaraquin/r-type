@@ -9,8 +9,7 @@ class CactusEngine(ConanFile):
 
     def requirements(self):
         self.requires("gtest/1.15.0")
-        self.requires("sdl/2.28.3")
-        self.requires("sdl_image/2.6.3")
+        self.requires("raylib/5.5")
         self.requires("sol2/3.3.1")
         self.requires("lua/5.4.6")
         self.requires("chipmunk2d/7.0.3")

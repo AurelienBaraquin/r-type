@@ -16,7 +16,7 @@ function update(delta)
     position.y = position.y + speed
     setPosition(selfEntity, position)
 
-    if position.y > 600 then
+    if position.y < -100 then
         destroyEntity(selfEntity)
         print("BossBullet destroyed after moving out of bounds")
     end

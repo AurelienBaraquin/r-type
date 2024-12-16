@@ -43,6 +43,10 @@ function update(delta)
         shoot_timer = 0
         shoot()
     end
+
+    if (position.x < 100) then
+        destroyEntity(selfEntity)
+    end
 end
 
 function shoot()
@@ -84,7 +88,7 @@ function damage(dmg)
     hp = hp - dmg
     print("Boss took damage:", dmg, "remaining HP:", hp)
 
-    if hp <= 0 then
+    if (hp <= 0) then
         destroyEntity(selfEntity)
         print("Boss destroyed")
     end

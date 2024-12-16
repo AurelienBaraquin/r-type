@@ -9,7 +9,7 @@
           "MoveDown": "S",
           "MoveLeft": "A",
           "MoveRight": "D",
-          "Shoot": "Space"
+          "Shoot": "SPACE"
         },
         "mouse": {
           "Shoot": "LeftButton"
