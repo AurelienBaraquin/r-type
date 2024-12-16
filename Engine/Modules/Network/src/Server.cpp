@@ -2,8 +2,9 @@
 #include <iostream>
 
 #include "Network.hpp"
+#include "UdpServer.hpp"
 
-int tryServer()
+void tryServer()
 {
     try {
         asio::io_context ioContext;
@@ -15,6 +16,7 @@ int tryServer()
         std::cout << "Server running on port 12345...\n";
 
         t.join();
+        
     } catch (std::exception& e) {
         std::cerr << "Server exception: " << e.what() << "\n";
     }

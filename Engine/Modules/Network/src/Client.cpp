@@ -2,8 +2,9 @@
 #include <iostream>
 
 #include "Network.hpp"
+#include "UdpClient.hpp"
 
-int tryClient()
+void tryClient()
 {
     try {
         asio::io_context ioContext;

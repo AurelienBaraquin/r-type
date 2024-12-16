@@ -1,19 +1,80 @@
 #include "Network.hpp"
 
-Network::Network()
+#ifdef CLIENT
+Network::Network() : ioContext(), client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
 {
-    // #ifdef CLIENT
-    // tryClient();
-    // #elif SERVER
-    // tryServer();
-    // #else
-    // std::cerr << "Please define either CLIENT or SERVER\n";
-    // #endif
+    try {
+        Packet p;
+        p.setMessageType(MessageType::PLAYER_UPDATE);
+        p.setSequence(1);
+
+        // Construct payload (example: playerID=42, pos=(1.0f,2.0f,3.0f), vel=(0.0f,0.0f,0.0f))
+        struct PlayerUpdate {
+            uint32_t playerID;
+            float pos[3];
+            float vel[3];
+        } pu;
+        pu.playerID = 42;
+        pu.pos[0] = 1.0f;
+        pu.pos[1] = 2.0f;
+        pu.pos[2] = 3.0f;
+        pu.vel[0] = 0.0f;
+        pu.vel[1] = 0.0f;
+        pu.vel[2] = 0.0f;
+
+        std::vector<uint8_t> payload(sizeof(PlayerUpdate));
+        std::memcpy(payload.data(), &pu, sizeof(PlayerUpdate));
+        p.setPayload(payload);
+
+        client.sendPacket(p);
+        std::cout << "Client: Packet sent.\n";
+    } catch (std::exception& e) {
+        std::cerr << "Client exception: " << e.what() << "\n";
+    }
 }
+
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    // Update network system
+    // Packet p;
+    // p.setMessageType(MessageType::PLAYER_INPUT);
+
+    // p.setSequence(1);
+
+    // struct PlayerInput {
+    //     uint32_t playerID;
+
+    // } pi;
+
+    // pi.PlayerID = 42;
+
+    // std::vector<uint8_t> payload(sizeof(PlayerInput));
+    // std::memcpy(payload.data(), &pi, sizeof(PlayerInput));
+    // p.setPayload(payload);
 }
+#endif
+
+#ifdef SERVER
+Network::Network() : ioContext(), server(ioContext, 12345)
+{
+    try {
+        server.start();
+
+        std::thread t([this]() { this->ioContext.run(); });
+
+        std::cout << "Server running on port 12345...\n";
+
+        t.join();
+        
+    } catch (std::exception& e) {
+        std::cerr << "Server exception: " << e.what() << "\n";
+    }
+}
+
+void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
+{
+    std::cout << "Server update\n" << std::endl;
+}
+#endif
 
 void Network::registerComponentFactory(ComponentFactory &componentFactory)
 {

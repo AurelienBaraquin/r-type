@@ -11,7 +11,7 @@ enum class MessageType : uint8_t {
     PLAYER_UPDATE = 0x01,
     WORLD_EVENT = 0x02,
     SERVER_SNAPSHOT = 0x03,
-    // Add more types as needed
+    PLAYER_INPUT = 0x04,
 };
 
 #pragma pack(push, 1)

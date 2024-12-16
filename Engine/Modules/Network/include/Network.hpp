@@ -2,6 +2,12 @@
 
 #include "ISystem.hpp"
 #include "Loader.hpp"
+#include "Protocol.hpp"
+#include "UdpClient.hpp"
+#include "UdpServer.hpp"
+
+#include <asio.hpp>
+#include <iostream>
 
 class Network : public ISystem, public ILoader
 {
@@ -17,7 +23,14 @@ class Network : public ISystem, public ILoader
     {
         return "network";
     }
+    private:
+    asio::io_context ioContext;
+    #ifdef SERVER
+        UdpServer server;
+    #elif CLIENT
+        UdpClient client;
+    #endif
 };
 
-int tryClient();
-int tryServer();
+void tryClient();
+void tryServer();
