@@ -68,6 +68,11 @@ void InputSystem::removeInput(int inputConfigID)
     configs.erase(inputConfigID);
 }
 
+std::string InputSystem::getState()
+{
+    return this.currentStates;
+}
+
 InputConfig& InputSystem::getInput(int inputConfigID)
 {
     return configs[inputConfigID];
@@ -179,7 +184,6 @@ void InputSystem::updateInputs(int inputConfigID)
 bool InputSystem::isInputActive(int inputConfigID, const std::string& action, bool allowHold)
 {
     bool prev;
-
     if (!allowHold) {
         prev = prevStates[action];
         prevStates[action] = currentStates[action];

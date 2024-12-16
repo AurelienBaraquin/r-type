@@ -11,12 +11,10 @@ void tryClient()
         asio::ip::udp::endpoint serverEndpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
         UdpClient client(ioContext, serverEndpoint);
 
-        // Create a Player Update packet
         Packet p;
         p.setMessageType(MessageType::PLAYER_UPDATE);
         p.setSequence(1);
 
-        // Construct payload (example: playerID=42, pos=(1.0f,2.0f,3.0f), vel=(0.0f,0.0f,0.0f))
         struct PlayerUpdate {
             uint32_t playerID;
             float pos[3];

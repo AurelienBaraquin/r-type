@@ -19,5 +19,5 @@ class UdpServer
     asio::io_context& io_;
     asio::ip::udp::socket socket_;
     asio::ip::udp::endpoint remoteEndpoint_;
-    std::array<uint8_t, 2048> recvBuffer_;  // Increase size as needed
+    std::array<uint8_t, 2048> recvBuffer_;
 };

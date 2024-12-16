@@ -25,7 +25,6 @@ struct PacketHeader {
 };
 #pragma pack(pop)
 
-// A utility class to build and parse packets
 class Packet
 {
    public:
@@ -40,13 +39,10 @@ class Packet
         header.checksum = 0;
     }
 
-    // Serialize to a buffer
     std::vector<uint8_t> serialize() const;
 
-    // Deserialize from a buffer
     bool deserialize(const uint8_t* data, size_t size);
 
-    // Compute checksum for this packet
     uint32_t computeChecksum() const;
 
     void setMessageType(MessageType type)

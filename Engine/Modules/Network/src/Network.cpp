@@ -10,7 +10,6 @@ Network::Network()
         p.setMessageType(MessageType::PLAYER_UPDATE);
         p.setSequence(1);
 
-        // Construct payload (example: playerID=42, pos=(1.0f,2.0f,3.0f), vel=(0.0f,0.0f,0.0f))
         struct PlayerUpdate {
             uint32_t playerID;
             float pos[3];
@@ -37,6 +36,10 @@ Network::Network()
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
+    // auto* input = registry.getComponent<Components::Input>(entity);
+    // if (!input)
+    //     throw std::runtime_error("Input component not found");
+    // std::cout << "Input " <<  input.inputConfigID << std::endl;
     // Packet p;
     // p.setMessageType(MessageType::PLAYER_INPUT);
 
