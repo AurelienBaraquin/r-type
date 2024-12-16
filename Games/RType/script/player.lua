@@ -21,6 +21,7 @@ function update(delta)
     end
     position = handle_move(position)
     if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
+        -- changeScene()
         shoot_timer = shoot_rate
         playAnimation(self, 1)
         local bullet_position = {

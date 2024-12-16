@@ -90,6 +90,11 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 throw std::runtime_error("Method not found");
             }
         };
+        luaState["changeScene"] = [this]() {
+            std::cout << "loading scene" << std::endl;
+            loadScene("Games/RType/config/scene.json",true);
+
+        };
     });
 
     _ScriptSystem.registerBinding("Entity", [&registry = registry](sol::state& luaState) {

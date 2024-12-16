@@ -53,10 +53,10 @@ class Engine : public ISystem
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
-    void loadScene(const std::string& filePath)
+    void loadScene(const std::string& filePath, bool reload=false)
     {
         SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager)
-            .loadScene(filePath);
+            .loadScene(filePath, reload);
     }
 
     void run()
