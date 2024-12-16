@@ -22,7 +22,7 @@ class SceneLoader
     }
 
     void loadEntity(const nlohmann::json& entityData, const std::string& sceneTag);
-    void loadScene(const std::string& filePath);
+    void loadScene(const std::string& filePath, bool reload = false);
 
     void clear()
     {

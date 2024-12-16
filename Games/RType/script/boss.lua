@@ -63,6 +63,8 @@ function shoot()
     }
 
     local bullet = createEntity("BossBullet")
+    addTag(bullet, "MainScene")
+
     if bullet ~= nil then
         setPosition(bullet, bullet_position)
         print("Boss shot a bullet from position:", bullet_position.x, bullet_position.y)
