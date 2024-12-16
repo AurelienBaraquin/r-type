@@ -1,4 +1,5 @@
 #include "Network.hpp"
+
 #include "Sharable.hpp"
 
 #ifdef CLIENT
@@ -37,37 +38,55 @@ Network::Network()
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    const auto& variables = Sharable::getInstance().getAllSharedVariables();
-    for (const auto& [varName, getter] : variables) {
-        auto data = getter();
+    const auto &variables = Sharable::getInstance().getAllSharedVariables();
+    std::vector<std::string> dataStr;  // Declare dataStr outside the loop
 
-        std::vector<std::string> dataStr = std::get<std::vector<std::string>>(data);
+    for (const auto &[varName, getter] : variables) {
+        auto data = getter();
+        dataStr = std::get<std::vector<std::string>>(data);  // Assign dataStr inside the loop
 
         std::cout << varName << ": ";
-        for (const auto& str : dataStr) {
+        for (const auto &str : dataStr) {
             std::cout << str << " ";
         }
         std::cout << std::endl << std::endl;
     }
 
-    // auto* input = registry.getComponent<Components::Input>(entity);
-    // if (!input)
-    //     throw std::runtime_error("Input component not found");
-    // std::cout << "Input " <<  input.inputConfigID << std::endl;
-    // Packet p;
-    // p.setMessageType(MessageType::PLAYER_INPUT);
+    Packet p;
+    p.setMessageType(MessageType::PLAYER_INPUT);
+    p.setSequence(1);
 
-    // p.setSequence(1);
+    struct PlayerInput {
+        uint32_t playerID;
+        std::vector<std::string> actions;
+    } pi;
+    pi.playerID = 42;
+    pi.actions = dataStr;
 
-    // struct PlayerInput {
-    //     uint32_t playerID;
-    // } pi;
+    size_t payloadSize =
+        sizeof(pi.playerID) + sizeof(size_t) + pi.actions.size() * sizeof(std::string);
+    std::vector<uint8_t> payload(payloadSize);
 
-    // pi.PlayerID = 42;
+    uint8_t *ptr = payload.data();
+    std::memcpy(ptr, &pi.playerID, sizeof(pi.playerID));
+    ptr += sizeof(pi.playerID);
 
-    // std::vector<uint8_t> payload(sizeof(PlayerInput));
-    // std::memcpy(payload.data(), &pi, sizeof(PlayerInput));
-    // p.setPayload(payload);
+    size_t actionsSize = pi.actions.size();
+    std::memcpy(ptr, &actionsSize, sizeof(actionsSize));
+    ptr += sizeof(actionsSize);
+
+    for (const auto &action : pi.actions) {
+        size_t actionSize = action.size();
+        std::memcpy(ptr, &actionSize, sizeof(actionSize));
+        ptr += sizeof(actionSize);
+        std::memcpy(ptr, action.data(), actionSize);
+        ptr += actionSize;
+    }
+
+    p.setPayload(payload);
+
+    client.sendPacket(p);
+    std::cout << "Client: Packet sent.\n";
 }
 #endif
 

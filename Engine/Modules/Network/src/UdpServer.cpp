@@ -24,23 +24,65 @@ void UdpServer::doReceive()
                                });
 }
 
+struct PlayerInput {
+    uint32_t playerID;
+    std::vector<std::string> actions;
+};
+
 void UdpServer::handlePacket(const uint8_t* data, size_t length,
                              const asio::ip::udp::endpoint& sender)
 {
     Packet p;
     if (!p.deserialize(data, length)) {
-        // Malformed packet
         std::cerr << "Server: Received malformed packet from " << sender << "\n";
         return;
     }
-
     switch (p.getMessageType()) {
         case MessageType::PLAYER_UPDATE:
             std::cout << "Server: Player update received, seq: " << p.header.sequence << "\n";
-            // parse the payload and update player state
             break;
+        case MessageType::PLAYER_INPUT: {
+            const uint8_t* ptr = p.payload.data();
+            const uint8_t* end = ptr + p.payload.size();
+            PlayerInput pi;
+            if (ptr + sizeof(pi.playerID) > end) {
+                std::cerr << "Server: Payload too short for playerID\n";
+                return;
+            }
+            std::memcpy(&pi.playerID, ptr, sizeof(pi.playerID));
+            ptr += sizeof(pi.playerID);
+            size_t actionsCount;
+            if (ptr + sizeof(actionsCount) > end) {
+                std::cerr << "Server: Payload too short for actionsCount\n";
+                return;
+            }
+            std::memcpy(&actionsCount, ptr, sizeof(actionsCount));
+            ptr += sizeof(actionsCount);
+            pi.actions.reserve(actionsCount);
+            for (size_t i = 0; i < actionsCount; ++i) {
+                size_t actionSize;
+                if (ptr + sizeof(actionSize) > end) {
+                    std::cerr << "Server: Payload too short for actionSize\n";
+                    return;
+                }
+                std::memcpy(&actionSize, ptr, sizeof(actionSize));
+                ptr += sizeof(actionSize);
+                if (ptr + actionSize > end) {
+                    std::cerr << "Server: Payload too short for action data\n";
+                    return;
+                }
+                std::string action(reinterpret_cast<const char*>(ptr), actionSize);
+                ptr += actionSize;
+                pi.actions.push_back(std::move(action));
+            }
+            std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
+                      << pi.actions.size() << " actions.\n";
+            for (const auto& act : pi.actions) {
+                std::cout << "  Action: " << act << "\n";
+            }
+            break;
+        }
         case MessageType::WORLD_EVENT:
-            // handle event
             break;
         default:
             std::cout << "Server: Unknown message type received\n";

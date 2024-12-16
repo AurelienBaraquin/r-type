@@ -21,7 +21,7 @@ struct PacketHeader {
     uint8_t msgType;         // one of MessageType
     uint32_t sequence;       // sequence number
     uint16_t payloadLength;  // length of payload
-    uint32_t checksum;       // CRC32 or similar
+    uint32_t checksum;       // CRC32 or similarPacket
 };
 #pragma pack(pop)
 
