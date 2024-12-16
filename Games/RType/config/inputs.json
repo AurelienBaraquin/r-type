@@ -9,7 +9,8 @@
           "MoveDown": "S",
           "MoveLeft": "A",
           "MoveRight": "D",
-          "Shoot": "SPACE"
+          "Shoot": "SPACE",
+          "Reload" : "R"
         },
         "mouse": {
           "Shoot": "LeftButton"
