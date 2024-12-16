@@ -67,7 +67,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
         std::cout << "Server running on port 12345...\n";
 
-        t.join();
+        t.detach();
 
     } catch (std::exception &e) {
         std::cerr << "Server exception: " << e.what() << "\n";
@@ -76,7 +76,6 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    std::cout << "Server update\n" << std::endl;
 }
 #endif
 
