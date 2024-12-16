@@ -37,20 +37,20 @@ Network::Network()
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    Packet p;
-    p.setMessageType(MessageType::PLAYER_INPUT);
+    // Packet p;
+    // p.setMessageType(MessageType::PLAYER_INPUT);
 
-    p.setSequence(1);
+    // p.setSequence(1);
 
-    struct PlayerInput {
-        uint32_t playerID;
-    } pi;
+    // struct PlayerInput {
+    //     uint32_t playerID;
+    // } pi;
 
-    pi.PlayerID = 42;
+    // pi.PlayerID = 42;
 
-    std::vector<uint8_t> payload(sizeof(PlayerInput));
-    std::memcpy(payload.data(), &pi, sizeof(PlayerInput));
-    p.setPayload(payload);
+    // std::vector<uint8_t> payload(sizeof(PlayerInput));
+    // std::memcpy(payload.data(), &pi, sizeof(PlayerInput));
+    // p.setPayload(payload);
 }
 #endif
 
