@@ -40,7 +40,7 @@
         "name": "Boss",
         "tags": ["boss"],
         "components": {
-          "Position": { "x": 800, "y": 100, "z": 3 },
+          "Position": { "x": 750, "y": 50, "z": 3 },
           "Scale": { "x": 0, "y": 0 },
           "Rotation": { "angle": 0 },
           "Sprite": { "spriteID": 4 },
