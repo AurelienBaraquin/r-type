@@ -90,10 +90,8 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 throw std::runtime_error("Method not found");
             }
         };
-        luaState["changeScene"] = [this]() {
-            std::cout << "loading scene" << std::endl;
-            loadScene("Games/RType/config/scene.json",true);
-
+        luaState["reloadScene"] = [this](std::string scenePath) {
+            loadScene(scenePath,true);
         };
     });
 
@@ -135,7 +133,8 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
          &factory = this->_componentFactory](sol::state& luaState) {
             luaState["createEntity"] = [&_entityTemplateManager, &registry,
                                         &factory](std::string templateName) {
-                return _entityTemplateManager.createEntity(templateName, registry, factory);
+                Entity entity = _entityTemplateManager.createEntity(templateName, registry, factory);
+                return entity;
             };
         });
 }

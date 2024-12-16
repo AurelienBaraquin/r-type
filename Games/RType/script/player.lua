@@ -21,7 +21,7 @@ function update(delta)
     end
     position = handle_move(position)
     if isInputActive(self, "Reload", true) then
-        changeScene()
+        reloadScene("Games/RType/config/scene.json")
     end
     if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
         shoot_timer = shoot_rate
@@ -73,6 +73,6 @@ end
 function damage(dmg)
     hp = hp - dmg
     if self ~= nil and hp < 0 then
-        can_move = false
+        reloadScene("Games/RType/config/scene.json")
     end
 end
