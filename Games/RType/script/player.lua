@@ -2,7 +2,8 @@ speed = 3
 self = nil
 shoot_timer = 0
 shoot_rate = 5
-
+hp = 3
+can_move = true
 
 function init(e)
     self = e
@@ -18,18 +19,7 @@ function update(delta)
         print("position is not a table")
         return
     end
-    if isInputActive(self, "MoveUp") then
-        position.y = position.y - speed
-    end
-    if isInputActive(self, "MoveDown") then
-        position.y = position.y + speed
-    end
-    if isInputActive(self, "MoveLeft") then
-        position.x = position.x - speed
-    end
-    if isInputActive(self, "MoveRight") then
-        position.x = position.x + speed
-    end
+    position = handle_move(position)
     if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
         shoot_timer = shoot_rate
         playAnimation(self, 1)
@@ -54,5 +44,31 @@ end
 function setSpeed(self, newSpeed)
     if newSpeed ~= nil then
         speed = newSpeed
+    end
+end
+
+function handle_move(position)
+    if can_move == false then
+        return position
+    end
+    if isInputActive(self, "MoveUp") then
+        position.y = position.y - speed
+    end
+    if isInputActive(self, "MoveDown") then
+        position.y = position.y + speed
+    end
+    if isInputActive(self, "MoveLeft") then
+        position.x = position.x - speed
+    end
+    if isInputActive(self, "MoveRight") then
+        position.x = position.x + speed
+    end
+    return position
+end
+
+function damage(dmg)
+    hp = hp - dmg
+    if self ~= nil and hp < 0 then
+        can_move = false
     end
 end

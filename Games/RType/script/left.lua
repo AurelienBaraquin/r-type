@@ -19,6 +19,12 @@ function update(delta)
 end
 
 function onCollide(other)
+    if hasTag(other, "player") then
+        if hasMethod(other, "damage") then
+            callMethod(other, "damage", 1)
+            destroyEntity(self)
+        end
+    end
 end
 
 function damage(dmg)
