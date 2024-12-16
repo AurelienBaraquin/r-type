@@ -1,5 +1,12 @@
 #include "Inputs.hpp"
-#include "raylib.h"
+
+#if defined(_WIN32)
+extern "C" {
+#endif
+#include <raylib.h>
+#if defined(_WIN32)
+}
+#endif
 
 void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)
 {

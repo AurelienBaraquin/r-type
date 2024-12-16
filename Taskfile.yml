@@ -46,8 +46,8 @@ tasks:
   buildw:
     desc: "Build the r-type client and server with conan-default preset for windows"
     cmds:
-      - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
-      - cmake --preset conan-default -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
 
   crtype:
