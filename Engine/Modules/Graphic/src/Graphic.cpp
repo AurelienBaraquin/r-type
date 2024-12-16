@@ -8,6 +8,9 @@ Graphic::Graphic(const std::string& title, int width, int height)
     : _title(title), _width(width), _height(height) {
     InitWindow(_width, _height, _title.c_str());
     SetTargetFPS(60);
+    // camera.offset = (Vector2){ width/2.0f, height/2.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 2.0f;
 }
 
 void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
@@ -39,6 +42,8 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     });
 
     BeginDrawing();
+    
+    BeginMode2D(camera);
     ClearBackground(BLACK);
 
     f.wait();
