@@ -41,7 +41,7 @@ class Packet
 
     std::vector<uint8_t> serialize() const;
 
-    bool deserialize(const uint8_t* data, size_t size);
+    bool deserialize(const uint8_t* data, std::size_t size);
 
     uint32_t computeChecksum() const;
 

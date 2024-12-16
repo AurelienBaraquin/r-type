@@ -1,4 +1,5 @@
 #include "Network.hpp"
+#include "Sharable.hpp"
 
 #ifdef CLIENT
 Network::Network()
@@ -36,6 +37,19 @@ Network::Network()
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
+    const auto& variables = Sharable::getInstance().getAllSharedVariables();
+    for (const auto& [varName, getter] : variables) {
+        auto data = getter();
+
+        std::vector<std::string> dataStr = std::get<std::vector<std::string>>(data);
+
+        std::cout << varName << ": ";
+        for (const auto& str : dataStr) {
+            std::cout << str << " ";
+        }
+        std::cout << std::endl << std::endl;
+    }
+
     // auto* input = registry.getComponent<Components::Input>(entity);
     // if (!input)
     //     throw std::runtime_error("Input component not found");

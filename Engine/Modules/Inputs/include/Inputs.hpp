@@ -8,7 +8,7 @@
 
 class Inputs : public ISystem, public ILoader, public NotThreadable {
 public:
-    Inputs() = default;
+    Inputs();
     ~Inputs() override = default;
 
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override;

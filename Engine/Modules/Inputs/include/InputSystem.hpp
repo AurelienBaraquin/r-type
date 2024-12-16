@@ -23,6 +23,8 @@ public:
     void updateInputs(int inputConfigID);
     bool isInputActive(int inputConfigID, const std::string& action, bool allowHold = true);
 
+    const std::unordered_map<std::string, bool>& getCurrentStates() const { return currentStates; }
+
 private:
     int KeyboardKeyFromString(const std::string& keyName);
 
