@@ -37,8 +37,8 @@
       },
       {
         "Template": {
-          "name": "Boss",
-          "tags": ["boss"],
+          "name": "Shooter",
+          "tags": ["shooter"],
           "components": {
             "Position": { "x": 800, "y": 100, "z": 3 },
             "Scale": { "x": 0, "y": 0 },
@@ -52,14 +52,14 @@
               "playing": true
             },
             "Area2D": { "width": 100, "height": 100 },
-            "Script": { "scriptPath": "Games/RType/script/boss.lua" }
+            "Script": { "scriptPath": "Games/RType/script/shooter.lua" }
           }
         }
       },
       {
         "Template": {
-          "name": "BossBullet",
-          "tags": ["boss_bullet"],
+          "name": "ShooterBullet",
+          "tags": ["shooter_bullet"],
           "components": {
             "Position": { "x": 0, "y": 0, "z": 2 },
             "Scale": { "x": 0, "y": 0 },
@@ -72,7 +72,7 @@
               "playing": true
             },
             "Area2D": { "width": 10, "height": 20 },
-            "Script": { "scriptPath": "Games/RType/script/boss_bullet.lua" }
+            "Script": { "scriptPath": "Games/RType/script/shooter_bullet.lua" }
           }
         }
       },
@@ -112,4 +112,3 @@
     ],
     "scenes": ["assets.json", "audio.json"]
   }
-  

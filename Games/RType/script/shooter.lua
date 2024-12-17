@@ -10,12 +10,12 @@ local move_duration = 60
 function init(e)
     selfEntity = e
     hp = 10
-    print("Boss initialized for entity:", selfEntity, "with HP:", hp)
+    print("Shooter initialized for entity:", selfEntity, "with HP:", hp)
 end
 
 function update(delta)
     if selfEntity == nil then
-        print("Boss entity is nil")
+        print("Shooter entity is nil")
         return
     end
 
@@ -47,7 +47,7 @@ end
 
 function shoot()
     if selfEntity == nil then
-        print("Cannot shoot, boss entity is nil")
+        print("Cannot shoot, shooter entity is nil")
         return
     end
 
@@ -58,37 +58,37 @@ function shoot()
         z = position.z
     }
 
-    local bullet = createEntity("BossBullet")
-    addTag(bullet, "boss_bullet")
+    local bullet = createEntity("ShooterBullet")
+    addTag(bullet, "shooter_bullet")
 
     if bullet ~= nil then
         setPosition(bullet, bullet_position)
-        print("Boss shot a bullet from position:", bullet_position.x, bullet_position.y)
+        print("Shooter shot a bullet from position:", bullet_position.x, bullet_position.y)
     else
-        print("Failed to create BossBullet entity")
+        print("Failed to create ShooterBullet entity")
     end
 end
 
 function onCollide(other)
     if hasTag(other, "bullet") then
         damage(1)
-        print("Boss hit by bullet:", other)
+        print("Shooter hit by bullet:", other)
         destroyEntity(other)
     end
 end
 
 function damage(dmg)
     if selfEntity == nil then
-        print("Cannot apply damage, boss entity is nil")
+        print("Cannot apply damage, shooter entity is nil")
         return
     end
 
     hp = hp - dmg
-    print("Boss took damage:", dmg, "remaining HP:", hp)
+    print("Shooter took damage:", dmg, "remaining HP:", hp)
 
     if (hp <= 0) then
         destroyEntity(selfEntity)
-        print("Boss destroyed")
+        print("Shooter destroyed")
     end
 end
 
@@ -100,9 +100,9 @@ function findPlayerEntity()
     return nil
 end
 
-function calculateDirection(bossPos, playerPos)
-    local dx = playerPos.x - bossPos.x
-    local dy = playerPos.y - bossPos.y
+function calculateDirection(shooterPos, playerPos)
+    local dx = playerPos.x - shooterPos.x
+    local dy = playerPos.y - shooterPos.y
     local magnitude = math.sqrt(dx * dx + dy * dy)
 
     if magnitude == 0 then

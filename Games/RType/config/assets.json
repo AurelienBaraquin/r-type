@@ -222,11 +222,11 @@
     },
     {
       "textureID": 3,
-      "path": "Games/RType/assets/boss.gif"
+      "path": "Games/RType/assets/shooter.gif"
     },
     {
       "textureID": 4,
-      "path": "Games/RType/assets/bossbull.png"
+      "path": "Games/RType/assets/shooterbull.png"
     },
     {
       "textureID": 5,

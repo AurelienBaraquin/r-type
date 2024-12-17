@@ -3,12 +3,12 @@ local speed = 4
 
 function init(e)
     selfEntity = e
-    print("BossBullet initialized for entity:", selfEntity)
+    print("ShooterBullet initialized for entity:", selfEntity)
 end
 
 function update(delta)
     if selfEntity == nil then
-        print("BossBullet entity is nil")
+        print("ShooterBullet entity is nil")
         return
     end
 
@@ -18,7 +18,7 @@ function update(delta)
 
     if position.x < -100 then
         destroyEntity(selfEntity)
-        print("BossBullet destroyed after moving out of bounds")
+        print("ShooterBullet destroyed after moving out of bounds")
     end
 end
 
@@ -26,9 +26,9 @@ function onCollide(other)
     if hasTag(other, "player") then
         if hasMethod(other, "damage") then
             callMethod(other, "damage", 2)
-            print("Player took damage from BossBullet")
+            print("Player took damage from ShooterBullet")
         end
         destroyEntity(selfEntity)
-        print("BossBullet destroyed after hitting player")
+        print("ShooterBullet destroyed after hitting player")
     end
 end
