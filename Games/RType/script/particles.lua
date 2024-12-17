@@ -9,7 +9,5 @@ function update(delta)
     timer = timer - 1
     if timer <= 0 then
         destroyEntity(self)
-        print("destroyed")
     end
-    print("caca")
 end
