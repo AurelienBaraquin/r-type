@@ -29,6 +29,24 @@ void InputSystem::load(const nlohmann::json& data) {
     }
 }
 
+void InputSystem::applyExternalInputStates(int inputConfigID, const std::vector<std::string>& states)
+{
+    for (auto& [action, state] : currentStates) {
+        state = false;
+    }
+
+    for (const auto &action : states) {
+        currentStates[action] = true;
+    }
+}
+
+void InputSystem::emptyInputStates()
+{
+    for (auto& [action, state] : currentStates) {
+        state = false;
+    }
+}
+
 int InputSystem::KeyboardKeyFromString(const std::string& keyName) {
     const static std::unordered_map<std::string, int> keyMap = {
         {"A", KEY_A}, {"B", KEY_B}, {"C", KEY_C}, {"D", KEY_D},

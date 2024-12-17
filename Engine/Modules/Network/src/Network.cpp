@@ -1,5 +1,4 @@
 #include "Network.hpp"
-
 #include "Sharable.hpp"
 
 #ifdef CLIENT
@@ -8,22 +7,23 @@ Network::Network()
       client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
 {
     client.startReceiving();
-    
+
     std::thread ioThread = std::thread([this]() {
         ioContext.run();
     });
-
     ioThread.detach();
 }
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    const auto &variables = Sharable::getInstance().getAllSharedVariables();
+    auto data = Sharable::getInstance().getSharedVariable("InputStates");
+    Sharable::getInstance().setSharedVariable("InputStates", std::vector<std::string>{});
     std::vector<std::string> dataStr;
 
-    for (const auto &[varName, getter] : variables) {
-        auto data = getter();
-        dataStr = std::get<std::vector<std::string>>(data);
+    if (data.has_value()) {
+        if (auto inputVec = std::get_if<std::vector<std::string>>(&(*data))) {
+            dataStr = *inputVec;
+        }
     }
 
     Packet p;
@@ -38,7 +38,10 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     pi.actions = dataStr;
 
     size_t payloadSize =
-        sizeof(pi.playerID) + sizeof(size_t) + pi.actions.size() * sizeof(std::string);
+        sizeof(pi.playerID) + sizeof(size_t) +
+        std::accumulate(pi.actions.begin(), pi.actions.end(), (size_t)0,
+                        [](size_t sum, const std::string& s) { return sum + sizeof(size_t) + s.size(); });
+
     std::vector<uint8_t> payload(payloadSize);
 
     uint8_t *ptr = payload.data();
@@ -82,7 +85,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    std::cout << server.countClients() << std::endl;
+    // std::cout << server.countClients() << std::endl;
 }
 #endif
 

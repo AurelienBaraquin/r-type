@@ -1,5 +1,6 @@
 #include "UdpServer.hpp"
 #include <iostream>
+#include "Sharable.hpp"
 #include <algorithm>
 
 UdpServer::UdpServer(asio::io_context& ioContext, unsigned short port)
@@ -111,11 +112,12 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
                 pi.actions.push_back(std::move(action));
             }
 
-            std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
-                      << pi.actions.size() << " actions.\n";
-            for (const auto& act : pi.actions) {
-                std::cout << "  Action: " << act << "\n";
-            }
+            // std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
+                    //   << pi.actions.size() << " actions.\n";
+            // for (const auto& act : pi.actions) {
+                // std::cout << "  Action: " << act << "\n";
+            // }
+            Sharable::getInstance().setSharedVariable("InputLoads", pi.actions);
             break;
         }
 

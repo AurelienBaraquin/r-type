@@ -30,6 +30,9 @@ public:
     void updateInputs(int inputConfigID);
     bool isInputActive(int inputConfigID, const std::string& action, bool allowHold = true);
 
+    void applyExternalInputStates(int inputConfigID, const std::vector<std::string>& states);
+    void emptyInputStates();
+
     const std::unordered_map<std::string, bool>& getCurrentStates() const { return currentStates; }
 
 private:
