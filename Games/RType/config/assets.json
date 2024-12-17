@@ -138,7 +138,51 @@
           "originY": 0
         }
       ]
+    },
+    {
+      "animationID": 5,
+      "frameTime": 0.1,
+      "frames": [
+        {
+          "textureID": 5,
+          "width":32,
+          "height": 32,
+          "originX": 128,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 96,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 64,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 32,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 0,
+          "originY": 0
+        }
+
+      ]
+
     }
+
   ],
   "sprites": [
     {
@@ -147,6 +191,16 @@
         "textureID": 2,
         "width": 63,
         "height": 61,
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "spriteID": 2,
+      "data": {
+        "textureID": 6,
+        "width": 1769,
+        "height": 300,
         "originX": 0,
         "originY": 0
       }
@@ -173,6 +227,14 @@
     {
       "textureID": 4,
       "path": "Games/RType/assets/bossbull.png"
+    },
+    {
+      "textureID": 5,
+      "path": "Games/RType/assets/explosion.png"
+    },
+    {
+      "textureID": 6,
+      "path": "Games/RType/assets/background_space.png"
     }
   ]
 }

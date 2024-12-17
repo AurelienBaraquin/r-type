@@ -40,7 +40,7 @@
         "name": "Boss",
         "tags": ["boss"],
         "components": {
-          "Position": { "x": 800, "y": 100, "z": 3 },
+          "Position": { "x": 750, "y": 50, "z": 3 },
           "Scale": { "x": 0, "y": 0 },
           "Rotation": { "angle": 0 },
           "Sprite": { "spriteID": 4 },
@@ -77,10 +77,32 @@
       }
     },
     {
+      "name": "ScrollingBackground1",
+      "tags": ["scrolling_background"],
+      "components": {
+        "Position": { "x": 0, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 2 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
+      }
+    },
+    {
+      "name": "ScrollingBackground2",
+      "tags": ["scrolling_background"],
+      "components": {
+        "Position": { "x": 1769, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 2 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
+      }
+    },
+    {
       "_name_": "Player",
       "tags": ["player"],
       "components": {
-        "Position": { "x": 100, "y": 200, "z": 1 },
+        "Position": { "x": 0, "y": 0, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Area2D": { "width": 33 , "height": 17 },
@@ -113,5 +135,5 @@
       }
     }
   ],
-  "scenes": ["assets.json", "audio.json"]
+  "scenes": ["assets.json", "audio.json", "particles.json"]
 }

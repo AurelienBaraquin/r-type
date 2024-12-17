@@ -1,0 +1,23 @@
+{
+    "sceneTag": "particles",
+    "entities": [
+        {
+            "Template": {
+              "name": "BulletExplosion",
+              "tags": ["particles"],
+              "components": {
+                  "Position": { "x": 0, "y": 0, "z": 0 },
+                  "Scale": { "x": 0, "y": 0 },
+                  "Rotation": { "angle": 0 },
+                  "Animation": {
+                    "animationID": 5,
+                    "currentFrame": 0,
+                    "elapsedTime": 0.0,
+                    "loop": true,
+                    "playing": true },
+                  "Script": { "scriptPath": "Games/RType/script/particles.lua" }
+              }
+            }
+        }
+    ]
+}

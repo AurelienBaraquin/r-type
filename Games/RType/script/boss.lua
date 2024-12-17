@@ -2,7 +2,7 @@ local selfEntity = nil
 local speed = 2
 local hp = 10
 local shoot_timer = 0
-local shoot_rate = 60
+local shoot_rate = 30
 local move_direction = 1
 local move_timer = 0
 local move_duration = 60
@@ -26,14 +26,14 @@ function update(delta)
     end
 
     local position = getPosition(selfEntity)
-    position.x = position.x + speed * move_direction
+    position.y = position.y + speed * move_direction
     setPosition(selfEntity, position)
 
-    if position.x < 100 then
-        position.x = 100
+    if position.y < 100 then
+        position.y = 100
         move_direction = 1
-    elseif position.x > 700 then
-        position.x = 700
+    elseif position.y > 500 then
+        position.y = 500
         move_direction = -1
     end
     setPosition(selfEntity, position)
@@ -42,10 +42,6 @@ function update(delta)
     if shoot_timer >= shoot_rate then
         shoot_timer = 0
         shoot()
-    end
-
-    if (position.x < 100) then
-        destroyEntity(selfEntity)
     end
 end
 
@@ -57,13 +53,13 @@ function shoot()
 
     local position = getPosition(selfEntity)
     local bullet_position = {
-        x = position.x,
+        x = position.x - 50,
         y = position.y,
         z = position.z
     }
 
     local bullet = createEntity("BossBullet")
-    addTag(bullet, "MainScene")
+    addTag(bullet, "boss_bullet")
 
     if bullet ~= nil then
         setPosition(bullet, bullet_position)
