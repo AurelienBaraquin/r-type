@@ -57,3 +57,6 @@ Each module is composed of components.
 Follow the documentation to add your modules for custom engine [here](Engine/README.md)
 
 Follow the documentation to make your own game [here](Engine/ScriptingAndScene.md)
+
+
+mettre, image, license, author, platforme supporté, task alternative
