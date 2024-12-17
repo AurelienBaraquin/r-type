@@ -147,21 +147,7 @@
           "textureID": 5,
           "width":32,
           "height": 32,
-          "originX": 0,
-          "originY": 0
-        },
-        {
-          "textureID": 5,
-          "width": 32,
-          "height": 32,
-          "originX": 32,
-          "originY": 0
-        },
-        {
-          "textureID": 5,
-          "width": 32,
-          "height": 32,
-          "originX": 64,
+          "originX": 128,
           "originY": 0
         },
         {
@@ -175,7 +161,21 @@
           "textureID": 5,
           "width": 32,
           "height": 32,
-          "originX": 128,
+          "originX": 64,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 32,
+          "originY": 0
+        },
+        {
+          "textureID": 5,
+          "width": 32,
+          "height": 32,
+          "originX": 0,
           "originY": 0
         }
 
