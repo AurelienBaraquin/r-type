@@ -19,9 +19,10 @@ void Physics::callFunction(Registry& registry, Entity entity, Entity entity2, st
                            ScriptSystem& _scriptSystem)
 {
     auto* script = registry.getComponent<Components::Script>(entity);
-    if (script && script->scriptPath != "" && script->initialized &&
+    if (script && script->initialized && script->scriptPath != "" && script->initialized &&
         _scriptSystem.hasScript(entity, script->scriptPath)) {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
+        
         if (luaState[function]) {  // <--- crashes
             luaState[function](entity2);
         }
@@ -103,8 +104,6 @@ void Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
                 auto* area2D2 = registry.getComponent<Components::Area2D>(entity2);
                 if (!position2 || !area2D2) continue;
 
-                // important section
-
                 bool intersect = hasIntersection(*position, *area2D, *position2, *area2D2);
 
                 if (intersect && !isIn(area2D->collidedEntities, entity2)) {
@@ -119,8 +118,6 @@ void Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
                         area2D->collidedEntities.end());
                     collisions.push_back({entity, entity2, false});
                 }
-
-
             }
         }
     }

@@ -1,0 +1,7 @@
+{
+    "levels": [
+      { "name": "Level 1", "scene": "Games/RType/config/scene1.json" },
+      { "name": "Level 2", "scene": "Games/RType/config/scene2.json" }
+    ]
+  }
+  

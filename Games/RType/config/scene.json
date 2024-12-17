@@ -40,7 +40,7 @@
         "name": "Boss",
         "tags": ["boss"],
         "components": {
-          "Position": { "x": 800, "y": 100, "z": 3 },
+          "Position": { "x": 750, "y": 50, "z": 3 },
           "Scale": { "x": 0, "y": 0 },
           "Rotation": { "angle": 0 },
           "Sprite": { "spriteID": 4 },
@@ -74,6 +74,28 @@
           "Area2D": { "width": 10, "height": 20 },
           "Script": { "scriptPath": "Games/RType/script/boss_bullet.lua" }
         }
+      }
+    },
+    {
+      "name": "ScrollingBackground1",
+      "tags": ["scrolling_background"],
+      "components": {
+        "Position": { "x": 0, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 2 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
+      }
+    },
+    {
+      "name": "ScrollingBackground2",
+      "tags": ["scrolling_background"],
+      "components": {
+        "Position": { "x": 1769, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 2 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
       }
     },
     {
