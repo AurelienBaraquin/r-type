@@ -33,7 +33,7 @@ void tryClient()
         p.setPayload(payload);
 
         client.sendPacket(p);
-        std::cout << "Client: Packet sent.\n";
+        // std::cout << "Client: Packet sent.\n";
     } catch (std::exception& e) {
         std::cerr << "Client exception: " << e.what() << "\n";
     }

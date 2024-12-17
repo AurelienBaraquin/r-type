@@ -7,49 +7,23 @@ Network::Network()
     : ioContext(),
       client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
 {
-    try {
-        Packet p;
-        p.setMessageType(MessageType::PLAYER_UPDATE);
-        p.setSequence(1);
+    client.startReceiving();
+    
+    std::thread ioThread = std::thread([this]() {
+        ioContext.run();
+    });
 
-        struct PlayerUpdate {
-            uint32_t playerID;
-            float pos[3];
-            float vel[3];
-        } pu;
-        pu.playerID = 42;
-        pu.pos[0] = 1.0f;
-        pu.pos[1] = 2.0f;
-        pu.pos[2] = 3.0f;
-        pu.vel[0] = 0.0f;
-        pu.vel[1] = 0.0f;
-        pu.vel[2] = 0.0f;
-
-        std::vector<uint8_t> payload(sizeof(PlayerUpdate));
-        std::memcpy(payload.data(), &pu, sizeof(PlayerUpdate));
-        p.setPayload(payload);
-
-        client.sendPacket(p);
-        std::cout << "Client: Packet sent.\n";
-    } catch (std::exception &e) {
-        std::cerr << "Client exception: " << e.what() << "\n";
-    }
+    ioThread.detach();
 }
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
     const auto &variables = Sharable::getInstance().getAllSharedVariables();
-    std::vector<std::string> dataStr;  // Declare dataStr outside the loop
+    std::vector<std::string> dataStr;
 
     for (const auto &[varName, getter] : variables) {
         auto data = getter();
-        dataStr = std::get<std::vector<std::string>>(data);  // Assign dataStr inside the loop
-
-        std::cout << varName << ": ";
-        for (const auto &str : dataStr) {
-            std::cout << str << " ";
-        }
-        std::cout << std::endl << std::endl;
+        dataStr = std::get<std::vector<std::string>>(data);
     }
 
     Packet p;
@@ -86,7 +60,6 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     p.setPayload(payload);
 
     client.sendPacket(p);
-    std::cout << "Client: Packet sent.\n";
 }
 #endif
 
@@ -109,6 +82,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
+    std::cout << server.countClients() << std::endl;
 }
 #endif
 

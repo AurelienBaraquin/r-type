@@ -1,6 +1,6 @@
 #include "UdpServer.hpp"
-
 #include <iostream>
+#include <algorithm>
 
 UdpServer::UdpServer(asio::io_context& ioContext, unsigned short port)
     : io_(ioContext), socket_(ioContext, asio::ip::udp::endpoint(asio::ip::udp::v4(), port))
@@ -14,14 +14,33 @@ void UdpServer::start()
 
 void UdpServer::doReceive()
 {
-    socket_.async_receive_from(asio::buffer(recvBuffer_), remoteEndpoint_,
-                               [this](std::error_code ec, std::size_t bytes_received) {
-                                   if (!ec && bytes_received > 0) {
-                                       handlePacket(recvBuffer_.data(), bytes_received,
-                                                    remoteEndpoint_);
-                                   }
-                                   doReceive();  // continue receiving next packets
-                               });
+    socket_.async_receive_from(
+        asio::buffer(recvBuffer_), remoteEndpoint_,
+        [this](std::error_code ec, std::size_t bytes_received) {
+            if (!ec && bytes_received > 0) {
+                handlePacket(recvBuffer_.data(), bytes_received, remoteEndpoint_);
+            } else if (ec) {
+                std::cerr << "Server: Receive error: " << ec.message() << "\n";
+            }
+            doReceive();
+        });
+}
+
+void UdpServer::sendAll(const Packet& packet)
+{
+    auto data = std::make_shared<std::vector<uint8_t>>(packet.serialize());
+
+    for (const auto& client : clients_) {
+        socket_.async_send_to(
+            asio::buffer(*data), client,
+            [data, client](std::error_code ec, std::size_t bytes_transferred) {
+                if (ec) {
+                    std::cerr << "Server: Error sending to " << client << ": " << ec.message() << "\n";
+                } else {
+                }
+            }
+        );
+    }
 }
 
 struct PlayerInput {
@@ -32,25 +51,39 @@ struct PlayerInput {
 void UdpServer::handlePacket(const uint8_t* data, size_t length,
                              const asio::ip::udp::endpoint& sender)
 {
+    auto it = std::find_if(clients_.begin(), clients_.end(), [&](const auto& ep) {
+        return ep == sender;
+    });
+    if (it == clients_.end()) {
+        std::cout << "Server: New client connected from " << sender << "\n";
+        clients_.push_back(sender);
+    }
+
     Packet p;
     if (!p.deserialize(data, length)) {
         std::cerr << "Server: Received malformed packet from " << sender << "\n";
         return;
     }
+
+    sendAll(p);
+
     switch (p.getMessageType()) {
         case MessageType::PLAYER_UPDATE:
             std::cout << "Server: Player update received, seq: " << p.header.sequence << "\n";
             break;
+
         case MessageType::PLAYER_INPUT: {
             const uint8_t* ptr = p.payload.data();
             const uint8_t* end = ptr + p.payload.size();
             PlayerInput pi;
+
             if (ptr + sizeof(pi.playerID) > end) {
                 std::cerr << "Server: Payload too short for playerID\n";
                 return;
             }
             std::memcpy(&pi.playerID, ptr, sizeof(pi.playerID));
             ptr += sizeof(pi.playerID);
+
             size_t actionsCount;
             if (ptr + sizeof(actionsCount) > end) {
                 std::cerr << "Server: Payload too short for actionsCount\n";
@@ -58,6 +91,7 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
             }
             std::memcpy(&actionsCount, ptr, sizeof(actionsCount));
             ptr += sizeof(actionsCount);
+
             pi.actions.reserve(actionsCount);
             for (size_t i = 0; i < actionsCount; ++i) {
                 size_t actionSize;
@@ -67,6 +101,7 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
                 }
                 std::memcpy(&actionSize, ptr, sizeof(actionSize));
                 ptr += sizeof(actionSize);
+
                 if (ptr + actionSize > end) {
                     std::cerr << "Server: Payload too short for action data\n";
                     return;
@@ -75,6 +110,7 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
                 ptr += actionSize;
                 pi.actions.push_back(std::move(action));
             }
+
             std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
                       << pi.actions.size() << " actions.\n";
             for (const auto& act : pi.actions) {
@@ -82,10 +118,13 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
             }
             break;
         }
+
         case MessageType::WORLD_EVENT:
+            std::cout << "Server: WORLD_EVENT received.\n";
             break;
+
         default:
-            std::cout << "Server: Unknown message type received\n";
+            std::cout << "Server: Unknown message type received.\n";
             break;
     }
 }
