@@ -4,6 +4,7 @@
 
 - [Aurelien Baraquin](Aurelien.Baraquin@epitech.eu)
 - [Guillaume Tran](Guillaume1.tran@epitech.eu)
+- [Louis Cornu](Louis.cornu@epitech.eu)
 
 Duration : 2 months
 
