@@ -60,4 +60,12 @@ Follow the documentation to add your modules for custom engine [here](Engine/REA
 Follow the documentation to make your own game [here](Engine/ScriptingAndScene.md)
 
 
-mettre, image, license, author, platforme supporté, task alternative
+# TODO 
+
+mettre, image, license, author, platforme supporté, task alternative, mettre dans githubpage read the docs -> html
+
+plusieurs stages, boss, améliorations 
+
+
+etude comparatives, doc network a comparer
+
