@@ -71,6 +71,16 @@ class Engine : public ISystem
         return _ScriptSystem;
     }
 
+    Registry& getRegistry()
+    {
+        return _registry;
+    }
+
+    SystemManager& getSystemManager()
+    {
+        return _systemManager;
+    }
+
    private:
     void startup();
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;

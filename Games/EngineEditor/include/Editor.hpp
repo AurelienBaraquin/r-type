@@ -4,6 +4,12 @@
 
 #pragma once
 
+#define BUILD_GRAPHIC
+#define BUILD_PHYSICS
+#define BUILD_AUDIO
+#define BUILD_INPUTS
+#include "Engine.hpp"
+#include "SceneManager.hpp"
 #include <memory>
 #include "raylib.h"
 #include "Scene.hpp"
@@ -11,21 +17,40 @@
 class Editor
 {
 public:
-    Editor()
+    Editor() : _graphic(_engine.addModule<Graphic>("R-Type", 1, 1))
     {
-        InitWindow(800, 450, "Engine Editor");
+        // engine.addModule<Inputs>();
+        _engine.addModule<Physics>();
+        InitWindow(1920, 1080, "Engine Editor");
+        _engine.loadScene("Games/RType/config/scene.json");
+        _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry().view<>());
+
+        float _width = (float)GetScreenWidth();
+        float _height = (float)GetScreenHeight();
+        _leftBox = {0, 0, _width * 0.20f, _height};
+        _centerBox = {_leftBox.width, 0,_width * 0.60f, _height};
+        _rightBox = {_centerBox.x + _centerBox.width, 0, _width * 0.20f, _height};
     }
 
     ~Editor()
     {
     }
+
     void run();
 
+    void setEntities(std::vector<Entity> entities)
+    {
+        _entities = entities;
+    }
+
 private:
-    std::shared_ptr<Scene> scene;
-
-
-    Rectangle leftPanel = {0, 0, 200, 450};
-    Rectangle CenterPanel = {200, 0, 600, 450};
-    Rectangle rightPanel = {600, 0, 200, 450};
+    Engine _engine;
+    std::vector<Entity> _entities;
+    std::shared_ptr<SceneManager> _sceneManager;
+    Graphic& _graphic;
+    float _width = 0;
+    float _height = 0;
+    Rectangle _leftBox;
+    Rectangle _centerBox;
+    Rectangle _rightBox;
 };

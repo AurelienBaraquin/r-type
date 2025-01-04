@@ -9,17 +9,19 @@ void TextureSystem::loadTexture(int textureID, const std::string& path) {
         return;
     }
     textures[textureID] = texture;
+    this->get(textureID);
 }
 
 void TextureSystem::remove(int textureID) {
-    auto it = textures.find(textureID);
-    if (it != textures.end()) {
-        UnloadTexture(it->second);
-        textures.erase(it);
-    }
+    // auto it = textures.find(textureID);
+    // if (it != textures.end()) {
+    //     UnloadTexture(it->second);
+    //     textures.erase(it);
+    // }
 }
 
 Texture2D TextureSystem::get(int textureID) const {
+    std::cout << "texture size get: " << textures.size() << std::endl;
     auto it = textures.find(textureID);
     if (it != textures.end()) {
         return it->second;
@@ -34,4 +36,5 @@ void TextureSystem::load(const nlohmann::json& data) {
 
         loadTexture(textureID, path);
     }
+    std::cout << "texture size is now: " << textures.size() << std::endl;
 }

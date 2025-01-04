@@ -4,13 +4,19 @@
 
 #ifndef B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
 #define B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
+#include "raylib.h"
+#include "Engine.hpp"
 
+class SceneManager
+{
+public:
+    SceneManager(std::vector<Entity> entities) : _entities(entities) {}
+    ~SceneManager() = default;
 
-
-class SceneManager {
-
+    void drawEntities();
+   private:
+    std::vector<Entity> _entities;
+    Entity _selectedEntity;
 };
 
-
-
-#endif //B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
+#endif  // B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
