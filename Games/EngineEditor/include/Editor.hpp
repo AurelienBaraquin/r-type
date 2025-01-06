@@ -19,11 +19,10 @@ class Editor
 public:
     Editor() : _graphic(_engine.addModule<Graphic>("R-Type", 1, 1))
     {
-        // engine.addModule<Inputs>();
         _engine.addModule<Physics>();
         InitWindow(1920, 1080, "Engine Editor");
         _engine.loadScene("Games/RType/config/scene.json");
-        _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry().view<>());
+        _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry());
 
         float _width = (float)GetScreenWidth();
         float _height = (float)GetScreenHeight();
@@ -37,6 +36,9 @@ public:
     }
 
     void run();
+    void drawScene();
+    void drawEntities(const std::vector<Entity>& entities);
+    std::vector<Entity> getSortedEntitiesByZ();
 
     void setEntities(std::vector<Entity> entities)
     {

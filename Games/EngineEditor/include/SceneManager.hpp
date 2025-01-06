@@ -10,13 +10,16 @@
 class SceneManager
 {
 public:
-    SceneManager(std::vector<Entity> entities) : _entities(entities) {}
+    SceneManager(Registry& registry) : _registry(registry) {
+        _entities = _registry.view<>();
+    }
     ~SceneManager() = default;
 
     void drawEntities();
    private:
     std::vector<Entity> _entities;
     Entity _selectedEntity;
+    Registry &_registry;
 };
 
 #endif  // B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
