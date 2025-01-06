@@ -54,21 +54,15 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
         auto rotation = _engine.getRegistry().getComponent<Components::Rotation>(entity);
         auto scale = _engine.getRegistry().getComponent<Components::Scale>(entity);
 
-        float adjustedX = _centerBox.x + position->x;
+        float adjustedX = position->x;
         float adjustedY = _centerBox.y + position->y;
         Components::Position adjustedPosition = {(int)adjustedX, (int)adjustedY, position->z};
-
-        if (adjustedX < _centerBox.x || adjustedX > _centerBox.x + _centerBox.width ||
-            adjustedY < _centerBox.y || adjustedY > _centerBox.y + _centerBox.height)
-        {
-            continue;
-        }
 
         if (_engine.getRegistry().hasComponent<Components::Sprite>(entity))
         {
             auto sprite = _engine.getRegistry().getComponent<Components::Sprite>(entity);
             BrutSprite bruteSpriteVar = _graphic.manageSprites().getSprite(sprite->spriteID);
-            _graphic.drawTextureEx(&bruteSpriteVar, position, rotation, scale);
+            _graphic.drawTextureEx(&bruteSpriteVar, &adjustedPosition, rotation, scale);
         }
         else if (_engine.getRegistry().hasComponent<Components::Animation>(entity))
         {

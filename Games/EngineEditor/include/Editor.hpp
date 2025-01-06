@@ -21,7 +21,7 @@ public:
     {
         _engine.addModule<Physics>();
         InitWindow(1920, 1080, "Engine Editor");
-        _engine.loadScene("Games/RType/config/scene.json");
+        _engine.loadScene("Games/EngineEditor/assets/scene.json");
         _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry());
 
         float _width = (float)GetScreenWidth();
