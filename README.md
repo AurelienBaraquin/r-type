@@ -1,4 +1,6 @@
-# Rtype
+# R-Type
+
+![](doc/assets/image.jpg)
 
 ## Team members
 
@@ -6,7 +8,7 @@
 - [Guillaume Tran](Guillaume1.tran@epitech.eu)
 - [Louis Cornu](Louis.cornu@epitech.eu)
 
-Duration : 2 months
+Duration of the project : 2 months
 
 ## Description
 
@@ -21,11 +23,17 @@ The goal of this project is divided in 2 parts, firstly we have to create a game
 - Sol2
 - Lua
 - SFML
+
+## Supported platforms
+
+- Windows 
+- Linux
+- MacOS
   
 
 ## Installation
 
-make sure you have Conan installed on your machine, then run the following commands:
+make sure you have Conan and tasj installed on your machine, then run the following commands:
 
 ```bash
 git clone git@github.com:EpitechPromo2027/B-CPP-500-MPL-5-2-rtype-guillaume1.tran.git
