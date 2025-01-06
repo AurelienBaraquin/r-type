@@ -1,6 +1,8 @@
 self = nil
 speed = 1
 collide = nil
+damage = 1
+
 function init(e)
     collide = nil
     if e == nil then
@@ -27,7 +29,7 @@ function onCollide(other)
     if hasTag(other, "enemy") then
         collide = other
         if hasMethod(other, "damage") then
-            callMethod(other, "damage", 1)
+            callMethod(other, "damage", damage)
         end
         if self ~= nil then
             destroyEntity(self)

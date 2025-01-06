@@ -70,11 +70,11 @@ function shoot()
 end
 
 function onCollide(other)
-    if hasTag(other, "bullet") then
-        damage(1)
-        print("Shooter hit by bullet:", other)
-        destroyEntity(other)
-    end
+    -- if hasTag(other, "bullet") then
+    --     damage(1)
+    --     print("Shooter hit by bullet:", other)
+    --     destroyEntity(other)
+    -- end
 end
 
 function damage(dmg)
@@ -87,6 +87,8 @@ function damage(dmg)
     print("Shooter took damage:", dmg, "remaining HP:", hp)
 
     if (hp <= 0) then
+        bonus = createEntity("Bonus")
+        setPosition(bonus, getPosition(selfEntity))
         destroyEntity(selfEntity)
         print("Shooter destroyed")
     end
