@@ -70,3 +70,13 @@ void SceneLoader::loadScene(const std::string& filePath, bool reload)
     }
     
 }
+
+void changeScene(const std::string& filePath)
+{
+    auto entities = registry.view<>();
+    for (auto entity : entities) {
+        registry.destroyEntity(entity);
+    }
+    SceneLoader(factory, registry, loaderManager, _entityTemplateManager)
+        .loadScene(filePath);
+}
