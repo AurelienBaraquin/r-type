@@ -176,5 +176,5 @@
       }
     }
   ],
-  "scenes": ["assets.json", "audio.json", "particles.json"]
+  "scenes": ["assets.json", "inputs.json", "audio.json", "particles.json"]
 }

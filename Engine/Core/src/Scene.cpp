@@ -23,6 +23,7 @@ void SceneLoader::loadEntity(const nlohmann::json& entityData, const std::string
     const auto& components = entityData["components"];
 
     factory.addComponent(entity, "Json", entityData, registry);
+
     for (auto& [componentName, componentData] : components.items()) {
         factory.addComponent(entity, componentName, componentData, registry);
     }
@@ -69,6 +70,7 @@ void SceneLoader::loadScene(const std::string& filePath, bool reload)
         }
         loaderManager.load(sceneData);
     }
+    file.close();
     
 }
 

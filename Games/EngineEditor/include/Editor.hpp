@@ -19,9 +19,14 @@ class Editor
 public:
     Editor() : _graphic(_engine.addModule<Graphic>("R-Type", 1, 1))
     {
+        _scenePath = "Games/EngineEditor/assets/scene.json";
         _engine.addModule<Physics>();
+        _engine.addModule<Inputs>();
         InitWindow(1920, 1080, "Engine Editor");
-        _engine.loadScene("Games/EngineEditor/assets/scene.json");
+        std::ifstream file(_scenePath);
+        file >> _sceneData;
+        file.close();
+        _engine.loadScene(_scenePath);
         _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry(), _selectedEntity);
 
         float _width = (float)GetScreenWidth();
@@ -30,6 +35,7 @@ public:
         _centerBox = {_leftBox.width, 0,_width * 0.60f, _height};
         _rightBox = {_centerBox.x + _centerBox.width, 0, _width * 0.20f, _height};
         _selectedEntity = -1;
+
     }
 
     ~Editor()
@@ -38,6 +44,11 @@ public:
 
     void run();
     void drawScene();
+    void reloadScene()
+    {
+        std::cout << _scenePath << std::endl;
+        _engine.reloadScene(_scenePath);
+    }
     void drawEntities(const std::vector<Entity>& entities);
     std::vector<Entity> getSortedEntitiesByZ();
 
@@ -46,7 +57,30 @@ public:
         _entities = entities;
     }
 
+    void saveScene()
+    {
+        std::vector<Entity> entities = _engine.getRegistry().view<>();
+        nlohmann::json sceneData;
+        for (auto& entity : entities)
+        {
+            auto json = _engine.getRegistry().getComponent<Components::Json>(entity);
+            sceneData["entities"].push_back(json->data);
+        }
+        for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it)
+        {
+            if (it.key() != "entities")
+            {
+                sceneData[it.key()] = it.value();
+            }
+        }
+        std::ofstream file(_scenePath);
+        file << sceneData.dump(4);
+        file.close();
+    }
+
 private:
+    std::string _scenePath;
+    nlohmann::json _sceneData;
     Engine _engine;
     std::vector<Entity> _entities;
     Entity _selectedEntity;

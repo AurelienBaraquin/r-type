@@ -13,7 +13,11 @@ void Editor::run()
     camera.offset = (Vector2){_centerBox.x, _centerBox.y};
     camera.zoom = 1.0f;
 
-    std::vector<Entity> entities = _engine.getRegistry().view<Components::Json>();
+    std::vector<Entity> unfilteredEntities = _engine.getRegistry().view<Components::Json>();
+    for (const auto& entity : unfilteredEntities)
+    {
+        std::vector<std::string> tags = _engine.getRegistry().getTags(entity);
+    }
     std::vector<bool> TextBoxesBool;
     Entity oldSelectedEntity = -1;
 
@@ -23,6 +27,11 @@ void Editor::run()
         ClearBackground(RAYWHITE);
 
         GuiPanel(_centerBox, "Scene");
+
+        if (IsKeyPressed(KEY_R)) {
+            std::cout << "Reload scene" << std::endl;
+            reloadScene();
+        }
 
         auto entities = getSortedEntitiesByZ();
 
@@ -51,8 +60,10 @@ void Editor::run()
                     }
 
                     std::string value = "";
+                    std::string valueMemory = "";
                     if (it2->is_string()) {
                         value = it2->get<std::string>();
+                        
                     }
                     if (it2->is_number()) {
                         value = std::to_string(it2->get<float>());
@@ -61,6 +72,7 @@ void Editor::run()
                         value = it2->get<bool>() ? "true" : "false";
                     }
                     char *label = value.data();
+                    valueMemory = value;
                     padding += 20;
 
                     if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20},
@@ -68,14 +80,22 @@ void Editor::run()
                                 100,
                                 TextBoxesBool[iComponent])) {
                         TextBoxesBool[iComponent] = !TextBoxesBool[iComponent];
-                                }
-
+                        if (!TextBoxesBool[iComponent]) {
+                            saveScene();
+                            continue;
+                        }
+                    }
+                    
                     if (it2->is_number()) {
                         *it2 = std::stof(value);
                     } else if (it2->is_boolean()) {
                         *it2 = value == "true";
                     } else {
                         *it2 = value;
+                    }
+
+                    if (valueMemory != value) {
+                        saveScene();
                     }
 
                     iComponent++;
@@ -87,18 +107,6 @@ void Editor::run()
 
         EndDrawing();
     }
-
-    nlohmann::json sceneData;
-    for (auto& entity : entities)
-    {
-        auto json = _engine.getRegistry().getComponent<Components::Json>(entity);
-        sceneData["entities"].push_back(json->data);
-    }
-    sceneData["sceneTag"] = "my_scene";
-
-    std::ofstream file("Games/EngineEditor/assets/scene.json");
-    file << sceneData.dump(4);
-    file.close();
 
     CloseWindow();
     
