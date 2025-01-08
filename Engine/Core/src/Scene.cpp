@@ -22,6 +22,7 @@ void SceneLoader::loadEntity(const nlohmann::json& entityData, const std::string
     Entity entity = registry.createEntity();
     const auto& components = entityData["components"];
 
+    factory.addComponent(entity, "Json", entityData, registry);
     for (auto& [componentName, componentData] : components.items()) {
         factory.addComponent(entity, componentName, componentData, registry);
     }
@@ -71,7 +72,7 @@ void SceneLoader::loadScene(const std::string& filePath, bool reload)
     
 }
 
-void changeScene(const std::string& filePath)
+void SceneLoader::changeScene(const std::string& filePath)
 {
     auto entities = registry.view<>();
     for (auto entity : entities) {

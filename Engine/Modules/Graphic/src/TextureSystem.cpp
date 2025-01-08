@@ -21,7 +21,6 @@ void TextureSystem::remove(int textureID) {
 }
 
 Texture2D TextureSystem::get(int textureID) const {
-    std::cout << "texture size get: " << textures.size() << std::endl;
     auto it = textures.find(textureID);
     if (it != textures.end()) {
         return it->second;

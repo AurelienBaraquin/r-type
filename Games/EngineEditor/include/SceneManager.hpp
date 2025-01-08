@@ -10,7 +10,7 @@
 class SceneManager
 {
 public:
-    SceneManager(Registry& registry) : _registry(registry) {
+    SceneManager(Registry& registry, Entity &selectedEntity) : _registry(registry), _selectedEntity(selectedEntity) {
         _entities = _registry.view<>();
     }
     ~SceneManager() = default;
@@ -18,7 +18,7 @@ public:
     void drawEntities();
    private:
     std::vector<Entity> _entities;
-    Entity _selectedEntity;
+    Entity& _selectedEntity;
     Registry &_registry;
 };
 

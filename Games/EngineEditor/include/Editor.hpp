@@ -22,13 +22,14 @@ public:
         _engine.addModule<Physics>();
         InitWindow(1920, 1080, "Engine Editor");
         _engine.loadScene("Games/EngineEditor/assets/scene.json");
-        _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry());
+        _sceneManager = std::make_shared<SceneManager>(_engine.getRegistry(), _selectedEntity);
 
         float _width = (float)GetScreenWidth();
         float _height = (float)GetScreenHeight();
         _leftBox = {0, 0, _width * 0.20f, _height};
         _centerBox = {_leftBox.width, 0,_width * 0.60f, _height};
         _rightBox = {_centerBox.x + _centerBox.width, 0, _width * 0.20f, _height};
+        _selectedEntity = -1;
     }
 
     ~Editor()
@@ -48,6 +49,7 @@ public:
 private:
     Engine _engine;
     std::vector<Entity> _entities;
+    Entity _selectedEntity;
     std::shared_ptr<SceneManager> _sceneManager;
     Graphic& _graphic;
     float _width = 0;

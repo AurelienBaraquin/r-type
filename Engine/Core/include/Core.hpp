@@ -10,6 +10,9 @@
 #include "Scene.hpp"
 #include "SystemManager.hpp"
 
+
+#include "Json.hpp"
+
 // TODO
 // j'ai mis en notThreadable pour le moment car crash lors de
 //if (luaState["update"]) { <--- crash voir notion
