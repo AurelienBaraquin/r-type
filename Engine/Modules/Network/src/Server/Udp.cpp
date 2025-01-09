@@ -22,7 +22,7 @@ void UdpServer::doReceive()
             if (!ec && bytes_received > 0) {
                 handlePacket(recvBuffer_.data(), bytes_received, remoteEndpoint_);
             } else if (ec) {
-                std::cerr << "Server: Receive error: " << ec.message() << "\n";
+                std::cerr << "Server: Receive error: " << ec.message() << std::endl;
             }
             doReceive();
         });
@@ -37,7 +37,7 @@ void UdpServer::sendAll(const Packet& packet)
                               [data, client](std::error_code ec, std::size_t bytes_transferred) {
                                   if (ec) {
                                       std::cerr << "Server: Error sending to " << client << ": "
-                                                << ec.message() << "\n";
+                                                << ec.message() << std::endl;
                                   } else {
                                   }
                               });
@@ -50,13 +50,13 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
     auto it = std::find_if(clients_.begin(), clients_.end(),
                            [&](const auto& ep) { return ep == sender; });
     if (it == clients_.end()) {
-        std::cout << "Server: New client connected from " << sender << "\n";
+        std::cout << "Server: New client connected from " << sender << std::endl;
         clients_.push_back(sender);
     }
 
     Packet p;
     if (!p.deserialize(data, length)) {
-        std::cerr << "Server: Received malformed packet from " << sender << "\n";
+        std::cerr << "Server: Received malformed packet from " << sender << std::endl;
         return;
     }
 
@@ -64,7 +64,7 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
 
     switch (p.getMessageType()) {
         case MessageType::PLAYER_UPDATE:
-            std::cout << "Server: Player update received, seq: " << p.header.sequence << "\n";
+            std::cout << "Server: Player update received" << std::endl;
             break;
 
         case MessageType::PLAYER_INPUT: {
@@ -109,7 +109,7 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
             std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
                       << pi.actions.size() << " actions.\n";
             for (const auto& act : pi.actions) {
-                std::cout << "  Action: " << act << "\n";
+                std::cout << "  Action: " << act << std::endl;
             }
             Sharable::getInstance().setSharedVariable("InputLoads", pi.actions);
             break;

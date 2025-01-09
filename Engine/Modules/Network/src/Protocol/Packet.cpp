@@ -82,11 +82,6 @@ void Packet::setMessageType(MessageType type)
     header.msgType = static_cast<uint8_t>(type);
 }
 
-void Packet::setSequence(uint32_t seq)
-{
-    header.sequence = seq;
-}
-
 void Packet::setPayload(const std::vector<uint8_t>& data)
 {
     payload = data;

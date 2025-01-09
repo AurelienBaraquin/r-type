@@ -18,7 +18,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
         t.detach();
 
     } catch (std::exception &e) {
-        std::cerr << "Server exception: " << e.what() << "\n";
+        std::cerr << "Server exception: " << e.what() << std::endl;
     }
 }
 

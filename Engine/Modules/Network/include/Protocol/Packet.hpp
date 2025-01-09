@@ -14,7 +14,6 @@ struct PacketHeader {
     uint16_t magic;          // 0xABCD
     uint8_t version;         // current protocol version
     uint8_t msgType;         // one of MessageType
-    uint32_t sequence;       // sequence number
     uint16_t payloadLength;  // length of payload
     uint32_t checksum;       // CRC32 or similarPacket
 };
@@ -32,7 +31,6 @@ class Packet
     uint32_t computeChecksum() const;
 
     void setMessageType(MessageType type);
-    void setSequence(uint32_t seq);
     void setPayload(const std::vector<uint8_t>& data);
 
     MessageType getMessageType() const;
