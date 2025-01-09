@@ -1,5 +1,6 @@
-#include "UdpClient.hpp"
 #include <iostream>
+
+#include "UdpClient.hpp"
 
 UdpClient::UdpClient(asio::io_context& ioContext, const asio::ip::udp::endpoint& serverEndpoint)
     : io_(ioContext),
@@ -22,12 +23,10 @@ void UdpClient::startReceiving()
 void UdpClient::doReceive()
 {
     std::cout << "Client: Waiting for data...\n";
-    socket_.async_receive_from(
-        asio::buffer(recvBuffer_), remoteEndpoint_,
-        [this](std::error_code ec, std::size_t bytes_received) {
-            handleReceive(ec, bytes_received);
-        }
-    );
+    socket_.async_receive_from(asio::buffer(recvBuffer_), remoteEndpoint_,
+                               [this](std::error_code ec, std::size_t bytes_received) {
+                                   handleReceive(ec, bytes_received);
+                               });
 }
 
 void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_received)

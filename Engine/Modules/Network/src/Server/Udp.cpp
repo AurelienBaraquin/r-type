@@ -1,7 +1,8 @@
-#include "UdpServer.hpp"
-#include <iostream>
-#include "Sharable.hpp"
 #include <algorithm>
+#include <iostream>
+
+#include "Sharable.hpp"
+#include "UdpServer.hpp"
 
 UdpServer::UdpServer(asio::io_context& ioContext, unsigned short port)
     : io_(ioContext), socket_(ioContext, asio::ip::udp::endpoint(asio::ip::udp::v4(), port))
@@ -32,29 +33,22 @@ void UdpServer::sendAll(const Packet& packet)
     auto data = std::make_shared<std::vector<uint8_t>>(packet.serialize());
 
     for (const auto& client : clients_) {
-        socket_.async_send_to(
-            asio::buffer(*data), client,
-            [data, client](std::error_code ec, std::size_t bytes_transferred) {
-                if (ec) {
-                    std::cerr << "Server: Error sending to " << client << ": " << ec.message() << "\n";
-                } else {
-                }
-            }
-        );
+        socket_.async_send_to(asio::buffer(*data), client,
+                              [data, client](std::error_code ec, std::size_t bytes_transferred) {
+                                  if (ec) {
+                                      std::cerr << "Server: Error sending to " << client << ": "
+                                                << ec.message() << "\n";
+                                  } else {
+                                  }
+                              });
     }
 }
-
-struct PlayerInput {
-    uint32_t playerID;
-    std::vector<std::string> actions;
-};
 
 void UdpServer::handlePacket(const uint8_t* data, size_t length,
                              const asio::ip::udp::endpoint& sender)
 {
-    auto it = std::find_if(clients_.begin(), clients_.end(), [&](const auto& ep) {
-        return ep == sender;
-    });
+    auto it = std::find_if(clients_.begin(), clients_.end(),
+                           [&](const auto& ep) { return ep == sender; });
     if (it == clients_.end()) {
         std::cout << "Server: New client connected from " << sender << "\n";
         clients_.push_back(sender);

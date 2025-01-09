@@ -1,20 +1,21 @@
 #pragma once
 
+#include <array>
 #include <asio.hpp>
 #include <functional>
 #include <thread>
-#include <array>
+
 #include "Protocol.hpp"
 
 class UdpClient
 {
-public:
+   public:
     UdpClient(asio::io_context& ioContext, const asio::ip::udp::endpoint& serverEndpoint);
     void sendPacket(const Packet& packet);
 
     void startReceiving();
 
-private:
+   private:
     void doReceive();
     void handleReceive(const std::error_code& ec, std::size_t bytes_received);
 

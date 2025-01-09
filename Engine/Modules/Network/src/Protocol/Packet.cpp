@@ -1,14 +1,11 @@
-#include "Protocol.hpp"
+#include "Packet.hpp"
 
-#include <cstring>  // for memcpy
-
-static uint32_t simpleChecksum(const uint8_t* data, size_t length)
+Packet::Packet()
 {
-    uint32_t sum = 0;
-    for (size_t i = 0; i < length; i++) {
-        sum += data[i];
-    }
-    return sum;
+    header.magic = MAGIC;
+    header.version = PROTOCOL_VERSION;
+    header.payloadLength = 0;
+    header.checksum = 0;
 }
 
 std::vector<uint8_t> Packet::serialize() const
@@ -57,6 +54,15 @@ bool Packet::deserialize(const uint8_t* data, size_t size)
     return true;
 }
 
+static uint32_t simpleChecksum(const uint8_t* data, size_t length)
+{
+    uint32_t sum = 0;
+    for (size_t i = 0; i < length; i++) {
+        sum += data[i];
+    }
+    return sum;
+}
+
 uint32_t Packet::computeChecksum() const
 {
     PacketHeader hdr = header;
@@ -69,4 +75,25 @@ uint32_t Packet::computeChecksum() const
     }
 
     return simpleChecksum(temp.data(), temp.size());
+}
+
+void Packet::setMessageType(MessageType type)
+{
+    header.msgType = static_cast<uint8_t>(type);
+}
+
+void Packet::setSequence(uint32_t seq)
+{
+    header.sequence = seq;
+}
+
+void Packet::setPayload(const std::vector<uint8_t>& data)
+{
+    payload = data;
+    header.payloadLength = static_cast<uint16_t>(data.size());
+}
+
+MessageType Packet::getMessageType() const
+{
+    return static_cast<MessageType>(header.msgType);
 }

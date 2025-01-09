@@ -14,6 +14,7 @@ class Network : public ISystem, public ILoader
    public:
     Network();
     ~Network() = default;
+
     void update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) override;
     void registerComponentFactory(ComponentFactory &componentFactory) override;
     void registerScriptBindings(ScriptSystem &scriptSystem, Registry &registry) override;
@@ -30,6 +31,6 @@ class Network : public ISystem, public ILoader
     UdpServer server;
 #elif CLIENT
     UdpClient client;
-    int id; // need to be replaced by uuid
+    int id;  // need to be replaced by uuid
 #endif
 };

@@ -1,11 +1,12 @@
-#include <asio.hpp>
-#include <time.h>
 #include <stdlib.h>
+#include <time.h>
+
+#include <asio.hpp>
 #include <iostream>
 
 #include "Network.hpp"
-#include "UdpClient.hpp"
 #include "Sharable.hpp"
+#include "UdpClient.hpp"
 
 #ifdef CLIENT
 Network::Network()
@@ -14,10 +15,9 @@ Network::Network()
 {
     client.startReceiving();
 
-    std::thread ioThread = std::thread([this]() {
-        ioContext.run();
-    });
+    std::thread ioThread = std::thread([this]() { ioContext.run(); });
     ioThread.detach();
+
     srand(time(NULL));
     this->id = rand() % 100000;
 }
@@ -45,10 +45,11 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     pi.playerID = this->id;
     pi.actions = dataStr;
 
-    size_t payloadSize =
-        sizeof(pi.playerID) + sizeof(size_t) +
-        std::accumulate(pi.actions.begin(), pi.actions.end(), (size_t)0,
-                        [](size_t sum, const std::string& s) { return sum + sizeof(size_t) + s.size(); });
+    size_t payloadSize = sizeof(pi.playerID) + sizeof(size_t) +
+                         std::accumulate(pi.actions.begin(), pi.actions.end(), (size_t)0,
+                                         [](size_t sum, const std::string &s) {
+                                             return sum + sizeof(size_t) + s.size();
+                                         });
 
     std::vector<uint8_t> payload(payloadSize);
 

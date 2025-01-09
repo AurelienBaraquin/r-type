@@ -2,21 +2,25 @@
 
 #include <asio.hpp>
 #include <functional>
+#include <memory>
 #include <thread>
 #include <unordered_set>
 #include <vector>
-#include <memory>
+
 #include "Protocol.hpp"
 
 class UdpServer
 {
-public:
+   public:
     UdpServer(asio::io_context& ioContext, unsigned short port);
     void start();
 
-    int countClients() const { return static_cast<int>(clients_.size()); }
+    int countClients() const
+    {
+        return static_cast<int>(clients_.size());
+    }
 
-private:
+   private:
     void doReceive();
     void handlePacket(const uint8_t* data, size_t length, const asio::ip::udp::endpoint& sender);
     void sendAll(const Packet& packet);

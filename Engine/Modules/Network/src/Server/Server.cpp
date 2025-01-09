@@ -2,8 +2,8 @@
 #include <iostream>
 
 #include "Network.hpp"
-#include "UdpServer.hpp"
 #include "Sharable.hpp"
+#include "UdpServer.hpp"
 
 #ifdef SERVER
 Network::Network() : ioContext(), server(ioContext, 12345)

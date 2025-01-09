@@ -1,6 +1,5 @@
 #include "Network.hpp"
 
-
 void Network::registerComponentFactory(ComponentFactory &componentFactory)
 {
     // Register network-related components
