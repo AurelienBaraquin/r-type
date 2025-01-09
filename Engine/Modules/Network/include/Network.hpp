@@ -30,5 +30,6 @@ class Network : public ISystem, public ILoader
     UdpServer server;
 #elif CLIENT
     UdpClient client;
+    int id; // need to be replaced by uuid
 #endif
 };

@@ -1,4 +1,6 @@
 #include <asio.hpp>
+#include <time.h>
+#include <stdlib.h>
 #include <iostream>
 
 #include "Network.hpp"
@@ -16,6 +18,8 @@ Network::Network()
         ioContext.run();
     });
     ioThread.detach();
+    srand(time(NULL));
+    this->id = rand() % 100000;
 }
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
@@ -38,7 +42,7 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
         uint32_t playerID;
         std::vector<std::string> actions;
     } pi;
-    pi.playerID = 42;
+    pi.playerID = this->id;
     pi.actions = dataStr;
 
     size_t payloadSize =
