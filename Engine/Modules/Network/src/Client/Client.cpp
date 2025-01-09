@@ -38,12 +38,10 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     p.setMessageType(MessageType::PLAYER_INPUT);
     p.setSequence(1);
 
-    struct PlayerInput {
-        uint32_t playerID;
-        std::vector<std::string> actions;
-    } pi;
-    pi.playerID = this->id;
-    pi.actions = dataStr;
+    PlayerInput pi = {
+        .playerID = this->id,
+        .actions = dataStr,
+    }
 
     size_t payloadSize = sizeof(pi.playerID) + sizeof(size_t) +
                          std::accumulate(pi.actions.begin(), pi.actions.end(), (size_t)0,

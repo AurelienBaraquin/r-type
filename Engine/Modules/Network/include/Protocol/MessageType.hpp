@@ -11,7 +11,7 @@ enum class MessageType : uint8_t {
     PLAYER_INPUT = 4,
 };
 
-struct PlayerInput {
+typedef struct PlayerInput {
     uint32_t playerID;
     std::vector<std::string> actions;
 };
