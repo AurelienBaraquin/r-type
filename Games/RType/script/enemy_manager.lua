@@ -1,7 +1,7 @@
 local selfEntity = nil
 local spawn_timer = 0
 local spawn_rate = 50
-local boss_spawned = false
+local shooter_spawned = false
 
 function init(e)
     self = e
@@ -11,9 +11,9 @@ end
 function update(delta)
     if spawn_timer <= 0 then
         spawn_timer = spawn_rate
-        if not boss_spawned and math.random(1, 100) > 80 then
-            spawnBoss()
-            boss_spawned = true
+        if not shooter_spawned and math.random(1, 100) > 80 then
+            spawnShooter()
+            shooter_spawned = true
         else
             spawnEnemy()
         end
@@ -33,14 +33,14 @@ function spawnEnemy()
     end
 end
 
-function spawnBoss()
-    local boss = createEntity("Boss")
-    addTag(boss, "MainScene")
+function spawnShooter()
+    local shooter = createEntity("Shooter")
+    addTag(shooter, "MainScene")
 
-    if boss ~= nil then
+    if shooter ~= nil then
         print("SPAWNED")
-        setPosition(boss, {x = 220, y = 30, z = 3})
+        setPosition(shooter, {x = 220, y = 30, z = 3})
     else
-        print("Failed to create Boss entity")
+        print("Failed to create Shooter entity")
     end
 end

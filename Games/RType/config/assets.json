@@ -181,7 +181,99 @@
 
       ]
 
+    },
+
+    {
+      "animationID": 6,
+      "frameTime": 0.1,
+      "frames": [
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 0,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 24,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 48,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 72,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 96,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 120,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 144,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 168,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 192,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 216,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 240,
+          "originY": 0
+        },
+        {
+          "textureID": 7,
+          "width": 24,
+          "height": 24,
+          "originX": 264,
+          "originY": 0
+        }
+      ]
     }
+    
 
   ],
   "sprites": [
@@ -204,6 +296,16 @@
         "originX": 0,
         "originY": 0
       }
+    },
+    {
+      "spriteID": 3,
+      "data": {
+        "textureID": 8,
+        "width": 24,
+        "height": 24,
+        "originX": 0,
+        "originY": 0
+      }
     }
   ],
   "scenes": ["inputs.json"],
@@ -222,11 +324,11 @@
     },
     {
       "textureID": 3,
-      "path": "Games/RType/assets/boss.gif"
+      "path": "Games/RType/assets/shooter.gif"
     },
     {
       "textureID": 4,
-      "path": "Games/RType/assets/bossbull.png"
+      "path": "Games/RType/assets/shooterbull.png"
     },
     {
       "textureID": 5,
@@ -235,6 +337,14 @@
     {
       "textureID": 6,
       "path": "Games/RType/assets/background_space.png"
+    },
+    {
+      "textureID": 7,
+      "path": "Games/RType/assets/bonus.png"
+    },
+    {
+      "textureID": 8,
+      "path": "Games/RType/assets/bonus_bullet.png"
     }
   ]
 }

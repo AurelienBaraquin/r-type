@@ -8,10 +8,10 @@ static constexpr uint16_t MAGIC = 0xABCD;
 static constexpr uint8_t PROTOCOL_VERSION = 0x01;
 
 enum class MessageType : uint8_t {
-    PLAYER_UPDATE = 0x01,
-    WORLD_EVENT = 0x02,
-    SERVER_SNAPSHOT = 0x03,
-    PLAYER_INPUT = 0x04,
+    PLAYER_UPDATE = 1,
+    WORLD_EVENT = 2,
+    SERVER_SNAPSHOT = 3,
+    PLAYER_INPUT = 4,
 };
 
 #pragma pack(push, 1)

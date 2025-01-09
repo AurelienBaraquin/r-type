@@ -24,6 +24,12 @@ tasks:
       - mkdir -p ./Release
       - cp ./build/build/Release/Games/RType/r-type_client ./Release/r-type_client
 
+  enginebuild:
+    desc: "Build the engine with conan-release preset"
+    cmds:
+      - cmake --preset conan-release -DBUILD_ENGINE_EDITOR=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=OFF
+      - cmake --build build --preset conan-release
+
   sb:
     desc: "Build rtype server with conan-release preset"
     cmds:
