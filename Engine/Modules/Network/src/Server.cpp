@@ -3,21 +3,27 @@
 
 #include "Network.hpp"
 #include "UdpServer.hpp"
+#include "Sharable.hpp"
 
-void tryServer()
+#ifdef SERVER
+Network::Network() : ioContext(), server(ioContext, 12345)
 {
     try {
-        asio::io_context ioContext;
-        UdpServer server(ioContext, 12345);
         server.start();
 
-        std::thread t([&ioContext]() { ioContext.run(); });
+        std::thread t([this]() { this->ioContext.run(); });
 
         std::cout << "Server running on port 12345...\n";
 
-        t.join();
+        t.detach();
 
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::cerr << "Server exception: " << e.what() << "\n";
     }
 }
+
+void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
+{
+    // std::cout << server.countClients() << std::endl;
+}
+#endif

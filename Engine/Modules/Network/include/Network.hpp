@@ -32,6 +32,3 @@ class Network : public ISystem, public ILoader
     UdpClient client;
 #endif
 };
-
-void tryClient();
-void tryServer();
