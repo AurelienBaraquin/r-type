@@ -13,6 +13,7 @@
 #include <memory>
 #include "raylib.h"
 #include "Scene.hpp"
+#include <algorithm>
 
 class Editor
 {
@@ -60,6 +61,7 @@ public:
     void saveScene()
     {
         std::vector<Entity> entities = _engine.getRegistry().view<>();
+        std::reverse(entities.begin(), entities.end());
         nlohmann::json sceneData;
         for (auto& entity : entities)
         {
