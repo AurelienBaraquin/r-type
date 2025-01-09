@@ -8,6 +8,7 @@ add_library(Network STATIC
     src/Client/Udp.cpp
     src/Server/Server.cpp
     src/Server/Udp.cpp
+    src/Protocol/PlayerInput.cpp
 )
 
 target_include_directories(Network PUBLIC
