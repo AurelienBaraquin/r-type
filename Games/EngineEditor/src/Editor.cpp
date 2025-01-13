@@ -28,11 +28,6 @@ void Editor::run()
 
         GuiPanel(_centerBox, "Scene");
 
-        if (IsKeyPressed(KEY_R)) {
-            std::cout << "Reload scene" << std::endl;
-            reloadScene();
-        }
-
         auto entities = getSortedEntitiesByZ();
 
         BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
@@ -44,66 +39,8 @@ void Editor::run()
         GuiPanel(_leftBox, "Lists");
         _sceneManager->drawEntities();
         GuiPanel(_rightBox, "Properties");
-
-        if (_selectedEntity != -1) {
-            auto json = _engine.getRegistry().getComponent<Components::Json>(_selectedEntity);
-            int iComponent = 0;
-            int padding = 30;
-            for (auto it = json->data["components"].begin(); it != json->data["components"].end(); ++it)
-            {
-                GuiLabel(Rectangle{_rightBox.x + 10, _rightBox.y + padding, 100, 20}, it.key().c_str());
-                for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2)
-                {
-                    if (_selectedEntity != oldSelectedEntity) {
-                        TextBoxesBool.push_back(false);
-                        oldSelectedEntity = _selectedEntity;
-                    }
-
-                    std::string value = "";
-                    std::string valueMemory = "";
-                    if (it2->is_string()) {
-                        value = it2->get<std::string>();
-                        
-                    }
-                    if (it2->is_number()) {
-                        value = std::to_string(it2->get<float>());
-                    }
-                    if (it2->is_boolean()) {
-                        value = it2->get<bool>() ? "true" : "false";
-                    }
-                    char *label = value.data();
-                    valueMemory = value;
-                    padding += 20;
-
-                    if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20},
-                                label,
-                                100,
-                                TextBoxesBool[iComponent])) {
-                        TextBoxesBool[iComponent] = !TextBoxesBool[iComponent];
-                        if (!TextBoxesBool[iComponent]) {
-                            saveScene();
-                            continue;
-                        }
-                    }
-                    
-                    if (it2->is_number()) {
-                        *it2 = std::stof(value);
-                    } else if (it2->is_boolean()) {
-                        *it2 = value == "true";
-                    } else {
-                        *it2 = value;
-                    }
-
-                    if (valueMemory != value) {
-                        saveScene();
-                    }
-
-                    iComponent++;
-                    
-                }
-                padding += 40;
-            }
-        }
+        int padding = 10;
+        drawProperties(padding , TextBoxesBool, oldSelectedEntity);
 
         EndDrawing();
     }
@@ -111,6 +48,62 @@ void Editor::run()
     CloseWindow();
     
     return;
+}
+
+void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity) {
+    if (_selectedEntity == -1) {
+        return;
+    }
+
+    auto json = _engine.getRegistry().getComponent<Components::Json>(_selectedEntity);
+    int iComponent = 0;
+
+    for (auto it = json->data["components"].begin(); it != json->data["components"].end(); ++it) {
+        GuiLabel(Rectangle{_rightBox.x + 10, _rightBox.y + padding, 100, 20}, it.key().c_str());
+
+        for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
+            if (_selectedEntity != oldSelectedEntity) {
+                TextBoxesBool.push_back(false);
+                oldSelectedEntity = _selectedEntity;
+            }
+
+            std::string value;
+            if (it2->is_string()) {
+                value = it2->get<std::string>();
+            } else if (it2->is_number()) {
+                value = std::to_string(it2->get<float>());
+            } else if (it2->is_boolean()) {
+                value = it2->get<bool>() ? "true" : "false";
+            }
+
+            std::string valueMemory = value;
+            char* label = value.data();
+            padding += 20;
+
+            if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20}, label, 100, TextBoxesBool[iComponent])) {
+                TextBoxesBool[iComponent] = !TextBoxesBool[iComponent];
+                if (!TextBoxesBool[iComponent]) {
+                    saveScene();
+                    reloadScene();
+                    return;
+                }
+            }
+
+            if (valueMemory != value) {
+                if (it2->is_number()) {
+                    *it2 = std::stof(value);
+                } else if (it2->is_boolean()) {
+                    *it2 = value == "true";
+                } else {
+                    *it2 = value;
+                }
+                saveScene();
+            }
+
+            iComponent++;
+        }
+        padding += 40;
+    }
 }
 
 std::vector<Entity> Editor::getSortedEntitiesByZ()

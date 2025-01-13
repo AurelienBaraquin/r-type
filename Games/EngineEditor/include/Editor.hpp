@@ -63,11 +63,13 @@ public:
         std::vector<Entity> entities = _engine.getRegistry().view<>();
         std::reverse(entities.begin(), entities.end());
         nlohmann::json sceneData;
+
         for (auto& entity : entities)
         {
             auto json = _engine.getRegistry().getComponent<Components::Json>(entity);
             sceneData["entities"].push_back(json->data);
         }
+
         for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it)
         {
             if (it.key() != "entities")
@@ -80,6 +82,7 @@ public:
         file.close();
     }
 
+    void drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity);
 private:
     std::string _scenePath;
     nlohmann::json _sceneData;
