@@ -155,19 +155,6 @@
             ]
         },
         {
-            "_name_": "Caca",
-            "components": {
-                "Position": {
-                    "x": 700.0,
-                    "y": 300.0,
-                    "z": 0.0
-                }
-            },
-            "tags": [
-                "coucou"
-            ]
-        },
-        {
             "_name_": "AudioSystem",
             "components": {
                 "Script": {
