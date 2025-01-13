@@ -2,7 +2,7 @@ speed = 3
 self = nil
 shoot_timer = 0
 shoot_rate = 10
-hp = 3
+hp = 1000
 can_move = true
 
 function init(e)

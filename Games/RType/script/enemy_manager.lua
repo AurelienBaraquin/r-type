@@ -5,7 +5,6 @@ local shooter_spawned = false
 local wave = 0
 function init(e)
     self = e
-    print(e)
 end
 
 function update(delta)
@@ -19,16 +18,21 @@ end
 
 function spawnEnemy()
     local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
-    if wave % 10 == 0 then 
-        enemyType = "EnemyRound"
+    if wave ~= 0 then 
+        if wave % 10 == 0 then
+            enemyType = "EnemyRound"
+        elseif wave % 5 == 0 then 
+            enemyType = "Shooter"
+        end
     end
     wave = wave + 1
-    
 
     if enemyType == "EnemyRound" then
         return spawnEnemyCircle()
     elseif enemyType == "Enemy1" then
         return spawnEnemy1Hord()
+    elseif enemyType == "Shooter" then
+        return spawnShooter()
     else
         return spawnEnemyByName(enemyType, 384, math.random(0, 180))
     end
@@ -36,7 +40,7 @@ end
 
 function spawnEnemy1Hord()
     y = math.random(0, 180)
-    for i = 1, 10 do
+    for i = 1, 4 do
         local enemy = spawnEnemyByName("Enemy1", 384 + i * 30, y)
         callMethod(enemy, "set_current_movement", i % 6 + 1)
     end
@@ -53,7 +57,6 @@ function spawnEnemyCircle()
 end
 
 function spawnEnemyByName(enemyName, x, y)
-    print("Spawning enemy: ", enemyName)
     local enemy = createEntity(enemyName)
     addTag(enemy, "MainScene")
     setPosition(enemy, {x = x, y = y, z = 0})

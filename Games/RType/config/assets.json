@@ -326,6 +326,16 @@
         "originX": 0,
         "originY": 0
       }
+    },
+    {
+      "spriteID": 6,
+      "data": {
+        "textureID": 11,
+        "width": 6,
+        "height": 6,
+        "originX": 0,
+        "originY": 0
+      }
     }
   ],
   "scenes": ["inputs.json"],
@@ -373,6 +383,10 @@
     {
       "textureID": 10,
       "path": "Games/RType/assets/enemy1/enemy2.png"
+    },
+    {
+      "textureID": 11,
+      "path": "Games/RType/assets/mini_bullet_enemy.png"
     }
   ]
 }

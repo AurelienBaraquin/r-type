@@ -30,6 +30,21 @@
                     "Script": { "scriptPath": "Games/RType/script/enemies/enemy2.lua" }
                 }
             }
+        },
+        {
+            "Template":
+            {
+                "name": "EnemyBullet",
+                "tags": ["enemyBullet"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Sprite": { "spriteID": 6 },
+                    "Area2D": { "width": 6, "height": 6 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy_bullet.lua" }
+                }
+            }
         }
 
     ]
