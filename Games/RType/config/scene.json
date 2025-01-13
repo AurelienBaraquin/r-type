@@ -167,11 +167,10 @@
 
     {
       "FromTemplate": {
-        "name": "Enemy",
         "name" : "Bonus",
         "tags": ["audio"]
       }
     }
   ],
-  "scenes": ["assets.json", "audio.json", "particles.json"]
+  "scenes": ["assets.json", "audio.json", "particles.json", "enemy1.json"]
 }

@@ -55,6 +55,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             auto* rotation = registry.getComponent<Components::Rotation>(entity);
             if (!rotation) throw std::runtime_error("Rotation component not found");
             if (rotation) {
+                std::cout << data["angle"].get_or(rotation->angle) << std::endl;
                 rotation->angle = data["angle"].get_or(rotation->angle);
             }
         };

@@ -1,0 +1,20 @@
+{
+    "sceneTag": "enemy1",
+    "entities": [
+        {
+            "Template":
+            {
+                "name": "Enemy1",
+                "tags": ["enemy"],
+                "components": {
+                    "Position": { "x": 400, "y": 200, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Area2D": { "width": 33, "height": 36 },
+                    "Sprite": { "spriteID": 4 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy1.lua" }
+                }
+            }
+        }
+    ]
+}
