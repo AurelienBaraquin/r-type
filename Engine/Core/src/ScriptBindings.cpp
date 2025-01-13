@@ -126,7 +126,15 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         };
 
         luaState["destroyEntity"] = [&registry](sol::object entityObj) {
+            std::cout << "delete" << entityObj.as<Entity>() << std::endl;
             if (!entityObj.valid() || entityObj.is<sol::lua_nil_t>()) {
+                std::cerr << "Invalid entity" << std::endl;
+                if (entityObj.is<sol::lua_nil_t>()) {
+                    std::cerr << "Entity is nil" << std::endl;
+                }
+                if (!entityObj.valid()) {
+                    std::cerr << "Entity is not valid" << std::endl;
+                }
                 return;
             }
 

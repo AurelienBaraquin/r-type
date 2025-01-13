@@ -272,7 +272,41 @@
           "originY": 0
         }
       ]
-    }
+    },
+    {
+      "animationID": 7,
+      "frameTime": 0.1,
+      "frames": [
+        {
+          "textureID": 13,
+          "width": 22,
+          "height": 20,
+          "originX": 0,
+          "originY": 0
+        },
+        {
+          "textureID": 13,
+          "width": 22,
+          "height": 20,
+          "originX": 22,
+          "originY": 0
+        },
+        {
+          "textureID": 13,
+          "width": 22,
+          "height": 20,
+          "originX": 44,
+          "originY": 0
+        },
+        {
+          "textureID": 13,
+          "width": 22,
+          "height": 20,
+          "originX": 66,
+          "originY": 0
+        }
+      ]
+    }    
     
 
   ],
@@ -336,6 +370,16 @@
         "originX": 0,
         "originY": 0
       }
+    },
+    {
+      "spriteID": 7,
+      "data": {
+        "textureID": 12,
+        "width": 159,
+        "height": 205,
+        "originX": 0,
+        "originY": 0
+      }
     }
   ],
   "scenes": ["inputs.json"],
@@ -387,6 +431,14 @@
     {
       "textureID": 11,
       "path": "Games/RType/assets/mini_bullet_enemy.png"
+    },
+    {
+      "textureID": 12,
+      "path": "Games/RType/assets/enemy1/boss.png"
+    },
+    {
+      "textureID": 13,
+      "path": "Games/RType/assets/enemy1/boss_bullet.png"
     }
   ]
 }

@@ -3,32 +3,48 @@ local spawn_timer = 0
 local spawn_rate = 4
 local shooter_spawned = false
 local wave = 0
+local can_spawn = true
+
 function init(e)
     self = e
 end
 
 function update(delta)
-    if spawn_timer <= 0 then
+    if spawn_timer <= 0 and can_spawn then
         spawn_timer = spawn_rate
         enemy = spawnEnemy()
     end
     spawn_timer = spawn_timer - 1 * delta
 end
 
+function set_can_spawn(value)
+    can_spawn = value
+end
 
 function spawnEnemy()
     local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
     if wave ~= 0 then 
-        if wave % 10 == 0 then
+        if wave % 50 == 0 then
+            enemyType = "Boss"
+            can_spawn = false
+        elseif wave % 10 == 0 then
             enemyType = "EnemyRound"
         elseif wave % 5 == 0 then 
             enemyType = "Shooter"
         end
     end
+    enemyType = "Boss"
+    can_spawn = false
     wave = wave + 1
 
     if enemyType == "EnemyRound" then
         return spawnEnemyCircle()
+    elseif enemyType == "Boss" then
+        boss = spawnEnemyByName("Boss", 384, 30)
+        if hasMethod(boss, "set_enemy_manager") then
+            callMethod(boss, "set_enemy_manager", self)
+        end
+        return boss
     elseif enemyType == "Enemy1" then
         return spawnEnemy1Hord()
     elseif enemyType == "Shooter" then
