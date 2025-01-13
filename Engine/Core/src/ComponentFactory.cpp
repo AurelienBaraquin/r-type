@@ -24,4 +24,9 @@ void Engine::registerComponentFactory(ComponentFactory& componentFactory)
                                                     Registry& registry) {
         registry.addComponent<Components::Script>(entity, data["scriptPath"].get<std::string>());
     });
+
+    componentFactory.registerComponent("Json", [](Entity entity, const nlohmann::json& data,
+                                                 Registry& registry) {
+        registry.addComponent<Components::Json>(entity, data);
+    });
 }

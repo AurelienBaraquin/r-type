@@ -29,7 +29,12 @@ tasks:
     cmds:
       - cmake --preset conan-release -DBUILD_ENGINE_EDITOR=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=OFF
       - cmake --build build --preset conan-release
-
+      - mkdir -p ./Release
+      - cp ./build/build/Release/Games/EngineEditor/EngineEditor ./Release/EngineEditor
+  ee:
+    desc: "Run the engine editor"
+    cmds:
+      - ./Release/EngineEditor
   sb:
     desc: "Build rtype server with conan-release preset"
     cmds:

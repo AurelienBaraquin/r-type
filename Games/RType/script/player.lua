@@ -1,7 +1,7 @@
 speed = 3
 self = nil
 shoot_timer = 0
-shoot_rate = 5
+shoot_rate = 10
 hp = 3
 can_move = true
 
@@ -23,7 +23,7 @@ function update(delta)
     if isInputActive(self, "Reload", true) then
         reloadScene("Games/RType/config/scene.json")
     end
-    if isInputActive(self, "Shoot", false) and shoot_timer <= 0 then
+    if isInputActive(self, "Shoot", true) and shoot_timer <= 0 then
         shoot_timer = shoot_rate
         playAnimation(self, 1)
         local bullet_position = {
@@ -34,7 +34,7 @@ function update(delta)
         bullet = createEntity("Bullet")
         addTag(bullet, "MainScene")
         setPosition(bullet, bullet_position)
-        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 100.0)
+        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 20.0)
     end
     if shoot_timer > 0 then
         shoot_timer = shoot_timer - 1

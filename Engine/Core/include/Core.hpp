@@ -10,6 +10,9 @@
 #include "Scene.hpp"
 #include "SystemManager.hpp"
 
+
+#include "Json.hpp"
+
 // TODO
 // j'ai mis en notThreadable pour le moment car crash lors de
 //if (luaState["update"]) { <--- crash voir notion
@@ -59,6 +62,18 @@ class Engine : public ISystem
             .loadScene(filePath, reload);
     }
 
+    void reloadScene(const std::string& filePath)
+    {
+        SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager)
+            .loadScene(filePath, true);
+    }
+
+    void changeScene(const std::string& filePath)
+    {
+        SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager)
+            .changeScene(filePath);
+    }
+
     void run()
     {
         startup();
@@ -69,6 +84,16 @@ class Engine : public ISystem
     ScriptSystem& getScriptSystem()
     {
         return _ScriptSystem;
+    }
+
+    Registry& getRegistry()
+    {
+        return _registry;
+    }
+
+    SystemManager& getSystemManager()
+    {
+        return _systemManager;
     }
 
    private:

@@ -38,6 +38,10 @@ public:
     }
     std::string getPart() override { return "graphic"; }
 
+    void drawTexture(BrutSprite* sprite, Components::Position* position);
+    void drawTextureEx(BrutSprite* sprite, Components::Position* position,
+                       Components::Rotation* rotation, Components::Scale* scale);
+
 private:
     Camera2D camera = { 0 };
     std::string _title;
@@ -48,8 +52,4 @@ private:
     TextureSystem _TextureSystem;
     SpriteSystem _SpriteSystem;
     AnimationSystem _AnimationSystem;
-
-    void drawTexture(BrutSprite* sprite, Components::Position* position);
-    void drawTextureEx(BrutSprite* sprite, Components::Position* position,
-                       Components::Rotation* rotation, Components::Scale* scale);
 };

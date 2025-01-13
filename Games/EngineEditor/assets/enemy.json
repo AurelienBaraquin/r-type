@@ -1,0 +1,25 @@
+{
+  "sceneTag" : "Enemy",
+  "entities": [
+    {
+      "id": 0,
+      "_name_": "Enemy",
+      "tags": ["enemy"],
+      "components": {
+          "Position": { "x": 400, "y": 200, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Area2D": { "width": 33, "height": 36 },
+          "Animation": {
+            "animationID": 2,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+          },
+          "Script": { "scriptPath": "Games/RType/script/left.lua" }
+        }
+    }
+  ]
+  
+}

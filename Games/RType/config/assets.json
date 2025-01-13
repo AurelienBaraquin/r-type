@@ -5,7 +5,7 @@
       "_name_": "Caca",
       "tags": ["coucou"],
       "components": {
-        "Position": { "x": 700, "y": 300, "z": 0 }
+        "Position": { "x": 400, "y": 0, "z": 0 }
       }
     }
   ],
