@@ -10,7 +10,10 @@
 class ILoader
 {
    public:
-    ILoader() = default;
+    ILoader()
+    {
+        std::cout << "ILoader constructor" << std::endl;
+    }
     virtual ~ILoader() = default;
 
     virtual void load(const nlohmann::json& data) = 0;

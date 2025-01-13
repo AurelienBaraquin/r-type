@@ -117,6 +117,7 @@
     {
       "name": "ScrollingBackground1",
       "tags": ["scrolling_background"],
+      "id": 0,
       "components": {
         "Position": { "x": 0, "y": 0, "z": -1 },
         "Scale": { "x": 0, "y": 0 },
@@ -128,6 +129,7 @@
     {
       "name": "ScrollingBackground2",
       "tags": ["scrolling_background"],
+      "id": 2,
       "components": {
         "Position": { "x": 1769, "y": 0, "z": -1 },
         "Scale": { "x": 0, "y": 0 },
@@ -139,8 +141,9 @@
     {
       "_name_": "Player",
       "tags": ["player"],
+      "id": 3,
       "components": {
-        "Position": { "x": 0, "y": 0, "z": 1 },
+        "Position": { "x": 200, "y": 200, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Area2D": { "width": 33 , "height": 17 },
@@ -172,5 +175,5 @@
       }
     }
   ],
-  "scenes": ["assets.json", "audio.json", "particles.json", "enemy1.json"]
+  "scenes": ["assets.json", "inputs.json", "audio.json", "particles.json", "enemy1.json"]
 }

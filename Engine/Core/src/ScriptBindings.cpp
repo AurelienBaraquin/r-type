@@ -94,6 +94,13 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         luaState["reloadScene"] = [this](std::string scenePath) {
             loadScene(scenePath,true);
         };
+        luaState["load"] = [this](std::string scenePath) {
+            loadScene(scenePath, false);
+        };
+
+        luaState["changeScene"] = [this](std::string scenePath) {
+            loadScene(scenePath);
+        };
     });
 
     _ScriptSystem.registerBinding("Entity", [&registry = registry](sol::state& luaState) {

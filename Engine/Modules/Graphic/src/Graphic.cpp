@@ -7,6 +7,7 @@
 Graphic::Graphic(const std::string& title, int width, int height)
     : _title(title), _width(width), _height(height) {
     InitWindow(_width, _height, _title.c_str());
+    std::cout << "Graphic module initialized" << std::endl;
     SetTargetFPS(60);
     // camera.offset = (Vector2){ width/2.0f, height/2.0f };
     camera.rotation = 0.0f;
