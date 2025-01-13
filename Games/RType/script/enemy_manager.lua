@@ -1,8 +1,8 @@
 local selfEntity = nil
 local spawn_timer = 0
-local spawn_rate = 2
+local spawn_rate = 4
 local shooter_spawned = false
-
+local wave = 0
 function init(e)
     self = e
     print(e)
@@ -19,7 +19,15 @@ end
 
 function spawnEnemy()
     local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
-    if enemyType == "Enemy1" then
+    if wave % 10 == 0 then 
+        enemyType = "EnemyRound"
+    end
+    wave = wave + 1
+    
+
+    if enemyType == "EnemyRound" then
+        return spawnEnemyCircle()
+    elseif enemyType == "Enemy1" then
         return spawnEnemy1Hord()
     else
         return spawnEnemyByName(enemyType, 384, math.random(0, 180))
@@ -28,9 +36,19 @@ end
 
 function spawnEnemy1Hord()
     y = math.random(0, 180)
-    for i = 1, 5 do
+    for i = 1, 10 do
         local enemy = spawnEnemyByName("Enemy1", 384 + i * 30, y)
         callMethod(enemy, "set_current_movement", i % 6 + 1)
+    end
+end
+
+function spawnEnemyCircle()
+    gap = 3.14 * 2 / 11
+    for i = 1, 10 do
+        local enemy = spawnEnemyByName("EnemyRound", 500 + math.cos(gap * i) * 110, 90 + 24 + math.sin(gap * i) * 110)
+        callMethod(enemy, "set_property", gap * i, 110, 500)
+
+        print("Spawning enemy: ", enemy)
     end
 end
 

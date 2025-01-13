@@ -316,6 +316,16 @@
         "originX": 0,
         "originY": 0
       }
+    },
+    {
+      "spriteID": 5,
+      "data": {
+        "textureID": 10,
+        "width": 48,
+        "height": 48,
+        "originX": 0,
+        "originY": 0
+      }
     }
   ],
   "scenes": ["inputs.json"],
@@ -359,6 +369,10 @@
     {
       "textureID": 9,
       "path": "Games/RType/assets/enemy1/enemy1_left.png"
+    },
+    {
+      "textureID": 10,
+      "path": "Games/RType/assets/enemy1/enemy2.png"
     }
   ]
 }
