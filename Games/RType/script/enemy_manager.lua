@@ -4,8 +4,8 @@ local spawn_rate = 4
 local shooter_spawned = false
 local wave = 0
 local can_spawn = true
-
 function init(e)
+    
     self = e
 end
 
@@ -23,20 +23,16 @@ end
 
 function spawnEnemy()
     local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
-    -- if wave ~= 0 then 
-    --     if wave % 50 == 0 then
-    --         enemyType = "Boss"
-    --         can_spawn = false
-    --     elseif wave % 10 == 0 then
-    --         enemyType = "EnemyRound"
-    --     elseif wave % 5 == 0 then 
-    --         enemyType = "Shooter"
-    --     end
-    -- end
-    enemyType = "EnemyRound"
-    -- enemyType = "EnemyRound"
-    -- enemyType = "Boss"
-    can_spawn = false
+    if wave ~= 0 then 
+        if wave % 15 == 0 then
+            enemyType = "Boss"
+            can_spawn = false
+        elseif wave % 10 == 0 then
+            enemyType = "EnemyRound"
+        elseif wave % 5 == 0 then 
+            enemyType = "Shooter"
+        end
+    end
     wave = wave + 1
 
     if enemyType == "EnemyRound" then

@@ -1,5 +1,5 @@
 self = e
-hp = 100
+hp = 40
 sprite_entity = nil
 can_move = true
 enemy_manager = nil
@@ -85,8 +85,7 @@ end
 function onCollide(other)
     if hasTag(other, "player") then
         if hasMethod(other, "damage") then
-            callMethod(other, "damage", 100)
-            damage(1000)
+            reloadScene("Games/RType/config/scene.json")
         end
     end
 end
@@ -104,7 +103,7 @@ function damage(dmg)
             setPosition(explosion, getPosition(self))
             destroyEntity(sprite_entity)
             destroyEntity(self)
-            changeScene("Games/RType/config/scene.json")
+            changeScene("Games/RType/config/scene2.json")
         end
     end
 end

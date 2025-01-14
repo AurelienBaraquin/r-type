@@ -306,9 +306,41 @@
           "originY": 0
         }
       ]
-    }    
-    
-
+    },
+    {
+      "animationID": 8,
+      "frameTime": 0.1,
+      "frames": [
+        {
+          "textureID": 14,
+          "width": 17,
+          "height": 9,
+          "originX": 0,
+          "originY": 0
+        },
+        {
+          "textureID": 14,
+          "width": 17,
+          "height": 9,
+          "originX": 17,
+          "originY": 0
+        },
+        {
+          "textureID": 14,
+          "width": 17,
+          "height": 9,
+          "originX": 34,
+          "originY": 0
+        },
+        {
+          "textureID": 14,
+          "width": 17,
+          "height": 9,
+          "originX": 51,
+          "originY": 0
+        }
+      ]
+    }
   ],
   "sprites": [
     {
@@ -380,6 +412,17 @@
         "originX": 0,
         "originY": 0
       }
+    }, 
+    {
+      "comment": "STAGE 2 background eye",
+      "spriteID": 8,
+      "data": {
+        "textureID": 15,
+        "width": 1769,
+        "height": 300,
+        "originX": 0,
+        "originY": 0
+      }
     }
   ],
   "scenes": ["inputs.json"],
@@ -439,6 +482,14 @@
     {
       "textureID": 13,
       "path": "Games/RType/assets/enemy1/boss_bullet.png"
+    },
+    {
+      "textureID": 14,
+      "path": "Games/RType/assets/enemy2/eyes_bullet.png"
+    },
+    {
+      "textureID":15,
+      "path":"Games/RType/assets/enemy2/background2.png"
     }
   ]
 }

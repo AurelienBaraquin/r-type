@@ -143,7 +143,7 @@
       "tags": ["player"],
       "id": 3,
       "components": {
-        "Position": { "x": 200, "y": 200, "z": 1 },
+        "Position": { "x": 64, "y": 128, "z": 1 },
         "Scale": { "x": 0, "y": 0 },
         "Rotation": { "angle": 0 },
         "Area2D": { "width": 33 , "height": 17 },

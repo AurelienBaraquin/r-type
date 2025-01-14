@@ -2,7 +2,7 @@ speed = 3
 self = nil
 shoot_timer = 0
 shoot_rate = 10
-hp = 1000
+hp = 10000
 can_move = true
 
 function init(e)
@@ -52,6 +52,8 @@ function setSpeed(self, newSpeed)
 end
 
 function handle_move(position)
+
+    old_position = position
     if can_move == false then
         return position
     end
@@ -66,6 +68,18 @@ function handle_move(position)
     end
     if isInputActive(self, "MoveRight") then
         position.x = position.x + speed
+    end
+    if position.y > 600 then
+        position.y = 600
+    end
+    if position.y < 0 then
+        position.y = 0
+    end
+    if position.x > 800 then
+        position.x = 800
+    end
+    if position.x < 0 then
+        position.x = 0
     end
     return position
 end

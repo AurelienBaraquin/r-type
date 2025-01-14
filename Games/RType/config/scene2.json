@@ -1,0 +1,179 @@
+{
+  "sceneTag": "MainScene",
+  "entities": [
+    {
+      "Template": {
+        "name": "Enemy",
+        "tags": ["enemy"],
+        "components": {
+          "Position": { "x": 400, "y": 200, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Area2D": { "width": 33, "height": 36 },
+          "Animation": {
+            "animationID": 2,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+          },
+          "Script": { "scriptPath": "Games/RType/script/left.lua" }
+        }
+      }
+    },
+    {
+      "Template": {
+        "name": "Bonus",
+        "tags": ["bonus"],
+        "components": {
+          "Position" : { "x": 0, "y": 0, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Area2D": { "width": 24, "height": 24 },
+          "Animation": {
+            "animationID": 6,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+
+          },
+          "Script": { "scriptPath": "Games/RType/script/bonus.lua" }
+        }
+      }
+    },
+    {
+      "Template": {
+        "name": "Bullet",
+        "tags": ["bullet"],
+        "components": {
+          "Position": { "x": 0, "y": 0, "z": 0 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Sprite": { "spriteID": 1 },
+          "Area2D": { "width": 19, "height": 13 },
+          "Script": { "scriptPath": "Games/RType/script/bullet.lua" }
+        }
+      }
+    },
+
+    {
+      "Template": {
+        "name": "BonusBullet",
+        "tags": ["bullet"],
+        "components": {
+          "Position": { "x": 0, "y": 0, "z": 2 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Area2D": { "width": 10, "height": 20 },
+          "Script": { "scriptPath": "Games/RType/script/bullet.lua" },
+          "Sprite": { "spriteID": 3 }
+        }
+      }
+    },
+    
+
+    {
+      "Template": {
+        "name": "Shooter",
+        "tags": ["enemy"],
+        "components": {
+          "Position": { "x": 750, "y": 50, "z": 3 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Sprite": { "spriteID": 4 },
+          "Animation": {
+            "animationID": 3,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+          },
+          "Area2D": { "width": 100, "height": 100 },
+          "Script": { "scriptPath": "Games/RType/script/shooter.lua" }
+        }
+      }
+    },
+    {
+      "Template": {
+        "name": "ShooterBullet",
+        "tags": ["shooter_bullet"],
+        "components": {
+          "Position": { "x": 0, "y": 0, "z": 2 },
+          "Scale": { "x": 0, "y": 0 },
+          "Rotation": { "angle": 0 },
+          "Animation": {
+            "animationID": 4,
+            "currentFrame": 0,
+            "elapsedTime": 0.0,
+            "loop": true,
+            "playing": true
+          },
+          "Area2D": { "width": 10, "height": 20 },
+          "Script": { "scriptPath": "Games/RType/script/shooter_bullet.lua" }
+        }
+      }
+    },
+    {
+      "name": "ScrollingBackground1",
+      "tags": ["scrolling_background"],
+      "id": 0,
+      "components": {
+        "Position": { "x": 0, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 8 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
+      }
+    },
+    {
+      "name": "ScrollingBackground2",
+      "tags": ["scrolling_background"],
+      "id": 2,
+      "components": {
+        "Position": { "x": 1769, "y": 0, "z": -1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Sprite": { "spriteID": 8 },
+        "Script": { "scriptPath": "Games/RType/script/scrolling_background.lua" }
+      }
+    },
+    {
+      "_name_": "Player",
+      "tags": ["player"],
+      "id": 3,
+      "components": {
+        "Position": { "x": 64, "y": 128, "z": 1 },
+        "Scale": { "x": 0, "y": 0 },
+        "Rotation": { "angle": 0 },
+        "Area2D": { "width": 33 , "height": 17 },
+        "Input": { "inputConfigID": 0 },
+        "Animation": {
+          "animationID": 1,
+          "currentFrame": 0,
+          "elapsedTime": 0.0,
+          "loop": true,
+          "playing": true
+        },
+        "Script": { "scriptPath": "Games/RType/script/player.lua" }
+      }
+    },
+
+    {
+      "_name_": "EnemyManager",
+      "tags": ["enemy_manager"],
+      "components": {
+        "Position": { "x": 1, "y": 0, "z": 0 },
+        "Script": { "scriptPath": "Games/RType/script/enemy_manager2.lua" }
+      }
+    },
+
+    {
+      "FromTemplate": {
+        "name" : "Bonus",
+        "tags": ["audio"]
+      }
+    }
+  ],
+  "scenes": ["assets.json", "inputs.json", "audio.json", "particles.json", "enemy2.json"]
+}
