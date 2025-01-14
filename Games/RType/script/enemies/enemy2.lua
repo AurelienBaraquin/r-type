@@ -7,7 +7,7 @@ angle = 0
 distance = 0
 init_pos = 0
 
-fire_rate = 20
+fire_rate = 10
 fire_timer = 0
 function init(e)
     self = e
@@ -30,7 +30,7 @@ end
 function update(delta)
     local position = getPosition(self)
     movement = movement + delta * 50
-    angle = angle + 0.01
+    angle = angle + 0.012
     if movement > 1 then
         init_pos = init_pos - 1
         movement = 0

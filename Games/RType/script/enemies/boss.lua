@@ -7,9 +7,11 @@ enemy_manager = nil
 reload_rate = 1
 reload_timer = 0
 
-n_bullets = 4
-fire_rate = 0.1
+n_bullets_max = 10
+n_bullets = 10
+fire_rate = 0.05
 fire_timer = 0
+time_before_moving = 15
 
 function set_enemy_manager(manager)
     enemy_manager = manager
@@ -17,12 +19,19 @@ end
 
 function init(e)
     self = e
-
     sprite_entity = createEntity("BossSprite")
     print("sprite entity" .. sprite_entity)
 end
 
 function update(delta)
+    if can_move == false and time_before_moving > 0 then
+        time_before_moving = time_before_moving - 1 * delta
+    end
+    if time_before_moving <= 0 and can_move == false then
+        vector = {x = -2, y = 0}
+        move(vector)
+    end
+    
     local position = getPosition(self)
     handle_movement()
     if reload_timer >= reload_rate then
@@ -31,14 +40,22 @@ function update(delta)
     reload_timer = reload_timer + 1 * delta
     if position.x < 300 then
        can_move = false
-
     end
+end
+
+function move(vector)
+    local position = getPosition(self)
+    position.x = position.x + vector.x
+    position.y = position.y + vector.y
+    setPosition(self, position)
+    position.x = position.x - 64
+    setPosition(sprite_entity, position)
 end
 
 function handle_fire(delta)
     if n_bullets <= 0 then
         reload_timer = 0
-        n_bullets = 4
+        n_bullets = n_bullets_max
     end
     fire_timer = fire_timer + 1 * delta
     if fire_timer >= fire_rate then
@@ -65,6 +82,15 @@ function handle_movement()
     end
 end
 
+function onCollide(other)
+    if hasTag(other, "player") then
+        if hasMethod(other, "damage") then
+            callMethod(other, "damage", 100)
+            damage(1000)
+        end
+    end
+end
+
 function damage(dmg)
     hp = hp - dmg
     print("hp: " .. hp)
@@ -78,6 +104,7 @@ function damage(dmg)
             setPosition(explosion, getPosition(self))
             destroyEntity(sprite_entity)
             destroyEntity(self)
+            changeScene("Games/RType/config/scene.json")
         end
     end
 end

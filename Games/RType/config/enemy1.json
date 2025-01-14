@@ -25,7 +25,7 @@
                     "Position": { "x": 0, "y": 0, "z": 0 },
                     "Scale": { "x": 0, "y": 0 },
                     "Rotation": { "angle": 0 },
-                    "Area2D": { "width": 48, "height": 48 },
+                    "Area2D": { "width": 32, "height": 32 },
                     "Sprite": { "spriteID": 5 },
                     "Script": { "scriptPath": "Games/RType/script/enemies/enemy2.lua" }
                 }

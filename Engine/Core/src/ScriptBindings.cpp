@@ -14,6 +14,18 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             return luaState.create_table_with("x", position->x, "y", position->y, "z", position->z);
         };
 
+        luaState["distanceTo"] = [&registry, &luaState](Components::Position& pos1,
+                                                        Components::Position& pos2) {
+
+            return std::sqrt(std::pow(pos1.x - pos2.x, 2) + std::pow(pos1.y - pos2.y, 2));
+                                                        };
+
+        luaState["normalize"] = [&registry, &luaState](Components::Position& pos) {
+            float length = std::sqrt(std::pow(pos.x, 2) + std::pow(pos.y, 2));
+            return luaState.create_table_with("x", pos.x / length, "y", pos.y / length);
+        };
+
+
         luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
@@ -99,7 +111,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         };
 
         luaState["changeScene"] = [this](std::string scenePath) {
-            loadScene(scenePath);
+            changeScene(scenePath);
         };
     });
 
@@ -126,7 +138,6 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         };
 
         luaState["destroyEntity"] = [&registry](sol::object entityObj) {
-            std::cout << "delete" << entityObj.as<Entity>() << std::endl;
             if (!entityObj.valid() || entityObj.is<sol::lua_nil_t>()) {
                 std::cerr << "Invalid entity" << std::endl;
                 if (entityObj.is<sol::lua_nil_t>()) {

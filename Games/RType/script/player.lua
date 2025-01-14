@@ -28,7 +28,7 @@ function update(delta)
         playAnimation(self, 1)
         local bullet_position = {
             x = position.x + 10,
-            y = position.y - 20,
+            y = position.y + 4,
             z = position.z
         }
         bullet = createEntity("Bullet")
