@@ -60,8 +60,6 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
         return;
     }
 
-    sendAll(p);
-
     switch (p.getMessageType()) {
         case MessageType::PLAYER_UPDATE:
             std::cout << "Server: Player update received" << std::endl;
