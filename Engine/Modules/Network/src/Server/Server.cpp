@@ -30,6 +30,7 @@ void Network::snapShot(Registry &registry)
     entityData data;
     std::vector<entityData> entities;
     std::vector<Entity> entitiesToSend;
+    static size_t id = 0;
 
     for (auto entity :
          registry.view<Components::Position, Components::Scale, Components::Rotation>()) {
@@ -45,8 +46,17 @@ void Network::snapShot(Registry &registry)
             .z = pos->z,
         };
         entities.push_back(data);
-        std::cout << "Server: Drawing x;" << pos->x << " y;" << pos->y << " z:" << pos->z
-                  << std::endl;
+    }
+    SnapShot snap = {
+        .id = id++,
+        .entities = entities,
+    };
+    std::string bin = serializeToString(snap);
+    std::cout << bin << std::endl;
+    SnapShot snap2 = deserializeFromString<SnapShot>(bin);
+    std::cout << snap2.id << std::endl;
+    for (auto entity : snap2.entities) {
+        std::cout << entity.x << std::endl;
     }
     // this->server.sendAll(generateSnapshot(entities));
 }
@@ -61,18 +71,5 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
         this->snapShot(registry);
         lastSnapShotTime = currentTime;
     }
-    SnapShot snap = {
-        .id = 1,
-        .entities = {
-            {
-                .entity = 1,
-                .x = 1,
-                .y = 1,
-                .z = 1,
-            },
-        },
-    };
-    std::cout << "snap \"" << serializeToString(snap) << "\"\n";
-    std::cout << "Server: Update" << std::endl;
 }
 #endif
