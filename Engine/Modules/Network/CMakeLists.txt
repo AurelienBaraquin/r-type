@@ -9,6 +9,7 @@ add_library(Network STATIC
     src/Server/Server.cpp
     src/Server/Udp.cpp
     src/Protocol/PlayerInput.cpp
+    src/Protocol/SnapShot.cpp
 )
 
 target_include_directories(Network PUBLIC
@@ -19,5 +20,6 @@ target_include_directories(Network PUBLIC
 
 target_link_libraries(Network PRIVATE Core nlohmann_json::nlohmann_json)
 target_link_libraries(Network PRIVATE Core asio::asio)
+target_link_libraries(Network PRIVATE cereal::cereal)
 
 add_library(Engine::Network ALIAS Network)

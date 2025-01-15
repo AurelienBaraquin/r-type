@@ -28,7 +28,8 @@ class Network : public ISystem, public ILoader
    private:
     asio::io_context ioContext;
 #ifdef SERVER
-    UdpServer server;
+    void snapShot(Registry &registry);
+    UdpServer server;    
 #elif CLIENT
     UdpClient client;
     int id;  // need to be replaced by uuid

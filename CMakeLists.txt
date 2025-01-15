@@ -28,6 +28,6 @@ find_package(raylib)
 find_package(nlohmann_json)
 find_package(SFML 2.5 REQUIRED COMPONENTS audio)
 find_package(asio REQUIRED)
-
+find_package(cereal REQUIRED)
 add_subdirectory(Engine)
 add_subdirectory(Games)

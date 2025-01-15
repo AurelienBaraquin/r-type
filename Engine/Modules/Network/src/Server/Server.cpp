@@ -1,4 +1,5 @@
 #include <asio.hpp>
+#include <chrono>
 #include <iostream>
 
 #include "Network.hpp"
@@ -23,22 +24,42 @@ Network::Network() : ioContext(), server(ioContext, 12345)
     }
 }
 
-void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
+void Network::snapShot(Registry &registry)
 {
     RegistryLock lock(registry);
-
-    std::vector<Entity> entitiesToDraw;
+    entityData data;
+    std::vector<entityData> entities;
+    std::vector<Entity> entitiesToSend;
 
     for (auto entity :
          registry.view<Components::Position, Components::Scale, Components::Rotation>()) {
-        entitiesToDraw.push_back(entity);
+        entitiesToSend.push_back(entity);
     }
 
-    for (auto entity : entitiesToDraw) {
+    for (auto entity : entitiesToSend) {
         auto *pos = registry.getComponent<Components::Position>(entity);
-
+        entityData data = {
+            .entityID = static_cast<int>(entity),
+            .pos = *pos,
+        };
+        entities.push_back(data);
         std::cout << "Server: Drawing x;" << pos->x << " y;" << pos->y << " z:" << pos->z
                   << std::endl;
     }
+    // this->server.sendAll(generateSnapshot(entities));
+}
+
+void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
+{
+    static auto lastSnapShotTime = std::chrono::steady_clock::now();
+    auto currentTime = std::chrono::steady_clock::now();
+    std::chrono::duration<float> elapsedTime = currentTime - lastSnapShotTime;
+
+    if (elapsedTime.count() >= 1.0f) {
+        this->snapShot(registry);
+        lastSnapShotTime = currentTime;
+    }
+
+    std::cout << "Server: Update" << std::endl;
 }
 #endif

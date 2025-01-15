@@ -18,6 +18,7 @@ class CactusEngine(ConanFile):
         # self.requires("sfml/2.5.1")
         self.requires("flac/1.4.3", force=True)
         self.requires("asio/1.32.0")
+        self.requires("cereal/1.3.2")
 
     def layout(self):
         self.folders.build = "build/Release"

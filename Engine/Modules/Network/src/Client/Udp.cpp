@@ -41,6 +41,9 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                 case MessageType::WORLD_EVENT:
                     std::cout << "Client: Received WORLD_EVENT from server.\n";
                     break;
+                case MessageType::SNAPSHOT:
+                    std::cout << "Client: Received SNAPSHOT from server.\n";
+                    break;
                 case MessageType::PLAYER_INPUT: {
                     PlayerInput pi = loadInputFromPacket(p);
 
