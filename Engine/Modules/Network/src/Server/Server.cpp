@@ -39,8 +39,10 @@ void Network::snapShot(Registry &registry)
     for (auto entity : entitiesToSend) {
         auto *pos = registry.getComponent<Components::Position>(entity);
         entityData data = {
-            .entityID = static_cast<int>(entity),
-            .pos = *pos,
+            .entity = entity,
+            .x = pos->x,
+            .y = pos->y,
+            .z = pos->z,
         };
         entities.push_back(data);
         std::cout << "Server: Drawing x;" << pos->x << " y;" << pos->y << " z:" << pos->z
@@ -59,7 +61,18 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
         this->snapShot(registry);
         lastSnapShotTime = currentTime;
     }
-
+    SnapShot snap = {
+        .id = 1,
+        .entities = {
+            {
+                .entity = 1,
+                .x = 1,
+                .y = 1,
+                .z = 1,
+            },
+        },
+    };
+    std::cout << "snap \"" << serializeToString(snap) << "\"\n";
     std::cout << "Server: Update" << std::endl;
 }
 #endif

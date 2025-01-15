@@ -1,5 +1,7 @@
 #include "Protocol.hpp"
-
+#include <sstream>
+#include <fstream>
+    
 // PlayerInput loadInputFromPacket(const Packet& packet)
 // {
 //     const uint8_t* ptr = p.payload.data();
@@ -40,3 +42,22 @@
 //         pi.actions.push_back(std::move(action));
 //     }
 // }
+std::string serializeToString(const SnapShot& snapshot)
+{
+    std::stringstream ss;
+    cereal::BinaryOutputArchive archive(ss);
+    
+    archive(snapshot);
+    
+    return ss.str();
+}
+SnapShot deserializeFromString(const std::string& data)
+{
+    // std::stringstream ss(data);
+    // SnapShot snapshot;
+    // {
+    //     cereal::BinaryInputArchive archive(ss);
+    //     archive(snapshot);
+    // }
+    // return snapshot;
+}

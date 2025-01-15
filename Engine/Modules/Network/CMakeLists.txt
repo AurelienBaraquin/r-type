@@ -20,6 +20,6 @@ target_include_directories(Network PUBLIC
 
 target_link_libraries(Network PRIVATE Core nlohmann_json::nlohmann_json)
 target_link_libraries(Network PRIVATE Core asio::asio)
-target_link_libraries(Network PRIVATE cereal::cereal)
+target_link_libraries(Network PUBLIC Core cereal::cereal)
 
 add_library(Engine::Network ALIAS Network)

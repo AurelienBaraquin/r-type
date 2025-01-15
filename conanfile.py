@@ -1,4 +1,5 @@
 from conan import ConanFile
+from conan.tools.cmake import cmake_layout
 
 class CactusEngine(ConanFile):
     name = "CactusEngine"
@@ -24,3 +25,4 @@ class CactusEngine(ConanFile):
         self.folders.build = "build/Release"
         self.folders.generators = "build/Release/generators"
         self.folders.source = "src"
+        cmake_layout(self)
