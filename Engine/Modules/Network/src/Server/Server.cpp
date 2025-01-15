@@ -3,9 +3,8 @@
 
 #include "Network.hpp"
 #include "Sharable.hpp"
-#include "UdpServer.hpp"
 #include "Transform.hpp"
-
+#include "UdpServer.hpp"
 
 #ifdef SERVER
 Network::Network() : ioContext(), server(ioContext, 12345)
@@ -30,16 +29,16 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
 
     std::vector<Entity> entitiesToDraw;
 
-        for (auto entity : registry.view<Components::Position,
-                                        Components::Scale, Components::Rotation>()) {
-            entitiesToDraw.push_back(entity);
-        }
+    for (auto entity :
+         registry.view<Components::Position, Components::Scale, Components::Rotation>()) {
+        entitiesToDraw.push_back(entity);
+    }
 
-    
-    for (auto entity: entitiesToDraw) {
+    for (auto entity : entitiesToDraw) {
         auto *pos = registry.getComponent<Components::Position>(entity);
 
-        std::cout << "Server: Drawing x;" << pos->x << " y;" << pos->y << " z:" << pos->z << std::endl;
+        std::cout << "Server: Drawing x;" << pos->x << " y;" << pos->y << " z:" << pos->z
+                  << std::endl;
     }
 }
 #endif
