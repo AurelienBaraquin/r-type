@@ -40,7 +40,7 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
 {
     std::vector<std::string> dataStr = getDatas();
 
-    Packet p = generatePlayerInput(this->id, dataStr);
+    auto p = generatePlayerInput(this->id, dataStr);
 
     client.sendPacket(p);
 }
