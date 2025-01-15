@@ -1,0 +1,176 @@
+{
+    "entities": [
+        {
+            "_name_": "Enemy",
+            "components": {
+                "Animation": {
+                    "animationID": 2.0,
+                    "currentFrame": 0.0,
+                    "elapsedTime": 0.0,
+                    "loop": true,
+                    "playing": true
+                },
+                "Area2D": {
+                    "height": 36.0,
+                    "width": 33.0
+                },
+                "Position": {
+                    "x": 30.0,
+                    "y": 20.0,
+                    "z": 0.0
+                },
+                "Rotation": {
+                    "angle": 20.0
+                },
+                "Scale": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/left.lua"
+                }
+            },
+            "id": 0,
+            "tags": [
+                "enemy"
+            ]
+        },
+        {
+            "_name_": "AudioSystem",
+            "components": {
+                "Script": {
+                    "scriptPath": "Games/RType/script/audio.lua"
+                }
+            },
+            "tags": [
+                "audio"
+            ]
+        },
+        {
+            "_name_": "EnemyManager",
+            "components": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/enemy_manager.lua"
+                }
+            },
+            "id": 2,
+            "tags": [
+                "enemy_manager"
+            ]
+        },
+        {
+            "_name_": "Player",
+            "components": {
+                "Animation": {
+                    "animationID": 1.0,
+                    "currentFrame": 0.0,
+                    "elapsedTime": 0.0,
+                    "loop": true,
+                    "playing": true
+                },
+                "Area2D": {
+                    "height": 17.0,
+                    "width": 33.0
+                },
+                "Input": {
+                    "inputConfigID": 0.0
+                },
+                "Position": {
+                    "x": 30.0,
+                    "y": 20.0,
+                    "z": 40.0
+                },
+                "Rotation": {
+                    "angle": 0.0
+                },
+                "Scale": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/player.lua"
+                }
+            },
+            "id": 1,
+            "tags": [
+                "player"
+            ]
+        },
+        {
+            "components": {
+                "Position": {
+                    "x": 1769.0,
+                    "y": 0.0,
+                    "z": -1.0
+                },
+                "Rotation": {
+                    "angle": 20.0
+                },
+                "Scale": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/scrolling_background.lua"
+                },
+                "Sprite": {
+                    "spriteID": 2.0
+                }
+            },
+            "name": "ScrollingBackground2",
+            "tags": [
+                "scrolling_background"
+            ]
+        },
+        {
+            "components": {
+                "Position": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": -1.0
+                },
+                "Rotation": {
+                    "angle": 0.0
+                },
+                "Scale": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/scrolling_background.lua"
+                },
+                "Sprite": {
+                    "spriteID": 2.0
+                }
+            },
+            "id": 0,
+            "name": "ScrollingBackground1",
+            "tags": [
+                "scrolling_background"
+            ]
+        },
+        {
+            "_name_": "AudioSystem",
+            "components": {
+                "Script": {
+                    "scriptPath": "Games/RType/script/audio.lua"
+                }
+            },
+            "tags": [
+                "audio"
+            ]
+        }
+    ],
+    "sceneTag": "my_scene",
+    "scenes": [
+        "assets.json",
+        "audio.json",
+        "particles.json",
+        "inputs.json"
+    ]
+}

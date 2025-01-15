@@ -1,0 +1,100 @@
+{
+    "sceneTag": "enemy1",
+    "entities": [
+        {
+            "Template":
+            {
+                "name": "Enemy1",
+                "tags": ["enemy"],
+                "components": {
+                    "Position": { "x": 400, "y": 200, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Area2D": { "width": 24, "height": 24 },
+                    "Sprite": { "spriteID": 4 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy1.lua" }
+                }
+            }
+        },
+        {
+            "Template":
+            {
+                "name": "EnemyRound",
+                "tags": ["enemy"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Area2D": { "width": 32, "height": 32 },
+                    "Sprite": { "spriteID": 5 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy2.lua" }
+                }
+            }
+        },
+        {
+            "Template":
+            {
+                "name": "EnemyBullet",
+                "tags": ["enemyBullet"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Sprite": { "spriteID": 6 },
+                    "Area2D": { "width": 6, "height": 6 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy_bullet.lua" }
+                }
+            }
+        },
+        {
+            "Template":
+            {
+                "name": "Boss",
+                "tags": ["enemy"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Area2D": { "width": 32, "height": 205 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/boss.lua"}
+                }
+            }
+        },
+        {
+            "Template":
+            {
+                "name": "BossSprite",
+                "tags": ["boss"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Sprite": { "spriteID": 7 }
+                }
+                
+            }
+            
+        },
+        {
+            "Template":
+            {
+                "name": "BossBullet",
+                "tags": ["bossBullet"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Animation": {
+                        "animationID": 7,
+                        "currentFrame": 0,
+                        "elapsedTime": 0.0,
+                        "loop": true,
+                        "playing": true
+                    },
+                    "Area2D": { "width": 20, "height": 20 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies/enemy_bullet.lua" }
+                }
+            }
+        }
+    ]
+}

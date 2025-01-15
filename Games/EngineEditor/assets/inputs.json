@@ -1,0 +1,28 @@
+{
+  "sceneTag": "inputs",
+  "inputConfigs": [
+    {
+      "id": 0,
+      "inputConfig": {
+        "keyboard": {
+          "MoveUp": "W",
+          "MoveDown": "S",
+          "MoveLeft": "A",
+          "MoveRight": "D",
+          "Shoot": "SPACE",
+          "Reload" : "R"
+        },
+        "mouse": {
+          "Shoot": "LeftButton"
+        },
+        "controller": {
+          "MoveUp": "RightStickYPositive",
+          "MoveDown": "RightStickYNegative",
+          "MoveLeft": "LeftStickXNegative",
+          "MoveRight": "LeftStickXPositive",
+          "Shoot": "X"
+        }
+      }
+    }
+  ]
+}

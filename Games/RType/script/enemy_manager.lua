@@ -1,46 +1,86 @@
 local selfEntity = nil
 local spawn_timer = 0
-local spawn_rate = 50
+local spawn_rate = 4
 local shooter_spawned = false
-
+local wave = 0
+local can_spawn = true
 function init(e)
+    
     self = e
-    print(e)
 end
 
 function update(delta)
-    if spawn_timer <= 0 then
+    if spawn_timer <= 0 and can_spawn then
         spawn_timer = spawn_rate
-        if not shooter_spawned and math.random(1, 100) > 80 then
-            spawnShooter()
-            shooter_spawned = true
-        else
-            spawnEnemy()
-        end
+        enemy = spawnEnemy()
     end
-    if spawn_timer > 0 then
-        spawn_timer = spawn_timer - 1
-    end
+    spawn_timer = spawn_timer - 1 * delta
+end
+
+function set_can_spawn(value)
+    can_spawn = value
 end
 
 function spawnEnemy()
-    local enemy = createEntity("Enemy")
-    addTag(enemy, "MainScene")
-    if enemy ~= nil then
-        setPosition(enemy, {x = 384, y = math.random(0, 180), z = 0})
-    else
-        print("Failed to create Enemy entity")
+    local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
+    if wave ~= 0 then 
+        if wave % 15 == 0 then
+            enemyType = "Boss"
+            can_spawn = false
+        elseif wave % 10 == 0 then
+            enemyType = "EnemyRound"
+        elseif wave % 5 == 0 then 
+            enemyType = "Shooter"
+        end
     end
+    wave = wave + 1
+
+    if enemyType == "EnemyRound" then
+        return spawnEnemyCircle()
+    elseif enemyType == "Boss" then
+        boss = spawnEnemyByName("Boss", 384, 30)
+        if hasMethod(boss, "set_enemy_manager") then
+            callMethod(boss, "set_enemy_manager", self)
+        end
+        return boss
+    elseif enemyType == "Enemy1" then
+        return spawnEnemy1Hord()
+    elseif enemyType == "Shooter" then
+        return spawnShooter()
+    else
+        return spawnEnemyByName(enemyType, 384, math.random(0, 180))
+    end
+end
+
+function spawnEnemy1Hord()
+    y = math.random(0, 180)
+    for i = 1, 4 do
+        local enemy = spawnEnemyByName("Enemy1", 384 + i * 30, y)
+        callMethod(enemy, "set_current_movement", i % 6 + 1)
+    end
+end
+
+function spawnEnemyCircle()
+    n_enemies = 16
+    gap = 3.14 * 2 / (n_enemies + 3)
+    for i = 1, n_enemies do
+        local enemy = spawnEnemyByName("EnemyRound", 500 + math.cos(gap * i) * 110, 90 + 24 + math.sin(gap * i) * 110)
+        callMethod(enemy, "set_property", gap * i, 110, 500)
+
+        print("Spawning enemy: ", enemy)
+    end
+end
+
+function spawnEnemyByName(enemyName, x, y)
+    local enemy = createEntity(enemyName)
+    addTag(enemy, "MainScene")
+    setPosition(enemy, {x = x, y = y, z = 0})
+    return enemy
 end
 
 function spawnShooter()
     local shooter = createEntity("Shooter")
     addTag(shooter, "MainScene")
-
-    if shooter ~= nil then
-        print("SPAWNED")
-        setPosition(shooter, {x = 220, y = 30, z = 3})
-    else
-        print("Failed to create Shooter entity")
-    end
+    setPosition(shooter, {x = 220, y = 30, z = 3})
+    return shooter
 end

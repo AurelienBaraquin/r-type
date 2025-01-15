@@ -14,6 +14,18 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             return luaState.create_table_with("x", position->x, "y", position->y, "z", position->z);
         };
 
+        luaState["distanceTo"] = [&registry, &luaState](Components::Position& pos1,
+                                                        Components::Position& pos2) {
+
+            return std::sqrt(std::pow(pos1.x - pos2.x, 2) + std::pow(pos1.y - pos2.y, 2));
+                                                        };
+
+        luaState["normalize"] = [&registry, &luaState](Components::Position& pos) {
+            float length = std::sqrt(std::pow(pos.x, 2) + std::pow(pos.y, 2));
+            return luaState.create_table_with("x", pos.x / length, "y", pos.y / length);
+        };
+
+
         luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
             if (!position)
@@ -55,6 +67,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             auto* rotation = registry.getComponent<Components::Rotation>(entity);
             if (!rotation) throw std::runtime_error("Rotation component not found");
             if (rotation) {
+                std::cout << data["angle"].get_or(rotation->angle) << std::endl;
                 rotation->angle = data["angle"].get_or(rotation->angle);
             }
         };
@@ -93,6 +106,13 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
         luaState["reloadScene"] = [this](std::string scenePath) {
             loadScene(scenePath,true);
         };
+        luaState["load"] = [this](std::string scenePath) {
+            loadScene(scenePath, false);
+        };
+
+        luaState["changeScene"] = [this](std::string scenePath) {
+            changeScene(scenePath);
+        };
     });
 
     _ScriptSystem.registerBinding("Entity", [&registry = registry](sol::state& luaState) {
@@ -119,6 +139,13 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
 
         luaState["destroyEntity"] = [&registry](sol::object entityObj) {
             if (!entityObj.valid() || entityObj.is<sol::lua_nil_t>()) {
+                std::cerr << "Invalid entity" << std::endl;
+                if (entityObj.is<sol::lua_nil_t>()) {
+                    std::cerr << "Entity is nil" << std::endl;
+                }
+                if (!entityObj.valid()) {
+                    std::cerr << "Entity is not valid" << std::endl;
+                }
                 return;
             }
 
