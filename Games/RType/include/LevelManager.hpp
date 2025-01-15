@@ -1,15 +1,20 @@
-#include <vector>
 #include <string>
+#include <vector>
+
 #include "json.hpp"
 
-class LevelManager {
+class LevelManager
+{
     std::vector<std::string> levels;
     int currentLevel;
 
-public:
-    LevelManager() : currentLevel(0) {}
+   public:
+    LevelManager() : currentLevel(0)
+    {
+    }
 
-    void loadLevel(const std::string &filePath) {
+    void loadLevel(const std::string &filePath)
+    {
         std::ifstream file(filePath);
         nlohmann::json json;
         file >> json;
@@ -19,11 +24,13 @@ public:
         }
     }
 
-    std::string getCurrentLevelScene() {
+    std::string getCurrentLevelScene()
+    {
         return levels[currentLevel];
     }
 
-    void nextLevel() {
+    void nextLevel()
+    {
         if (currentLevel < levels.size() - 1) {
             currentLevel++;
         }

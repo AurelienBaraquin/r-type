@@ -41,13 +41,9 @@ void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             return sol::as_table(std::vector<float>{mousePosition.x, mousePosition.y});
         };
 
-        luaState["isMouseButtonDown"] = [](int button) {
-            return IsMouseButtonDown(button);
-        };
+        luaState["isMouseButtonDown"] = [](int button) { return IsMouseButtonDown(button); };
 
-        luaState["isMouseButtonPressed"] = [](int button) {
-            return IsMouseButtonPressed(button);
-        };
+        luaState["isMouseButtonPressed"] = [](int button) { return IsMouseButtonPressed(button); };
 
         luaState["isMouseButtonReleased"] = [](int button) {
             return IsMouseButtonReleased(button);
@@ -55,21 +51,13 @@ void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
     });
 
     ScriptSystem.registerBinding("Keyboard", [&registry = registry, this](sol::state& luaState) {
-        luaState["isKeyDown"] = [](int key) {
-            return IsKeyDown(key);
-        };
+        luaState["isKeyDown"] = [](int key) { return IsKeyDown(key); };
 
-        luaState["isKeyPressed"] = [](int key) {
-            return IsKeyPressed(key);
-        };
+        luaState["isKeyPressed"] = [](int key) { return IsKeyPressed(key); };
 
-        luaState["isKeyReleased"] = [](int key) {
-            return IsKeyReleased(key);
-        };
+        luaState["isKeyReleased"] = [](int key) { return IsKeyReleased(key); };
 
-        luaState["getKeyPressed"] = []() {
-            return GetKeyPressed();
-        };
+        luaState["getKeyPressed"] = []() { return GetKeyPressed(); };
     });
 
     ScriptSystem.registerBinding("Controller", [&registry = registry, this](sol::state& luaState) {

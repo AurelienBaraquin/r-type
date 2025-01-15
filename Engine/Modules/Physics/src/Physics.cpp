@@ -22,7 +22,7 @@ void Physics::callFunction(Registry& registry, Entity entity, Entity entity2, st
     if (script && script->initialized && script->scriptPath != "" && script->initialized &&
         _scriptSystem.hasScript(entity, script->scriptPath)) {
         sol::state& luaState = _scriptSystem.getScript(entity, script->scriptPath);
-        
+
         if (luaState[function]) {  // <--- crashes
             luaState[function](entity2);
         }
@@ -109,12 +109,10 @@ void Physics::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
                 if (intersect && !isIn(area2D->collidedEntities, entity2)) {
                     area2D->collidedEntities.push_back(entity2);
                     collisions.push_back({entity, entity2, true});
-                }
-                else if (!intersect && isIn(area2D->collidedEntities, entity2)) {
+                } else if (!intersect && isIn(area2D->collidedEntities, entity2)) {
                     area2D->collidedEntities.erase(
                         std::remove(area2D->collidedEntities.begin(),
-                                    area2D->collidedEntities.end(),
-                                    entity2),
+                                    area2D->collidedEntities.end(), entity2),
                         area2D->collidedEntities.end());
                     collisions.push_back({entity, entity2, false});
                 }

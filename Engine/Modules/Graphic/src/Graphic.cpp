@@ -1,11 +1,14 @@
 #include "Graphic.hpp"
-#include <stdexcept>
+
 #include <algorithm>
+#include <stdexcept>
+
 #include "Sprite.hpp"
 #include "Transform.hpp"
 
 Graphic::Graphic(const std::string& title, int width, int height)
-    : _title(title), _width(width), _height(height) {
+    : _title(title), _width(width), _height(height)
+{
     InitWindow(_width, _height, _title.c_str());
     std::cout << "Graphic module initialized" << std::endl;
     SetTargetFPS(60);
@@ -14,8 +17,8 @@ Graphic::Graphic(const std::string& title, int width, int height)
     camera.zoom = 2.0f;
 }
 
-void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
-
+void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
+{
     if (WindowShouldClose()) {
         eventManager->publish(std::make_shared<Events::Shutdown>());
         return;
@@ -27,11 +30,11 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
     auto f = async([this, &registry, deltaTime, &entitiesToDraw]() {
         for (auto entity : registry.view<Components::Sprite, Components::Position,
-                                        Components::Scale, Components::Rotation>()) {
+                                         Components::Scale, Components::Rotation>()) {
             entitiesToDraw.push_back(entity);
         }
         for (auto entity : registry.view<Components::Animation, Components::Position,
-                                        Components::Scale, Components::Rotation>()) {
+                                         Components::Scale, Components::Rotation>()) {
             entitiesToDraw.push_back(entity);
         }
 
@@ -43,7 +46,7 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     });
 
     BeginDrawing();
-    
+
     BeginMode2D(camera);
     ClearBackground(BLACK);
 
@@ -83,9 +86,13 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     EndDrawing();
 }
 
-Graphic::~Graphic() { CloseWindow(); }
+Graphic::~Graphic()
+{
+    CloseWindow();
+}
 
-void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position) {
+void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position)
+{
     auto texture = _TextureSystem.get(sprite->textureID);
 
     if (texture.id == 0) {
@@ -97,7 +104,8 @@ void Graphic::drawTexture(BrutSprite* sprite, Components::Position* position) {
 }
 
 void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
-                            Components::Rotation* rotation, Components::Scale* scale) {
+                            Components::Rotation* rotation, Components::Scale* scale)
+{
     auto texture = _TextureSystem.get(sprite->textureID);
 
     if (texture.id == 0) {
@@ -110,6 +118,6 @@ void Graphic::drawTextureEx(BrutSprite* sprite, Components::Position* position,
     float width = (scale->x > 0) ? scale->x : sprite->width;
     float height = (scale->y > 0) ? scale->y : sprite->height;
 
-    DrawTexturePro(texture, {origin.x, origin.y, width, height}, {pos.x, pos.y, width, height},
-                    {0}, rotation->angle, WHITE);
+    DrawTexturePro(texture, {origin.x, origin.y, width, height}, {pos.x, pos.y, width, height}, {0},
+                   rotation->angle, WHITE);
 }

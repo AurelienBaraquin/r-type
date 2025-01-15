@@ -13,7 +13,7 @@
 #include "Registry.hpp"
 // TODO
 // j'ai mis en notThreadable pour le moment car crash lors de
-//if (luaState[function]) { // <--- crashes
+// if (luaState[function]) { // <--- crashes
 //    luaState[function](entity2);
 //}
 // dans updateScript
