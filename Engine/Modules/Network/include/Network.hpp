@@ -28,7 +28,7 @@ class Network : public ISystem, public ILoader
    private:
     asio::io_context ioContext;
 #ifdef SERVER
-    void snapShot(Registry &registry);
+    Packet snapShot(Registry &registry);
     UdpServer server;    
 #elif CLIENT
     UdpClient client;

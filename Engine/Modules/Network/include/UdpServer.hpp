@@ -20,10 +20,11 @@ class UdpServer
         return static_cast<int>(clients_.size());
     }
 
+    void sendAll(const Packet& packet);
+
    private:
     void doReceive();
     void handlePacket(const uint8_t* data, size_t length, const asio::ip::udp::endpoint& sender);
-    void sendAll(const Packet& packet);
 
     asio::io_context& io_;
     asio::ip::udp::socket socket_;

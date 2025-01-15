@@ -41,9 +41,16 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                 case MessageType::WORLD_EVENT:
                     std::cout << "Client: Received WORLD_EVENT from server.\n";
                     break;
-                case MessageType::SNAPSHOT:
+                case MessageType::SNAPSHOT: {
+                    std::vector<entityData> snap = loadSnapshotFromPacket(p);
+                    for (auto entity : snap) {
+                        std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
+                                  << entity.z << ")\n";
+                    }
+                    // Sharable::getInstance().setSharedVariable("Snapshot", p);
                     std::cout << "Client: Received SNAPSHOT from server.\n";
                     break;
+                }
                 case MessageType::PLAYER_INPUT: {
                     PlayerInput pi = loadInputFromPacket(p);
 

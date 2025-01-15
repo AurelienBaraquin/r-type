@@ -24,7 +24,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
     }
 }
 
-void Network::snapShot(Registry &registry)
+Packet Network::snapShot(Registry &registry)
 {
     RegistryLock lock(registry);
     entityData data;
@@ -58,7 +58,7 @@ void Network::snapShot(Registry &registry)
     for (auto entity : snap2.entities) {
         std::cout << entity.x << std::endl;
     }
-    // this->server.sendAll(generateSnapshot(entities));
+    return generateSnapshot(entities);
 }
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
@@ -68,7 +68,7 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     std::chrono::duration<float> elapsedTime = currentTime - lastSnapShotTime;
 
     if (elapsedTime.count() >= 1.0f) {
-        this->snapShot(registry);
+        server.sendAll(this->snapShot(registry));
         lastSnapShotTime = currentTime;
     }
 }
