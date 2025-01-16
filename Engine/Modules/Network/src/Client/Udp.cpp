@@ -44,10 +44,11 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                     break;
                 case MessageType::SNAPSHOT: {
                     std::vector<entityData> snap = loadSnapshotFromPacket(p);
-                    // for (auto entity : snap) {
-                        // std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
-                                //   << entity.z << ")\n";
-                    // }
+                    for (auto entity : snap) {
+                        std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
+                                  << entity.z << ")\n";
+                    }
+                    setSnapshot(snap);
                     // Sharable::getInstance().setSharedVariable("Snapshot", snap);
                     std::cout << "Client: Received SNAPSHOT from server.\n";
                     break;
