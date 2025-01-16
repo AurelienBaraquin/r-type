@@ -10,6 +10,12 @@ UdpClient::UdpClient(asio::io_context& ioContext, const asio::ip::udp::endpoint&
 {
 }
 
+UdpClient::~UdpClient()
+{
+    socket_.shutdown(asio::ip::udp::socket::shutdown_both);
+    socket_.close();
+}
+
 void UdpClient::sendPacket(const Packet& packet)
 {
     auto buffer = packet.serialize();

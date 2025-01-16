@@ -9,6 +9,12 @@ UdpServer::UdpServer(asio::io_context& ioContext, unsigned short port)
 {
 }
 
+UdpServer::~UdpServer()
+{
+    socket_.shutdown(asio::ip::udp::socket::shutdown_both);
+    socket_.close();
+}
+
 void UdpServer::start()
 {
     doReceive();

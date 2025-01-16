@@ -11,6 +11,7 @@ class UdpClient
 {
    public:
     UdpClient(asio::io_context& ioContext, const asio::ip::udp::endpoint& serverEndpoint);
+    ~UdpClient();
     void sendPacket(const Packet& packet);
 
     void startReceiving();

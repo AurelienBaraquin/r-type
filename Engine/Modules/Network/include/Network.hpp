@@ -13,7 +13,7 @@ class Network : public ISystem, public ILoader
 {
    public:
     Network();
-    ~Network() = default;
+    ~Network() { ioContext.stop(); }
 
     void update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) override;
     void registerComponentFactory(ComponentFactory &componentFactory) override;

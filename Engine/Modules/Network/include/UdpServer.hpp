@@ -13,6 +13,7 @@ class UdpServer
 {
    public:
     UdpServer(asio::io_context& ioContext, unsigned short port);
+    ~UdpServer();
     void start();
 
     int countClients() const
