@@ -15,7 +15,7 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
         std::thread t([this]() { this->ioContext.run(); });
 
-        std::cout << "Server running on port 12345...\n";
+        // std::cout << "Server running on port 12345...\n";
 
         t.detach();
 

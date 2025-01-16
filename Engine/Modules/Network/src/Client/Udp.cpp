@@ -29,7 +29,7 @@ void UdpClient::startReceiving()
 
 void UdpClient::doReceive()
 {
-    std::cout << "Client: Waiting for data...\n";
+    // std::cout << "Client: Waiting for data...\n";
     socket_.async_receive_from(asio::buffer(recvBuffer_), remoteEndpoint_,
                                [this](std::error_code ec, std::size_t bytes_received) {
                                    handleReceive(ec, bytes_received);
@@ -43,20 +43,20 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
         if (p.deserialize(recvBuffer_.data(), bytes_received)) {
             switch (p.getMessageType()) {
                 case MessageType::PLAYER_UPDATE:
-                    std::cout << "Client: Received PLAYER_UPDATE from server.\n";
+                    // std::cout << "Client: Received PLAYER_UPDATE from server.\n";
                     break;
                 case MessageType::WORLD_EVENT:
-                    std::cout << "Client: Received WORLD_EVENT from server.\n";
+                    // std::cout << "Client: Received WORLD_EVENT from server.\n";
                     break;
                 case MessageType::SNAPSHOT: {
                     std::vector<entityData> snap = loadSnapshotFromPacket(p);
                     for (auto entity : snap) {
-                        std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
-                                  << entity.z << ")\n";
+                        // std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
+                                //   << entity.z << ")\n";
                     }
                     setSnapshot(snap);
                     // Sharable::getInstance().setSharedVariable("Snapshot", snap);
-                    std::cout << "Client: Received SNAPSHOT from server.\n";
+                    // std::cout << "Client: Received SNAPSHOT from server.\n";
                     break;
                 }
                 case MessageType::PLAYER_INPUT: {
@@ -65,11 +65,11 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                     if (pi.actions.empty()) {
                         break;
                     }
-                    std::cout << "Client: Received PLAYER_INPUT from server.\n";
+                    // std::cout << "Client: Received PLAYER_INPUT from server.\n";
                     break;
                 }
                 default:
-                    std::cout << "Client: Received unknown message type.\n";
+                    // std::cout << "Client: Received unknown message type.\n";
                     break;
             }
         } else {

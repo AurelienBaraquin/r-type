@@ -47,9 +47,9 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
 
     std::vector<entityData> snap = getSnapShot();
     if (snap.size() > 0) {
-        std::cout << snap.size() << " entities in snapshot.\n";
+        // std::cout << snap.size() << " entities in snapshot.\n";
         setSnapshot(std::vector<entityData>{});
-        std::cout << "Client: Apply SNAPSHOT from server.\n";
+        // std::cout << "Client: Apply SNAPSHOT from server.\n";
     }
     // auto data = Sharable::getInstance().getSharedVariable("Snapshot");
     // Sharable::getInstance().setSharedVariable("Snapshot", std::vector<entityData>{});
