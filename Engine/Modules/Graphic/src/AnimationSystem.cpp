@@ -57,8 +57,7 @@ void AnimationSystem::updateAnimation(Components::Animation& animation, float de
     if (!animation.playing) return;
 
     if (_animations.find(animation.animationID) == _animations.end()) {
-        Logger::getInstance().error("Animation not found" +
-                                    std::to_string(animation.animationID));
+        Logger::getInstance().error("Animation not found" + std::to_string(animation.animationID));
         return;
     }
 

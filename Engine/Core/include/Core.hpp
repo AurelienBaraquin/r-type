@@ -6,16 +6,14 @@
 #include <vector>
 
 #include "EntityBuilder.hpp"
+#include "Json.hpp"
 #include "Loader.hpp"
 #include "Scene.hpp"
 #include "SystemManager.hpp"
 
-
-#include "Json.hpp"
-
 // TODO
 // j'ai mis en notThreadable pour le moment car crash lors de
-//if (luaState["update"]) { <--- crash voir notion
+// if (luaState["update"]) { <--- crash voir notion
 //    luaState["update"](deltaTime);
 //}
 // dans updateScript
@@ -56,7 +54,7 @@ class Engine : public ISystem
         return EntityBuilder(_registry.createEntity(), _registry);
     }
 
-    void loadScene(const std::string& filePath, bool reload=false)
+    void loadScene(const std::string& filePath, bool reload = false)
     {
         SceneLoader(_componentFactory, _registry, _loaderManager, _entityTemplateManager)
             .loadScene(filePath, reload);

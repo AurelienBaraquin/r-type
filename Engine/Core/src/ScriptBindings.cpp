@@ -16,15 +16,13 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
 
         luaState["distanceTo"] = [&registry, &luaState](Components::Position& pos1,
                                                         Components::Position& pos2) {
-
             return std::sqrt(std::pow(pos1.x - pos2.x, 2) + std::pow(pos1.y - pos2.y, 2));
-                                                        };
+        };
 
         luaState["normalize"] = [&registry, &luaState](Components::Position& pos) {
             float length = std::sqrt(std::pow(pos.x, 2) + std::pow(pos.y, 2));
             return luaState.create_table_with("x", pos.x / length, "y", pos.y / length);
         };
-
 
         luaState["setPosition"] = [&registry, &luaState](Entity entity, sol::table data) {
             auto* position = registry.getComponent<Components::Position>(entity);
@@ -93,7 +91,7 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             sol::state& luaState = scriptSystem.getScript(entity, script->scriptPath);
             if (luaState[method].valid()) {
                 std::vector<sol::object> args;
-//                args.push_back(sol::make_object(luaState, entity));
+                //                args.push_back(sol::make_object(luaState, entity));
 
                 for (auto arg : va) {
                     args.push_back(arg);
@@ -103,16 +101,10 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
                 throw std::runtime_error("Method not found");
             }
         };
-        luaState["reloadScene"] = [this](std::string scenePath) {
-            loadScene(scenePath,true);
-        };
-        luaState["load"] = [this](std::string scenePath) {
-            loadScene(scenePath, false);
-        };
+        luaState["reloadScene"] = [this](std::string scenePath) { loadScene(scenePath, true); };
+        luaState["load"] = [this](std::string scenePath) { loadScene(scenePath, false); };
 
-        luaState["changeScene"] = [this](std::string scenePath) {
-            changeScene(scenePath);
-        };
+        luaState["changeScene"] = [this](std::string scenePath) { changeScene(scenePath); };
     });
 
     _ScriptSystem.registerBinding("Entity", [&registry = registry](sol::state& luaState) {
@@ -160,7 +152,8 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
          &factory = this->_componentFactory](sol::state& luaState) {
             luaState["createEntity"] = [&_entityTemplateManager, &registry,
                                         &factory](std::string templateName) {
-                Entity entity = _entityTemplateManager.createEntity(templateName, registry, factory);
+                Entity entity =
+                    _entityTemplateManager.createEntity(templateName, registry, factory);
                 return entity;
             };
         });

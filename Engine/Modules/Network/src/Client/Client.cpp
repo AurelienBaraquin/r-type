@@ -45,14 +45,14 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
 
     client.sendPacket(p);
 
-    auto data = Sharable::getInstance().getSharedVariable("Snapshot");
-    Sharable::getInstance().setSharedVariable("Snapshot", std::vector<entityData>{});
-    if (data.has_value()) {
-        if (auto snap = std::get_if<std::vector<entityData>>(&(*data))) {
-            for (auto entity : *snap) {
-                std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", " << entity.z << ")\n";
-            }
-        }
-    }
+    // auto data = Sharable::getInstance().getSharedVariable("Snapshot");
+    // Sharable::getInstance().setSharedVariable("Snapshot", std::vector<entityData>{});
+    // if (data.has_value()) {
+        // if (auto snap = std::get_if<std::vector<entityData>>(&(*data))) {
+            // for (auto entity : *snap) {
+                // std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", " << entity.z << ")\n";
+            // }
+        // }
+    // }
 }
 #endif

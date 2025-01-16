@@ -1,10 +1,6 @@
 #include "Inputs.hpp"
 #include "Sharable.hpp"
 
-Inputs::Inputs() {
-    // Constructor remains empty or perform initialization if needed
-}
-
 void Inputs::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
 #ifdef CLIENT
     for (auto& [id, _] : _InputSystem.getAllConfigs()) {
