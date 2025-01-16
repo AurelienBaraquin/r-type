@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Sharable.hpp"
 #include "UdpClient.hpp"
 
 UdpClient::UdpClient(asio::io_context& ioContext, const asio::ip::udp::endpoint& serverEndpoint)
@@ -43,11 +44,11 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                     break;
                 case MessageType::SNAPSHOT: {
                     std::vector<entityData> snap = loadSnapshotFromPacket(p);
-                    for (auto entity : snap) {
-                        std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
-                                  << entity.z << ")\n";
-                    }
-                    // Sharable::getInstance().setSharedVariable("Snapshot", p);
+                    // for (auto entity : snap) {
+                        // std::cout << "Entity: " << entity.entity << " at (" << entity.x << ", " << entity.y << ", "
+                                //   << entity.z << ")\n";
+                    // }
+                    // Sharable::getInstance().setSharedVariable("Snapshot", snap);
                     std::cout << "Client: Received SNAPSHOT from server.\n";
                     break;
                 }
