@@ -1,13 +1,12 @@
 #pragma once
 
-#include "RaylibConfig.hpp"
-
 #include <string>
 #include <tuple>
 #include <vector>
 
 #include "AnimationSystem.hpp"
 #include "ISystem.hpp"
+#include "RaylibConfig.hpp"
 #include "SpriteSystem.hpp"
 #include "TextureSystem.hpp"
 #include "Transform.hpp"

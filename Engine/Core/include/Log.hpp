@@ -16,21 +16,33 @@
 #include "Async.hpp"
 
 #ifdef _WIN32
-class Logger {
-public:
-    static Logger& getInstance() {
+class Logger
+{
+   public:
+    static Logger& getInstance()
+    {
         static Logger instance;
         return instance;
     }
 
-    void setLogFile(const std::string& filename) {}
+    void setLogFile(const std::string& filename)
+    {
+    }
 
-    void info(const std::string& message) {}
-    void warning(const std::string& message) {}
-    void error(const std::string& message) {}
-    void debug(const std::string& message) {}
+    void info(const std::string& message)
+    {
+    }
+    void warning(const std::string& message)
+    {
+    }
+    void error(const std::string& message)
+    {
+    }
+    void debug(const std::string& message)
+    {
+    }
 
-private:
+   private:
     Logger() = default;
 };
 
@@ -75,10 +87,22 @@ class Logger
         }
     }
 
-    void info(const std::string& message) { log(LogLevel::INFO, message); }
-    void warning(const std::string& message) { log(LogLevel::WARNING, message); }
-    void error(const std::string& message) { log(LogLevel::ERROR, message); }
-    void debug(const std::string& message) { log(LogLevel::DEBUG, message); }
+    void info(const std::string& message)
+    {
+        log(LogLevel::INFO, message);
+    }
+    void warning(const std::string& message)
+    {
+        log(LogLevel::WARNING, message);
+    }
+    void error(const std::string& message)
+    {
+        log(LogLevel::ERROR, message);
+    }
+    void debug(const std::string& message)
+    {
+        log(LogLevel::DEBUG, message);
+    }
 
    private:
     std::ofstream logFile_;
@@ -120,6 +144,9 @@ class Logger
         }
     }
 
-    void resetConsoleColor() { std::cout << "\033[0m"; }
+    void resetConsoleColor()
+    {
+        std::cout << "\033[0m";
+    }
 };
 #endif

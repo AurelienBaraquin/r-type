@@ -1,7 +1,9 @@
 #include "Inputs.hpp"
+
 #include "Sharable.hpp"
 
-void Inputs::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) {
+void Inputs::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
+{
 #ifdef CLIENT
     for (auto& [id, _] : _InputSystem.getAllConfigs()) {
         _InputSystem.updateInputs(id);

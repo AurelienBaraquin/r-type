@@ -1,5 +1,4 @@
 #include "Inputs.hpp"
-
 #include "RaylibConfig.hpp"
 
 void Inputs::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry)

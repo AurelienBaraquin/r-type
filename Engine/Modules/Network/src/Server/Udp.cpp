@@ -79,9 +79,9 @@ void UdpServer::handlePacket(const uint8_t* data, size_t length,
             }
 
             // std::cout << "Server: Received PLAYER_INPUT from player " << pi.playerID << " with "
-                    //   << pi.actions.size() << " actions.\n";
+            //   << pi.actions.size() << " actions.\n";
             // for (const auto& act : pi.actions) {
-                // std::cout << "  Action: " << act << std::endl;
+            // std::cout << "  Action: " << act << std::endl;
             // }
             Sharable::getInstance().setSharedVariable("InputLoads", pi.actions);
             break;

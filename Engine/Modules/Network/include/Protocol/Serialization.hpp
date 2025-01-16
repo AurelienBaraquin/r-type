@@ -5,7 +5,8 @@
 #include <string>
 
 template <typename T>
-std::string serializeToString(const T& obj) {
+std::string serializeToString(const T& obj)
+{
     std::ostringstream oss;
     {
         cereal::BinaryOutputArchive archive(oss);
@@ -15,7 +16,8 @@ std::string serializeToString(const T& obj) {
 }
 
 template <typename T>
-T deserializeFromString(const std::string& data) {
+T deserializeFromString(const std::string& data)
+{
     std::istringstream iss(data);
     T obj;
     {

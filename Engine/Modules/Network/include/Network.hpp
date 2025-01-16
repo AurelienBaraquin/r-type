@@ -13,7 +13,10 @@ class Network : public ISystem, public ILoader
 {
    public:
     Network();
-    ~Network() { ioContext.stop(); }
+    ~Network()
+    {
+        ioContext.stop();
+    }
 
     void update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem) override;
     void registerComponentFactory(ComponentFactory &componentFactory) override;
@@ -29,7 +32,7 @@ class Network : public ISystem, public ILoader
     asio::io_context ioContext;
 #ifdef SERVER
     Packet snapShot(Registry &registry);
-    UdpServer server;    
+    UdpServer server;
 #elif CLIENT
     UdpClient client;
     int id;  // need to be replaced by uuid

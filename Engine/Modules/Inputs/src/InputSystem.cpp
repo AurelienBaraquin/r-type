@@ -30,13 +30,14 @@ void InputSystem::load(const nlohmann::json& data)
     }
 }
 
-void InputSystem::applyExternalInputStates(int inputConfigID, const std::vector<std::string>& states)
+void InputSystem::applyExternalInputStates(int inputConfigID,
+                                           const std::vector<std::string>& states)
 {
     for (auto& [action, state] : currentStates) {
         state = false;
     }
 
-    for (const auto &action : states) {
+    for (const auto& action : states) {
         currentStates[action] = true;
     }
 }

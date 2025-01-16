@@ -1,16 +1,16 @@
 #pragma once
 
+#include <cereal/archives/binary.hpp>
+#include <cereal/cereal.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/vector.hpp>
 #include <cstdint>
+#include <sstream>
 #include <string>
 #include <vector>
 
-#include "Transform.hpp"
 #include "Entity.hpp"
-#include <cereal/cereal.hpp>
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/vector.hpp>
-#include <cereal/types/string.hpp>
-#include <sstream>
+#include "Transform.hpp"
 
 enum class MessageType : uint8_t {
     PLAYER_UPDATE = 1,
@@ -23,30 +23,31 @@ struct PlayerInput {
     int playerID;
     std::vector<std::string> actions;
 
-    template<class Archive> 
-    void serialize(Archive & ar) 
-    { 
-        ar(playerID, actions); 
-    } 
+    template <class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(playerID, actions);
+    }
 };
 
 struct entityData {
     Entity entity;
     int x, y, z;
 
-    template<class Archive> 
-    void serialize(Archive & ar) 
-    { 
-        ar(entity, x, y, z); 
-    } 
+    template <class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(entity, x, y, z);
+    }
 };
 
 struct SnapShot {
     size_t id;
     std::vector<entityData> entities;
 
-    template<class Archive>
-    void serialize(Archive & archive) {
+    template <class Archive>
+    void serialize(Archive& archive)
+    {
         archive(id, entities);
     }
 };

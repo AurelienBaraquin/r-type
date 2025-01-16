@@ -4,8 +4,7 @@ std::vector<entityData>& updateSnapshot(const std::vector<entityData>& newSnapsh
 {
     static std::vector<entityData> snap;
 
-    if (set)
-    {
+    if (set) {
         snap = newSnapshot;
     }
     return snap;

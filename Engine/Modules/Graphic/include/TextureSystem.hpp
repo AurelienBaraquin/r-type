@@ -1,10 +1,10 @@
 #pragma once
 
-#include "RaylibConfig.hpp"
-
 #include <Loader.hpp>
 #include <string>
 #include <unordered_map>
+
+#include "RaylibConfig.hpp"
 
 class TextureSystem : public ILoader
 {

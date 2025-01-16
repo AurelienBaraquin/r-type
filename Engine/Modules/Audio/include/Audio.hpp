@@ -1,12 +1,12 @@
 #pragma once
 
-#include "RaylibConfig.hpp"
+#include <memory>
 #include <string>
 #include <unordered_map>
-#include <memory>
 #include <vector>
 
 #include "ISystem.hpp"
+#include "RaylibConfig.hpp"
 #include "Registry.hpp"
 #include "ScriptSystem.hpp"
 
@@ -17,7 +17,8 @@ struct AudioSource {
     bool playOnUpdate = false;
 };
 
-class AudioManager {
+class AudioManager
+{
    public:
     static AudioManager& getInstance();
 
@@ -33,7 +34,8 @@ class AudioManager {
     std::unordered_map<std::string, Music> musicCache;
 };
 
-class Audio : public ISystem, public NotThreadable {
+class Audio : public ISystem, public NotThreadable
+{
    public:
     Audio();
     ~Audio();

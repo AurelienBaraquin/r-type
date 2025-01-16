@@ -1,8 +1,8 @@
 #pragma once
 
 #ifdef CLIENT
-    #define BUILD_GRAPHIC
-    #define BUILD_AUDIO
+#define BUILD_GRAPHIC
+#define BUILD_AUDIO
 #endif
 #define BUILD_PHYSICS
 #define BUILD_INPUTS

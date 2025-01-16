@@ -3,12 +3,12 @@
 int main()
 {
     Engine engine;
-    #ifdef BUILD_GRAPHIC
-        engine.addModule<Graphic>("R-Type", 800, 600);
-    #endif
-    #ifdef BUILD_AUDIO
-        engine.addModule<Audio>();
-    #endif
+#ifdef BUILD_GRAPHIC
+    engine.addModule<Graphic>("R-Type", 800, 600);
+#endif
+#ifdef BUILD_AUDIO
+    engine.addModule<Audio>();
+#endif
     engine.addModule<Inputs>();
     engine.addModule<Physics>();
     engine.addModule<Network>();
@@ -17,5 +17,5 @@ int main()
 
     engine.run();
 
-    return 0; 
+    return 0;
 }

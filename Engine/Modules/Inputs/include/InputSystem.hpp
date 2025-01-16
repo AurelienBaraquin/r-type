@@ -1,11 +1,10 @@
 #pragma once
 
-#include "RaylibConfig.hpp"
-
 #include <string>
 #include <unordered_map>
 
 #include "Loader.hpp"
+#include "RaylibConfig.hpp"
 
 struct InputConfig {
     std::unordered_map<int, std::string> keyboardBindings;    // Key -> Action
@@ -35,9 +34,12 @@ class InputSystem : public ILoader
     void applyExternalInputStates(int inputConfigID, const std::vector<std::string>& states);
     void emptyInputStates();
 
-    const std::unordered_map<std::string, bool>& getCurrentStates() const { return currentStates; }
+    const std::unordered_map<std::string, bool>& getCurrentStates() const
+    {
+        return currentStates;
+    }
 
-private:
+   private:
    private:
     int KeyboardKeyFromString(const std::string& keyName);
 
