@@ -18,8 +18,6 @@ target_include_directories(Network PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Protocol
 )
 
-target_link_libraries(Network PRIVATE Core nlohmann_json::nlohmann_json)
-target_link_libraries(Network PRIVATE Core asio::asio)
-target_link_libraries(Network PUBLIC Core cereal::cereal)
+target_link_libraries(Network PUBLIC Core nlohmann_json::nlohmann_json asio::asio cereal::cereal)
 
 add_library(Engine::Network ALIAS Network)

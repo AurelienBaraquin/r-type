@@ -114,10 +114,7 @@ public:
 
 inline Packet generatePlayerInput(int id, std::vector<std::string> dataStr) {
     Packet packet;
-    PlayerInput pi = {
-        .playerID = id,
-        .actions = dataStr
-    };
+    PlayerInput pi = {id, dataStr};
 
     packet.setMessageType(MessageType::PLAYER_INPUT);
     packet.setPayload(pi);
@@ -136,10 +133,7 @@ inline Packet generateSnapshot(const std::vector<entityData>& entities) {
     static size_t id = 0;
 
     Packet packet;
-    SnapShot snap = {
-        .id = id++,
-        .entities = entities
-    };
+    SnapShot snap = {id++, entities};
     packet.setMessageType(MessageType::SNAPSHOT);
     packet.setPayload(snap);
     return packet;

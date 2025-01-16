@@ -17,5 +17,3 @@ target_link_libraries(Audio PUBLIC
 )
 
 add_library(Engine::Audio ALIAS Audio)
-
-find_package(SFML 2.5 REQUIRED COMPONENTS audio)

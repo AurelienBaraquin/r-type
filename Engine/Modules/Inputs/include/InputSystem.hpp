@@ -1,12 +1,6 @@
 #pragma once
 
-#if defined(_WIN32)
-extern "C" {
-#endif
-#include <raylib.h>
-#if defined(_WIN32)
-}
-#endif
+#include "RaylibConfig.hpp"
 
 #include <string>
 #include <unordered_map>

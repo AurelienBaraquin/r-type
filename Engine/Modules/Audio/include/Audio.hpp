@@ -1,6 +1,6 @@
 #pragma once
 
-#include <raylib.h>
+#include "RaylibConfig.hpp"
 #include <string>
 #include <unordered_map>
 #include <memory>

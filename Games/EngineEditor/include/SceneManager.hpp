@@ -5,7 +5,7 @@
 #ifndef B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
 #define B_CPP_500_MPL_5_2_RTYPE_GUILLAUME1_TRAN_SCENEMANAGER_HPP
 #include "Engine.hpp"
-#include "raylib.h"
+#include "RaylibConfig.hpp"
 
 class SceneManager
 {
