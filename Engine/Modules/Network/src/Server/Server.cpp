@@ -39,12 +39,7 @@ Packet Network::snapShot(Registry &registry)
 
     for (auto entity : entitiesToSend) {
         auto *pos = registry.getComponent<Components::Position>(entity);
-        entityData data = {
-            .entity = entity,
-            .x = pos->x,
-            .y = pos->y,
-            .z = pos->z,
-        };
+        entityData data = { entity, pos->x, pos->y, pos->z };
         entities.push_back(data);
     }
     SnapShot snap = {
