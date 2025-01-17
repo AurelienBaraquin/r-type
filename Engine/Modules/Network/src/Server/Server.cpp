@@ -42,10 +42,7 @@ Packet Network::snapShot(Registry &registry)
         entityData data = { entity, pos->x, pos->y, pos->z };
         entities.push_back(data);
     }
-    SnapShot snap = {
-        .id = id++,
-        .entities = entities,
-    };
+    SnapShot snap = { id++, entities };
     std::string bin = serializeToString(snap);
     std::cout << bin << std::endl;
     SnapShot snap2 = deserializeFromString<SnapShot>(bin);
