@@ -272,10 +272,14 @@ class Registry
     template <class Archive>
     void serialize(Archive& archive)
     {
+        std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
+        for (auto& [type, pool] : componentPools) {
+            pools[type.name()] = pool->clone();
+        }
         archive(entityManager,  // Ok
                 _tags,          // Ok
-                entityMasks     // Ok
-                                //  componentPools // std:type_index not supported
+                entityMasks,     // Ok
+                pools           // Ok
         );
     }
 
