@@ -32,12 +32,14 @@ struct PlayerInput {
 
 struct entityData {
     Entity entity;
-    int x, y, z;
+    Components::Position pos;
+    Components::Scale scale;
+    Components::Rotation rot;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(entity, x, y, z);
+        ar(entity, pos, scale, rot);
     }
 };
 

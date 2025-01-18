@@ -38,17 +38,11 @@ Packet Network::snapShot(Registry &registry)
     }
 
     for (auto entity : entitiesToSend) {
-        auto *pos = registry.getComponent<Components::Position>(entity);
-        entityData data = { entity, pos->x, pos->y, pos->z };
+        auto pos = registry.getComponent<Components::Position>(entity);
+        auto scale = registry.getComponent<Components::Scale>(entity);
+        auto rot = registry.getComponent<Components::Rotation>(entity);
+        entityData data = { entity, *pos, *scale, *rot };
         entities.push_back(data);
-    }
-    SnapShot snap = { id++, entities };
-    std::string bin = serializeToString(snap);
-    std::cout << bin << std::endl;
-    SnapShot snap2 = deserializeFromString<SnapShot>(bin);
-    std::cout << snap2.id << std::endl;
-    for (auto entity : snap2.entities) {
-        std::cout << entity.x << std::endl;
     }
     return generateSnapshot(entities);
 }
