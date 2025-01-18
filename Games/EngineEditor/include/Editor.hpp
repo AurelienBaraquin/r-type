@@ -8,16 +8,17 @@
 #define BUILD_PHYSICS
 #define BUILD_AUDIO
 #define BUILD_INPUTS
-#include "Engine.hpp"
-#include "SceneManager.hpp"
-#include <memory>
-#include "raylib.h"
-#include "Scene.hpp"
 #include <algorithm>
+#include <memory>
+
+#include "Engine.hpp"
+#include "Scene.hpp"
+#include "SceneManager.hpp"
+#include "raylib.h"
 
 class Editor
 {
-public:
+   public:
     Editor() : _graphic(_engine.addModule<Graphic>("R-Type", 1, 1))
     {
         _scenePath = "Games/RType/config/scene.json";
@@ -33,7 +34,7 @@ public:
         float _width = (float)GetScreenWidth();
         float _height = (float)GetScreenHeight();
         _leftBox = {0, 0, _width * 0.20f, _height};
-        _centerBox = {_leftBox.width, 0,_width * 0.60f, _height};
+        _centerBox = {_leftBox.width, 0, _width * 0.60f, _height};
         _rightBox = {_centerBox.x + _centerBox.width, 0, _width * 0.20f, _height};
         _selectedEntity = -1;
     }
@@ -63,16 +64,13 @@ public:
         std::reverse(entities.begin(), entities.end());
         nlohmann::json sceneData;
 
-        for (auto& entity : entities)
-        {
+        for (auto& entity : entities) {
             auto json = _engine.getRegistry().getComponent<Components::Json>(entity);
             sceneData["entities"].push_back(json->data);
         }
 
-        for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it)
-        {
-            if (it.key() != "entities")
-            {
+        for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it) {
+            if (it.key() != "entities") {
                 sceneData[it.key()] = it.value();
             }
         }

@@ -26,4 +26,8 @@
 #include "Inputs.hpp"
 #endif
 
+#ifdef BUILD_NETWORK
+#include "Network.hpp"
+#endif
+
 #endif  // ENGINE_HPP

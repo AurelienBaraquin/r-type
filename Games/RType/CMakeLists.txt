@@ -12,14 +12,24 @@ function(create_rtype_target target_name definition)
     target_include_directories(${target_name} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
-
-    target_link_libraries(${target_name} PRIVATE
-        Engine
-        Engine::Graphic
-        Engine::Physics
-        Engine::Inputs
-        Engine::Audio
-    )
+    if (SERVER)
+        target_link_libraries(${target_name} PRIVATE
+            Engine
+            Engine::Physics
+            Engine::Inputs
+            Engine::Network
+        )
+    endif()
+    if (CLIENT)
+        target_link_libraries(${target_name} PRIVATE
+            Engine
+            Engine::Graphic
+            Engine::Physics
+            Engine::Inputs
+            Engine::Audio
+            Engine::Network
+        )
+    endif()
 endfunction()
 
 if (SERVER)

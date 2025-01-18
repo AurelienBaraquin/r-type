@@ -2,8 +2,10 @@
 // Created by Guillaume Tran on 03/01/2025.
 //
 
-#include <nlohmann/json.hpp>
 #include "Editor.hpp"
+
+#include <nlohmann/json.hpp>
+
 #include "raygui.h"
 
 void Editor::run()
@@ -14,15 +16,13 @@ void Editor::run()
     camera.zoom = 1.0f;
     
     std::vector<Entity> unfilteredEntities = _engine.getRegistry().view<Components::Json>();
-    for (const auto& entity : unfilteredEntities)
-    {
+    for (const auto& entity : unfilteredEntities) {
         std::vector<std::string> tags = _engine.getRegistry().getTags(entity);
     }
     std::vector<bool> TextBoxesBool;
     Entity oldSelectedEntity = -1;
 
-    while (!WindowShouldClose())
-    {
+    while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -78,7 +78,9 @@ void Editor::run()
     return;
 }
 
-void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity) {
+void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
+                            Entity& oldSelectedEntity)
+{
     if (_selectedEntity == -1) {
         return;
     }
@@ -108,7 +110,8 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Enti
             char* label = value.data();
             padding += 20;
 
-            if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20}, label, 100, TextBoxesBool[iComponent])) {
+            if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20}, label, 100,
+                           TextBoxesBool[iComponent])) {
                 TextBoxesBool[iComponent] = !TextBoxesBool[iComponent];
                 if (!TextBoxesBool[iComponent]) {
                     saveScene();
@@ -147,8 +150,7 @@ std::vector<Entity> Editor::getSortedEntitiesByZ()
 
 void Editor::drawEntities(const std::vector<Entity>& entities)
 {
-    for (const auto& entity : entities)
-    {
+    for (const auto& entity : entities) {
         auto position = _engine.getRegistry().getComponent<Components::Position>(entity);
         auto rotation = _engine.getRegistry().getComponent<Components::Rotation>(entity);
         auto scale = _engine.getRegistry().getComponent<Components::Scale>(entity);
@@ -157,14 +159,11 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
         float adjustedY = _centerBox.y + position->y;
         Components::Position adjustedPosition = {(int)adjustedX, (int)adjustedY, position->z};
 
-        if (_engine.getRegistry().hasComponent<Components::Sprite>(entity))
-        {
+        if (_engine.getRegistry().hasComponent<Components::Sprite>(entity)) {
             auto sprite = _engine.getRegistry().getComponent<Components::Sprite>(entity);
             BrutSprite bruteSpriteVar = _graphic.manageSprites().getSprite(sprite->spriteID);
             _graphic.drawTextureEx(&bruteSpriteVar, &adjustedPosition, rotation, scale);
-        }
-        else if (_engine.getRegistry().hasComponent<Components::Animation>(entity))
-        {
+        } else if (_engine.getRegistry().hasComponent<Components::Animation>(entity)) {
             auto animation = _engine.getRegistry().getComponent<Components::Animation>(entity);
             auto frames = _graphic.manageAnimations().getAnimation(animation->animationID);
             auto currentFrame = frames[animation->currentFrame];
@@ -172,9 +171,7 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
             BrutSprite sprite = {currentFrame.textureID, currentFrame.width, currentFrame.height,
                                  currentFrame.originX, currentFrame.originY};
             _graphic.drawTextureEx(&sprite, &adjustedPosition, rotation, scale);
-        }
-        else
-        {
+        } else {
             DrawCircle(adjustedPosition.x, adjustedPosition.y, 10, RED);
         }
     }

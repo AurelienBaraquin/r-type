@@ -1,4 +1,5 @@
 from conan import ConanFile
+from conan.tools.cmake import cmake_layout
 
 class CactusEngine(ConanFile):
     name = "CactusEngine"
@@ -15,10 +16,12 @@ class CactusEngine(ConanFile):
         self.requires("chipmunk2d/7.0.3")
         self.requires("cista/0.15")
         self.requires("nlohmann_json/3.11.3")
-        # self.requires("sfml/2.5.1")
         self.requires("flac/1.4.3", force=True)
+        self.requires("asio/1.32.0")
+        self.requires("cereal/1.3.2")
 
     def layout(self):
         self.folders.build = "build/Release"
         self.folders.generators = "build/Release/generators"
         self.folders.source = "src"
+        cmake_layout(self)

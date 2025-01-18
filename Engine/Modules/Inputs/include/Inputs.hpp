@@ -1,12 +1,15 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "ISystem.hpp"
+#include "Input.hpp"
 #include "InputSystem.hpp"
 #include "Loader.hpp"
-#include "Input.hpp"
 
-class Inputs : public ISystem, public ILoader, public NotThreadable {
-public:
+class Inputs : public ISystem, public ILoader, public NotThreadable
+{
+   public:
     Inputs() = default;
     ~Inputs() override = default;
 
@@ -15,10 +18,18 @@ public:
     void registerComponentFactory(ComponentFactory& componentFactory) override;
 
     // ILoader interface
-    void load(const nlohmann::json& data) override {}
-    std::vector<ILoader*> getLoaders() override { return {dynamic_cast<ILoader*>(&_InputSystem)}; }
-    std::string getPart() override { return "inputs"; }
+    void load(const nlohmann::json& data) override
+    {
+    }
+    std::vector<ILoader*> getLoaders() override
+    {
+        return {dynamic_cast<ILoader*>(&_InputSystem)};
+    }
+    std::string getPart() override
+    {
+        return "inputs";
+    }
 
-private:
+   private:
     InputSystem _InputSystem;
 };
