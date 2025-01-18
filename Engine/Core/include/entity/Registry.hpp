@@ -1,17 +1,19 @@
 #pragma once
 
 #include <algorithm>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/vector.hpp>
 #include <mutex>
 #include <shared_mutex>
 #include <vector>
-#include <cereal/types/unordered_map.hpp>
-#include <cereal/types/vector.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/polymorphic.hpp>
 
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
+#include "cereal/types/bitset.hpp"
 
 class Registry
 {
@@ -270,7 +272,11 @@ class Registry
     template <class Archive>
     void serialize(Archive& archive)
     {
-        archive(entityManager, _tags, entityMasks, componentPools);
+        archive(entityManager,  // Ok
+                _tags,          // Ok
+                entityMasks     // Ok
+                                //  componentPools // std:type_index not supported
+        );
     }
 
    private:
