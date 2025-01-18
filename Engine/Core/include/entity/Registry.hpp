@@ -278,7 +278,7 @@ class Registry
         }
         archive(entityManager,  // Ok
                 _tags,          // Ok
-                entityMasks,     // Ok
+                entityMasks,    // Ok
                 pools           // Ok
         );
     }
