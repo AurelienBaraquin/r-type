@@ -50,8 +50,7 @@ void Editor::run()
         drawProperties(padding, TextBoxesBool, oldSelectedEntity);
 
         EndDrawing();
-        if (IsKeyPressed(KEY_R))
-        {
+        if (IsKeyPressed(KEY_R)) {
             saveScene();
         }
         if (IsKeyPressed(KEY_L)) {
