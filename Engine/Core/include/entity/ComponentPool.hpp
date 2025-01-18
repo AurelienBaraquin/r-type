@@ -1,19 +1,19 @@
 #pragma once
 
 #include <bitset>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/polymorphic.hpp>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/utility.hpp>
 #include <memory>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#include <cereal/types/unordered_map.hpp>
-#include <cereal/types/utility.hpp>
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/polymorphic.hpp>
 
 #include "Entity.hpp"
 #include "components/Json.hpp"
-#include "components/Transform.hpp"
 #include "components/Script.hpp"
+#include "components/Transform.hpp"
 
 constexpr size_t MAX_COMPONENTS = 64;
 
@@ -26,7 +26,9 @@ class IComponentPool
     virtual void remove(Entity entity) = 0;
 
     template <class Archive>
-    void serialize(Archive& archive) {}
+    void serialize(Archive& archive)
+    {
+    }
 
     virtual std::unique_ptr<IComponentPool> clone() const = 0;
 };

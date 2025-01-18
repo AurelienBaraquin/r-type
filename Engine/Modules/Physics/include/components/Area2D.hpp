@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <vector>
 #include <cereal/types/vector.hpp>
+#include <vector>
 
 #include "ComponentPool.hpp"
 #include "Entity.hpp"
@@ -18,7 +18,8 @@ struct Area2D {
     std::vector<Entity> collidedEntities;
 
     template <class Archive>
-    void serialize(Archive& archive) {
+    void serialize(Archive& archive)
+    {
         archive(width, height, firstCollidedEntity, collidedEntities);
     }
 };

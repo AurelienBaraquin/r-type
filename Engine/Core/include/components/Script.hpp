@@ -9,7 +9,8 @@ struct Script {
     bool initialized = false;
 
     template <class Archive>
-    void serialize(Archive& archive) {
+    void serialize(Archive& archive)
+    {
         archive(scriptPath, initialized);
     }
 };
