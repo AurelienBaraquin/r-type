@@ -70,7 +70,8 @@ class Editor
             if (!json) {
                 continue;
             }
-            sceneData["entities"].push_back(json->data);
+            nlohmann::json entityData = nlohmann::json::parse(json->data);
+            sceneData["entities"].push_back(entityData);
         }
         for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it) {
             std::cout << it.key() << std::endl;

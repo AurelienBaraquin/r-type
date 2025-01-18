@@ -5,6 +5,6 @@
 
 namespace Components {
 struct Json {
-    nlohmann::json data;
+    std::string data;
 };
 }  // namespace Components
