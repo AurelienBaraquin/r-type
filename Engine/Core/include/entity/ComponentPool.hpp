@@ -26,6 +26,8 @@ class IComponentPool
     void serialize(Archive& archive)
     {
     }
+
+    virtual std::unique_ptr<IComponentPool> clone() const = 0;
 };
 
 template <typename T>
@@ -52,6 +54,11 @@ class ComponentPool : public IComponentPool
     void serialize(Archive& archive)
     {
         archive(components);
+    }
+
+    std::unique_ptr<IComponentPool> clone() const override
+    {
+        return std::make_unique<ComponentPool<T>>(*this);
     }
 
    private:
