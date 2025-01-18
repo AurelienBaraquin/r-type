@@ -14,7 +14,7 @@ void Editor::run()
     camera.target = (Vector2){0, 0};
     camera.offset = (Vector2){_centerBox.x, _centerBox.y};
     camera.zoom = 1.0f;
-    
+
     std::vector<Entity> unfilteredEntities = _engine.getRegistry().view<Components::Json>();
     for (const auto& entity : unfilteredEntities) {
         std::vector<std::string> tags = _engine.getRegistry().getTags(entity);
@@ -29,7 +29,7 @@ void Editor::run()
         GuiPanel(_centerBox, "Scene");
 
         auto entities = getSortedEntitiesByZ();
-        //SCENE
+        // SCENE
         BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
         BeginMode2D(camera);
         drawEntities(entities);
@@ -38,8 +38,8 @@ void Editor::run()
 
         GuiPanel(_leftBox, "Lists");
         char* label = _scenePath.data();
-        if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 10, 200, 20}, label, 100, editScene))
-        {
+        if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 10, 200, 20}, label, 100,
+                       editScene)) {
             editScene = !editScene;
             _scenePath = label;
         }
@@ -47,24 +47,21 @@ void Editor::run()
         _sceneManager->drawEntities(50);
         GuiPanel(_rightBox, "Properties");
         int padding = 25;
-        drawProperties(padding , TextBoxesBool, oldSelectedEntity);
+        drawProperties(padding, TextBoxesBool, oldSelectedEntity);
 
         EndDrawing();
-        if (IsKeyPressed(KEY_R))
-        {
+        if (IsKeyPressed(KEY_R)) {
             reloadScene();
         }
-        if (IsKeyPressed(KEY_L))
-        {
+        if (IsKeyPressed(KEY_L)) {
             _launchScene = true;
             break;
         }
     }
 
     CloseWindow();
-    
-    if (_launchScene)
-    {
+
+    if (_launchScene) {
         Engine engine;
         engine.addModule<Graphic>("game", 384 * 2, 256 * 2);
         engine.addModule<Inputs>();

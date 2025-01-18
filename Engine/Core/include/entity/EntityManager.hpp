@@ -1,8 +1,8 @@
 #pragma once
 
-#include <queue>
-#include <cereal/types/queue.hpp>
 #include <cereal/archives/binary.hpp>
+#include <cereal/types/queue.hpp>
+#include <queue>
 
 #include "Entity.hpp"
 
