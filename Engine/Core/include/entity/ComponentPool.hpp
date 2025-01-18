@@ -5,6 +5,9 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/utility.hpp>
+#include <cereal/archives/binary.hpp>
 
 #include "Entity.hpp"
 
@@ -37,6 +40,12 @@ class ComponentPool : public IComponentPool
     {
         auto it = components.find(entity);
         return it != components.end() ? &it->second : nullptr;
+    }
+
+    template <class Archive>
+    void serialize(Archive& archive)
+    {
+        archive(components);
     }
 
    private:
