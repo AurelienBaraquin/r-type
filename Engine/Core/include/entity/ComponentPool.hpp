@@ -8,6 +8,7 @@
 #include <cereal/types/unordered_map.hpp>
 #include <cereal/types/utility.hpp>
 #include <cereal/archives/binary.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 #include "Entity.hpp"
 
@@ -20,6 +21,9 @@ class IComponentPool
    public:
     virtual ~IComponentPool() = default;
     virtual void remove(Entity entity) = 0;
+
+    template <class Archive>
+    void serialize(Archive& archive) {}
 };
 
 template <typename T>
@@ -51,3 +55,6 @@ class ComponentPool : public IComponentPool
    private:
     std::unordered_map<Entity, T> components;
 };
+
+CEREAL_REGISTER_TYPE(ComponentPool<int>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<int>);
