@@ -42,6 +42,15 @@ class EntityTemplateManager
         return entity;
     }
 
+    std::vector<nlohmann::json> getTemplates() const
+    {
+        std::vector<nlohmann::json> templates;
+        for (const auto& [_, tmpl] : _entityTemplates) {
+            templates.push_back(tmpl);
+        }
+        return templates;
+    }
+
    private:
     std::unordered_map<std::string, nlohmann::json> _entityTemplates;
 };

@@ -52,7 +52,7 @@ void Editor::run()
         EndDrawing();
         if (IsKeyPressed(KEY_R))
         {
-            reloadScene();
+            saveScene();
         }
         if (IsKeyPressed(KEY_L))
         {
@@ -128,7 +128,6 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
                 } else if (it2->is_string()) {
                     *it2 = value;
                 }
-                saveScene();
             }
 
             iComponent++;

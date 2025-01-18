@@ -60,18 +60,29 @@ class Editor
 
     void saveScene()
     {
+        std::cout << "Saving scene" << std::endl;
         std::vector<Entity> entities = _engine.getRegistry().view<>();
         std::reverse(entities.begin(), entities.end());
         nlohmann::json sceneData;
 
         for (auto& entity : entities) {
             auto json = _engine.getRegistry().getComponent<Components::Json>(entity);
+            if (!json) {
+                continue;
+            }
             sceneData["entities"].push_back(json->data);
         }
-
         for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it) {
+            std::cout << it.key() << std::endl;
             if (it.key() != "entities") {
                 sceneData[it.key()] = it.value();
+            }
+            if (it.key() == "entities") {
+                for (auto& entity : it.value()) {
+                    if (entity.contains("Template")) {
+                        sceneData["entities"].push_back(entity);
+                    }
+                }
             }
         }
         std::ofstream file(_scenePath);

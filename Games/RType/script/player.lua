@@ -24,7 +24,6 @@ function update(delta)
         reloadScene("Games/RType/config/scene.json")
     end
     if isInputActive(self, "Shoot", true) and shoot_timer <= 0 then
-        print("shoot")
         shoot_timer = shoot_rate
         playAnimation(self, 1)
         local bullet_position = {
