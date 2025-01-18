@@ -41,7 +41,7 @@ Packet Network::snapShot(Registry &registry)
         auto pos = registry.getComponent<Components::Position>(entity);
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rot = registry.getComponent<Components::Rotation>(entity);
-        entityData data = { entity, *pos, *scale, *rot };
+        entityData data = {entity, *pos, *scale, *rot};
         entities.push_back(data);
     }
     return generateSnapshot(entities);
@@ -54,6 +54,11 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     std::chrono::duration<float> elapsedTime = currentTime - lastSnapShotTime;
 
     if (elapsedTime.count() >= 1.0f) {
+        {
+            std::ofstream file("registry.txt");
+            cereal::BinaryOutputArchive archive(file);
+            archive(registry);
+        }
         server.sendAll(this->snapShot(registry));
         lastSnapShotTime = currentTime;
     }

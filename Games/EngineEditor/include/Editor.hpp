@@ -91,9 +91,10 @@ class Editor
     }
 
     void drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity);
-private:
+
+   private:
     nlohmann::json _sceneData;
-    
+
     Engine _engine;
     std::vector<Entity> _entities;
     Entity _selectedEntity;
@@ -105,7 +106,7 @@ private:
     Rectangle _leftBox;
     Rectangle _centerBox;
     Rectangle _rightBox;
-    
+
     std::string _scenePath;
     bool editScene = false;
     bool _launchScene = false;

@@ -11,8 +11,7 @@
 #ifdef CLIENT
 Network::Network()
     : ioContext(),
-      client(ioContext,
-             asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
+      client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
 {
     client.startReceiving();
 
@@ -50,7 +49,8 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
         // std::cout << snap.size() << " entities in snapshot.\n";
         setSnapshot(std::vector<entityData>{});
         // for (auto entity : snap) {
-        //     std::cout << "Entity: " << entity.entity << " at (" << entity.pos.x << ", " << entity.pos.y
+        //     std::cout << "Entity: " << entity.entity << " at (" << entity.pos.x << ", " <<
+        //     entity.pos.y
         //     << ", "
         //       << entity.pos.z << ")\n";
         // }
