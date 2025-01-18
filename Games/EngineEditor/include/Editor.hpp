@@ -20,7 +20,7 @@ class Editor
 public:
     Editor() : _graphic(_engine.addModule<Graphic>("R-Type", 1, 1))
     {
-        _scenePath = "Games/EngineEditor/assets/scene.json";
+        _scenePath = "Games/RType/config/scene.json";
         _engine.addModule<Physics>();
         _engine.addModule<Inputs>();
         InitWindow(1920, 1080, "Engine Editor");
@@ -36,7 +36,6 @@ public:
         _centerBox = {_leftBox.width, 0,_width * 0.60f, _height};
         _rightBox = {_centerBox.x + _centerBox.width, 0, _width * 0.20f, _height};
         _selectedEntity = -1;
-
     }
 
     ~Editor()
@@ -84,16 +83,21 @@ public:
 
     void drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity);
 private:
-    std::string _scenePath;
     nlohmann::json _sceneData;
+    
     Engine _engine;
     std::vector<Entity> _entities;
     Entity _selectedEntity;
     std::shared_ptr<SceneManager> _sceneManager;
+
     Graphic& _graphic;
     float _width = 0;
     float _height = 0;
     Rectangle _leftBox;
     Rectangle _centerBox;
     Rectangle _rightBox;
+    
+    std::string _scenePath;
+    bool editScene = false;
+    bool _launchScene = false;
 };

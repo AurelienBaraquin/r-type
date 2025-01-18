@@ -166,13 +166,6 @@
         "Position": { "x": 0, "y": 0, "z": 0 },
         "Script": { "scriptPath": "Games/RType/script/enemy_manager.lua" }
       }
-    },
-
-    {
-      "FromTemplate": {
-        "name" : "Bonus",
-        "tags": ["audio"]
-      }
     }
   ],
   "scenes": ["assets.json", "inputs.json", "audio.json", "particles.json", "enemy1.json"]

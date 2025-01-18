@@ -76,6 +76,11 @@ tasks:
     cmds:
       - lldb ./build/build/Release/Games/RType/r-type_client
 
+  eedebugMac:
+    desc: "Run the EngineEditor target in debug mode on Mac"
+    cmds:
+      - lldb ./build/build/Release/Games/EngineEditor/EngineEditor
+
   sdebugMac:
     desc: "Run the RType server target in debug mode on Mac"
     cmds:

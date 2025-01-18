@@ -6,7 +6,7 @@
 #include "raygui.h"
 
 
-void SceneManager::drawEntities()
+void SceneManager::drawEntities(int padding)
 {
     int i = 0;
     for (auto &entity : _entities)
@@ -17,7 +17,7 @@ void SceneManager::drawEntities()
             tags.push_back("No tag");
         }
         std::string entityName = "Entity " + std::to_string(entity) + " - " + tags[0];
-        if (GuiButton(Rectangle{0, (float)i * 20, 200, 20}, entityName.c_str()))
+        if (GuiButton(Rectangle{0, (float)i * 20 + padding, 200, 20}, entityName.c_str()))
         {
             _selectedEntity = entity;
             std::cout << "Selected entity: " << _selectedEntity << std::endl;

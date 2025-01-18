@@ -15,7 +15,7 @@ public:
     }
     ~SceneManager() = default;
 
-    void drawEntities();
+    void drawEntities(int padding);
    private:
     std::vector<Entity> _entities;
     Entity& _selectedEntity;
