@@ -4,6 +4,11 @@
 #include <mutex>
 #include <shared_mutex>
 #include <vector>
+#include <cereal/types/unordered_map.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 #include "ComponentPool.hpp"
 #include "EntityManager.hpp"
@@ -260,6 +265,12 @@ class Registry
             entityMasks.clear();
             componentPools.clear();
         }
+    }
+
+    template <class Archive>
+    void serialize(Archive& archive)
+    {
+        archive(entityManager, _tags, entityMasks, componentPools);
     }
 
    private:

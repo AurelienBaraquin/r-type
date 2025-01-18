@@ -1,6 +1,8 @@
 #pragma once
 
 #include <queue>
+#include <cereal/types/queue.hpp>
+#include <cereal/archives/binary.hpp>
 
 #include "Entity.hpp"
 
@@ -16,6 +18,12 @@ class EntityManager
         while (!availableEntities.empty()) {
             availableEntities.pop();
         }
+    }
+
+    template <class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(nextEntityId, availableEntities);
     }
 
    private:
