@@ -104,6 +104,44 @@
             ]
         },
         {
+            "_name_": "Player2",
+            "components": {
+                "Animation": {
+                    "animationID": 1.0,
+                    "currentFrame": 0,
+                    "elapsedTime": 0.0,
+                    "loop": true,
+                    "playing": true
+                },
+                "Area2D": {
+                    "height": 17,
+                    "width": 33
+                },
+                "Input": {
+                    "inputConfigID": 0
+                },
+                "Position": {
+                    "x": 14.0,
+                    "y": 128,
+                    "z": 1
+                },
+                "Rotation": {
+                    "angle": 0
+                },
+                "Scale": {
+                    "x": 0,
+                    "y": 0
+                },
+                "Script": {
+                    "scriptPath": "Games/RType/script/player2.lua"
+                }
+            },
+            "id": 3,
+            "tags": [
+                "player"
+            ]
+        },
+        {
             "_name_": "EnemyManager",
             "components": {
                 "Position": {
