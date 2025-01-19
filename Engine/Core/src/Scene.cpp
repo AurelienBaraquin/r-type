@@ -22,10 +22,9 @@ void SceneLoader::loadEntity(const nlohmann::json& entityData, const std::string
     Entity entity = registry.createEntity();
     const auto& components = entityData["components"];
 
-    std::string componentsStr = entityData.dump();
-    std::cout << "componentsStr: " << componentsStr << std::endl;
+    std::string componentsStr = components.dump();
     factory.addComponent(entity, "Json", componentsStr, registry);
-    
+
     for (auto& [componentName, componentData] : components.items()) {
         factory.addComponent(entity, componentName, componentData, registry);
     }

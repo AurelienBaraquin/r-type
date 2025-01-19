@@ -11,6 +11,9 @@
 #include <vector>
 
 #include "Entity.hpp"
+#include "components/Json.hpp"
+#include "components/Script.hpp"
+#include "components/Transform.hpp"
 
 constexpr size_t MAX_COMPONENTS = 64;
 
@@ -65,5 +68,16 @@ class ComponentPool : public IComponentPool
     std::unordered_map<Entity, T> components;
 };
 
-CEREAL_REGISTER_TYPE(ComponentPool<int>);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<int>);
+// Register ComponentPool specializations with Cereal
+CEREAL_REGISTER_TYPE(ComponentPool<Components::Json>);
+CEREAL_REGISTER_TYPE(ComponentPool<Components::Position>);
+CEREAL_REGISTER_TYPE(ComponentPool<Components::Scale>);
+CEREAL_REGISTER_TYPE(ComponentPool<Components::Rotation>);
+CEREAL_REGISTER_TYPE(ComponentPool<Components::Script>);
+
+// Register polymorphic relationships
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<Components::Json>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<Components::Position>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<Components::Scale>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<Components::Rotation>);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(IComponentPool, ComponentPool<Components::Script>);
