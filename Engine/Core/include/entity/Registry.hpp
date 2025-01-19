@@ -269,6 +269,23 @@ class Registry
         }
     }
 
+    void load(Registry &registry)
+    {
+        if (!inRegionLock) {
+            std::unique_lock lock(mutex);
+            
+            entityManager.load(registry.entityManager);
+            // _tags = registry._tags;
+            // entityMasks = registry.entityMasks;
+            // componentPools = registry.componentPools;
+        } else {
+            entityManager.load(registry.entityManager);
+            // _tags = registry._tags;
+            // entityMasks = registry.entityMasks;
+            // componentPools = registry.componentPools;
+        }
+    }
+
     template <class Archive>
     void serialize(Archive& archive)
     {
@@ -283,8 +300,8 @@ class Registry
         );
     }
 
-   private:
     EntityManager entityManager;
+   private:
     std::unordered_map<Tag, std::vector<Entity>> _tags;
     std::unordered_map<Entity, ComponentMask> entityMasks;
     std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> componentPools;

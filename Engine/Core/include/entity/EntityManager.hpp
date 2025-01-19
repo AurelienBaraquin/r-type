@@ -19,6 +19,21 @@ class EntityManager
             availableEntities.pop();
         }
     }
+void load(const EntityManager& entityManager)
+{
+    this->availableEntities = entityManager.getAvailableEntities();
+    this->nextEntityId = entityManager.getNextEntityId();
+}
+
+std::queue<Entity> getAvailableEntities() const
+{
+    return availableEntities;
+}
+
+int getNextEntityId() const
+{
+    return nextEntityId;
+}
 
     template <class Archive>
     void serialize(Archive& ar)
