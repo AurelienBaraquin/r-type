@@ -17,7 +17,7 @@ end
 function set_property(new_angle, new_distance, pos)
     angle = new_angle
     print(new_angle)
-    fire_timer = 4 * (new_angle / (2 * 3.14))
+    fire_timer = fire_rate * (new_angle / (2 * 3.14))
     print(fire_timer)
     distance = new_distance + 20
     init_pos = pos
