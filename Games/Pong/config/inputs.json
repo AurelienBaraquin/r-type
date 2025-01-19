@@ -7,20 +7,12 @@
         "keyboard": {
           "MoveUp": "W",
           "MoveDown": "S",
-          "MoveLeft": "A",
-          "MoveRight": "D",
-          "Shoot": "SPACE",
-          "Reload" : "R"
-        },
-        "mouse": {
-          "Shoot": "LeftButton"
+          "MoveUp2": "UP",
+          "MoveDown2": "DOWN"
         },
         "controller": {
           "MoveUp": "RightStickYPositive",
-          "MoveDown": "RightStickYNegative",
-          "MoveLeft": "LeftStickXNegative",
-          "MoveRight": "LeftStickXPositive",
-          "Shoot": "X"
+          "MoveDown": "RightStickYNegative"
         }
       }
     }

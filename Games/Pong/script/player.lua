@@ -2,7 +2,7 @@ speed = 3
 self = nil
 
 function init(e)
-    -- self = e
+    self = e
     print("init as " .. e)
 end
 
