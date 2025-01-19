@@ -86,10 +86,9 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
     std::string jsonString = jsonComponent->data;
     nlohmann::json json = nlohmann::json::parse(jsonString);
     int iComponent = 0;
-
+    std::cout << json.dump() << std::endl;
     for (auto it = json["components"].begin(); it != json["components"].end(); ++it) {
         GuiLabel(Rectangle{_rightBox.x + 10, _rightBox.y + padding, 100, 20}, it.key().c_str());
-
         for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
             if (_selectedEntity != oldSelectedEntity) {
                 TextBoxesBool.push_back(false);

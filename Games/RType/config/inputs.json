@@ -10,7 +10,13 @@
           "MoveLeft": "A",
           "MoveRight": "D",
           "Shoot": "SPACE",
-          "Reload" : "R"
+          "Reload" : "R",
+          "MoveUp2": "UP",
+          "MoveDown2": "DOWN",
+          "MoveLeft2": "LEFT",
+          "MoveRight2": "RIGHT",
+          "Shoot2": "ENTER"
+          
         },
         "mouse": {
           "Shoot": "LeftButton"
