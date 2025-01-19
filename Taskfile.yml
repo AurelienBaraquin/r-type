@@ -19,10 +19,11 @@ tasks:
   cb:
     desc: "Build rtype client with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=OFF -DCLIENT=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_PONG=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
       - mkdir -p ./Release
       - cp ./build/build/Release/Games/RType/r-type_client ./Release/r-type_client
+      - cp ./build/build/Release/Games/Pong/pong_client ./Release/pong_client
 
   enginebuild:
     desc: "Build the engine with conan-release preset"
@@ -38,10 +39,11 @@ tasks:
   sb:
     desc: "Build rtype server with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=OFF -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=ON -DCLIENT=OFF
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_PONG=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=OFF -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=ON -DCLIENT=OFF
       - cmake --build build --preset conan-release
       - mkdir -p ./Release
       - cp ./build/build/Release/Games/RType/r-type_server ./Release/r-type_server
+      - cp ./build/build/Release/Games/Pong/pong_server ./Release/pong_server
 
   build:
     desc: "Build r-type client and server conan-release preset"
@@ -57,14 +59,19 @@ tasks:
   buildw:
     desc: "Build the r-type client and server with conan-default preset for windows"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_PONG=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=ON -DCLIENT=OFF
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_PONG=ON -DBUILD_TESTS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DSERVER=OFF -DCLIENT=ON
       - cmake --build build --preset conan-release
 
   crtype:
     desc: "Run the r-type client target"
     cmds:
       - ./build/build/Release/Games/RType/r-type_client
+
+  cpong:
+    desc: "Run the r-type client target"
+    cmds:
+      - ./build/build/Release/Games/Pong/pong_client
 
   srtype:
     desc: "Run the r-type server target"
