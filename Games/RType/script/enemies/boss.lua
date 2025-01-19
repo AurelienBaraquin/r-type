@@ -20,6 +20,7 @@ end
 function init(e)
     self = e
     sprite_entity = createEntity("BossSprite")
+    addTag(sprite_entity, "my_scene")
     print("sprite entity" .. sprite_entity)
 end
 
