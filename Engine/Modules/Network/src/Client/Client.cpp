@@ -38,6 +38,13 @@ std::vector<std::string> getDatas()
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
+    std::ifstream file("registry.txt", std::ios::binary);
+    if (file.is_open()) {
+        // cereal::BinaryInputArchive archive(file);
+        // archive(registry);
+    registry.clear();
+
+    }
     std::vector<std::string> dataStr = getDatas();
 
     auto p = generatePlayerInput(this->id, dataStr);

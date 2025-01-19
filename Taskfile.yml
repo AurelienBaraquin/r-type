@@ -38,7 +38,7 @@ tasks:
   sb:
     desc: "Build rtype server with conan-release preset"
     cmds:
-      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=OFF -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=ON -DCLIENT=OFF
+      - cmake --preset conan-release -DBUILD_RTYPE=ON -DBUILD_TESTS=OFF -DBUILD_TOOLS=OFF -DGRAPHIC=ON -DPHYSICS=ON -DINPUTS=ON -DAUDIO=ON -DNETWORK=ON -DSERVER=ON -DCLIENT=OFF
       - cmake --build build --preset conan-release
       - mkdir -p ./Release
       - cp ./build/build/Release/Games/RType/r-type_server ./Release/r-type_server

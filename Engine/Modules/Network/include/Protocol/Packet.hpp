@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "Registry.hpp"
 #include "MessageType.hpp"
 
 static constexpr uint16_t MAGIC = 0xABCD;

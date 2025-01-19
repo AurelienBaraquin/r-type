@@ -1,9 +1,9 @@
 #pragma once
 
-#ifdef CLIENT
+// #ifdef CLIENT
 #define BUILD_GRAPHIC
 #define BUILD_AUDIO
-#endif
+// #endif
 #define BUILD_PHYSICS
 #define BUILD_INPUTS
 #define BUILD_NETWORK
