@@ -2,7 +2,7 @@
 
 #include <cereal/types/polymorphic.hpp>
 #include <cereal/types/memory.hpp>
-#include "ComponentPool.hpp"  // Include ComponentPool
+#include "ComponentPool.hpp"
 
 namespace Components {
 struct Sprite {
