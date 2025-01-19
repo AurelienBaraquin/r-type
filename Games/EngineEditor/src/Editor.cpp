@@ -38,7 +38,7 @@ void Editor::run()
 
         GuiPanel(_leftBox, "Lists");
         char* label = _scenePath.data();
-        if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 10, 200, 20}, label, 100,
+        if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 25, 200, 20}, label, 100,
                        editScene)) {
             editScene = !editScene;
             _scenePath = label;
@@ -50,13 +50,16 @@ void Editor::run()
         drawProperties(padding, TextBoxesBool, oldSelectedEntity);
 
         EndDrawing();
-        if (IsKeyPressed(KEY_R)) {
+        if (IsKeyPressed(KEY_F1)) {
             saveScene();
         }
-        if (IsKeyPressed(KEY_L)) {
+        if (IsKeyPressed(KEY_F2)) {
+            reloadScene();
+        }
+        if (IsKeyPressed(KEY_F5)) {
             _launchScene = true;
             break;
-        }
+        }       
     }
 
     CloseWindow();
