@@ -34,6 +34,7 @@ function update(delta)
         bullet = createEntity("Bullet")
         addTag(bullet, "MainScene")
         setPosition(bullet, bullet_position)
+        callMethod(bullet, "set_angle", 0)
         playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 20.0)
     end
     if shoot_timer > 0 then

@@ -3,7 +3,7 @@ follow = false
 entity_to_follow = nil
 timer = 10 * 60
 
-bullet_type = 0
+bullet_type = 1
 
 fire_rate = 0.2
 fire_timer = 0
@@ -53,13 +53,20 @@ function handle_bonus_bullet_straight()
 end
 
 function handle_bonus_bullet_diagonal(delta)
+    timer = timer - 0.05
+    if timer <= 0 then
+        destroyEntity(self_entity)
+    end
     if fire_timer >= fire_rate then
         fire_timer = 0
     else 
         fire_timer = fire_timer + 1 * delta
         return
     end
-
+    bullet1 = createEntity("BonusBullet")
+    callMethod(bullet1, "set_angle", math.pi / 5)
+    setPosition(bullet1, position)
     bullet = createEntity("BonusBullet")
+    callMethod(bullet, "set_angle", -math.pi / 5)
     setPosition(bullet, position)
 end

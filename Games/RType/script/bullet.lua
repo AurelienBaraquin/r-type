@@ -1,8 +1,8 @@
 self = nil
-speed = 1
+speed = 10
 collide = nil
 damage = 1
-
+angle = 0
 function init(e)
     collide = nil
     if e == nil then
@@ -17,12 +17,18 @@ function update(delta)
         print("self is nil")
     end
     local position = getPosition(self)
-     position.x = position.x + 5
+    position.y = position.y + math.sin(angle) * speed
+    position.x = position.x + math.cos(angle) * speed
     setPosition(self, position)
 
     if (position.x > 800) then
         destroyEntity(self)
     end
+end
+
+function set_angle(new_angle)
+    angle = new_angle
+    print("angle: ", angle)
 end
 
 function onCollide(other)
