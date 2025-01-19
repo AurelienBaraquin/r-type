@@ -60,7 +60,6 @@ class Editor
 
     void saveScene()
     {
-        std::cout << "Saving scene" << std::endl;
         std::vector<Entity> entities = _engine.getRegistry().view<>();
         std::reverse(entities.begin(), entities.end());
         nlohmann::json sceneData;
@@ -71,6 +70,7 @@ class Editor
                 continue;
             }
             nlohmann::json entityData = nlohmann::json::parse(json->data);
+            std::cout << "entityData: " << entityData << std::endl;
             sceneData["entities"].push_back(entityData);
         }
         for (auto it = _sceneData.begin(); it != _sceneData.end(); ++it) {

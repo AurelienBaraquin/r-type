@@ -120,12 +120,20 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
             }
 
             if (valueMemory != value) {
+                bool changed = true;
                 if (it2->is_number()) {
                     *it2 = std::stof(value);
                 } else if (it2->is_boolean()) {
                     *it2 = value == "true";
                 } else if (it2->is_string()) {
                     *it2 = value;
+                } else {
+                    changed = false;
+                    std::cout << "Type not supported" << std::endl;
+                }
+                if (changed) {
+                    std::string newJsonString = json.dump();
+                    jsonComponent->data = newJsonString;
                 }
             }
 
