@@ -100,11 +100,15 @@
             },
             "id": 3,
             "tags": [
-                "player"
+                "player", "p1"
             ]
         },
         {
             "_name_": "Player2",
+            "tags": [
+                "player",
+                "p2"
+            ],
             "components": {
                 "Animation": {
                     "animationID": 1.0,
@@ -133,13 +137,10 @@
                     "y": 0
                 },
                 "Script": {
-                    "scriptPath": "Games/RType/script/player2.lua"
+                    "scriptPath": "Games/RType/script/player.lua"
                 }
             },
-            "id": 3,
-            "tags": [
-                "player"
-            ]
+            "id": 3
         },
         {
             "_name_": "EnemyManager",

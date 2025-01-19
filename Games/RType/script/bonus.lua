@@ -11,7 +11,18 @@ fire_timer = 0
 position = nil
 function init(e)
     self_entity = e
-    print("init: ", self_entity)
+    tags = getTags(self_entity)
+    if tags then
+        for i, tag in ipairs(tags) do
+            if tag == "bonus" then
+                bullet_type = 0
+            end
+            if tag == "bonus1" then
+                bullet_type = 1
+            end
+
+        end
+    end
 end
 
 

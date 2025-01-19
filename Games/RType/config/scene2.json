@@ -24,7 +24,7 @@
     {
       "Template": {
         "name": "Bonus",
-        "tags": ["bonus"],
+        "tags": ["bonus1"],
         "components": {
           "Position" : { "x": 0, "y": 0, "z": 0 },
           "Scale": { "x": 0, "y": 0 },

@@ -117,6 +117,9 @@ void Engine::registerScriptBindings(ScriptSystem& ScriptSystem, Registry& regist
             return result;
         };
 
+        luaState["getTags"] = [&registry](Entity entity) { return registry.getTags(entity); };
+        
+
         luaState["hasTag"] = [&registry](Entity entity, std::string tag) {
             return registry.hasTag(entity, tag);
         };
