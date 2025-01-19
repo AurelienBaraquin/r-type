@@ -19,63 +19,80 @@ void Editor::run()
     for (const auto& entity : unfilteredEntities) {
         std::vector<std::string> tags = _engine.getRegistry().getTags(entity);
     }
-    std::vector<bool> TextBoxesBool;
     Entity oldSelectedEntity = -1;
 
     while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-
-        GuiPanel(_centerBox, "Scene");
-
-        auto entities = getSortedEntitiesByZ();
-        // SCENE
-        BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
-        BeginMode2D(camera);
-        drawEntities(entities);
-        EndMode2D();
-        EndScissorMode();
-
-        GuiPanel(_leftBox, "Lists");
-        char* label = _scenePath.data();
-        if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 25, 200, 20}, label, 100,
-                       editScene)) {
-            editScene = !editScene;
-            _scenePath = label;
-        }
-
-        _sceneManager->drawEntities(50);
-        GuiPanel(_rightBox, "Properties");
-        int padding = 25;
-        drawProperties(padding, TextBoxesBool, oldSelectedEntity);
-
-        EndDrawing();
-        if (IsKeyPressed(KEY_F1)) {
-            saveScene();
-        }
-        if (IsKeyPressed(KEY_F2)) {
-            reloadScene();
-        }
-        if (IsKeyPressed(KEY_F5)) {
-            _launchScene = true;
+        drawEditor(camera, oldSelectedEntity);
+        if (handleInputs()) {
             break;
-        }       
+        }    
     }
 
     CloseWindow();
 
     if (_launchScene) {
-        Engine engine;
-        engine.addModule<Graphic>("game", 384 * 2, 256 * 2);
-        engine.addModule<Inputs>();
-        engine.addModule<Physics>();
-        engine.addModule<Audio>();
-
-        engine.loadScene(_scenePath);
-        engine.run();
+        runGame();
     }
 
     return;
+}
+
+void Editor::runGame()
+{
+    Engine engine;
+    engine.addModule<Graphic>("game", 384 * 2, 256 * 2);
+    engine.addModule<Inputs>();
+    engine.addModule<Physics>();
+    engine.addModule<Audio>();
+
+    engine.loadScene(_scenePath);
+    engine.run();
+}
+
+void Editor::drawEditor(Camera2D camera, Entity& oldSelectedEntity)
+{
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    GuiPanel(_centerBox, "Scene");
+
+    auto entities = getSortedEntitiesByZ();
+    // SCENE
+    BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
+    BeginMode2D(camera);
+    drawEntities(entities);
+    EndMode2D();
+    EndScissorMode();
+
+    GuiPanel(_leftBox, "Lists");
+    char* label = _scenePath.data();
+    if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 25, 200, 20}, label, 100,
+                    editScene)) {
+        editScene = !editScene;
+        _scenePath = label;
+    }
+
+    _sceneManager->drawEntities(50);
+    GuiPanel(_rightBox, "Properties");
+    int padding = 25;
+    drawProperties(padding, TextBoxesBool, oldSelectedEntity);
+
+    EndDrawing();
+}
+
+bool Editor::handleInputs()
+{
+    if (IsKeyPressed(KEY_F1)) {
+        saveScene();
+    }
+    if (IsKeyPressed(KEY_F2)) {
+        reloadScene();
+    }
+    if (IsKeyPressed(KEY_F5)) {
+        _launchScene = true;
+        return true;
+    }
+    return false;
 }
 
 void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
@@ -89,7 +106,7 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
     std::string jsonString = jsonComponent->data;
     nlohmann::json json = nlohmann::json::parse(jsonString);
     int iComponent = 0;
-    std::cout << json.dump() << std::endl;
+
     for (auto it = json["components"].begin(); it != json["components"].end(); ++it) {
         GuiLabel(Rectangle{_rightBox.x + 10, _rightBox.y + padding, 100, 20}, it.key().c_str());
         for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
@@ -183,4 +200,13 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
             DrawCircle(adjustedPosition.x, adjustedPosition.y, 10, RED);
         }
     }
+}
+
+Camera2D Editor::setCamera()
+{
+    Camera2D camera = {0};
+    camera.target = (Vector2){0, 0};
+    camera.offset = (Vector2){_centerBox.x, _centerBox.y};
+    camera.zoom = 1.0f;
+    return camera;
 }

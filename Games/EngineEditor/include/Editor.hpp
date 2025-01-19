@@ -42,7 +42,8 @@ class Editor
     ~Editor()
     {
     }
-
+    Camera2D setCamera();
+    void drawEditor(Camera2D camera, Entity& oldSelectedEntity);
     void run();
     void drawScene();
     void reloadScene()
@@ -91,14 +92,17 @@ class Editor
         file.close();
     }
 
-    void drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity);
+    bool handleInputs();
 
+    void drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity);
+    void runGame();
    private:
     nlohmann::json _sceneData;
 
     Engine _engine;
-    std::vector<Entity> _entities;
     Entity _selectedEntity;
+
+    std::vector<Entity> _entities;
     std::shared_ptr<SceneManager> _sceneManager;
 
     Graphic& _graphic;
@@ -107,6 +111,8 @@ class Editor
     Rectangle _leftBox;
     Rectangle _centerBox;
     Rectangle _rightBox;
+
+    std::vector<bool> TextBoxesBool;
 
     std::string _scenePath;
     bool editScene = false;
