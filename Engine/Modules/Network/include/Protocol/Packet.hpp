@@ -144,14 +144,11 @@ inline PlayerInput loadInputFromPacket(const Packet& p)
 }
 
 inline Packet generateSnapshot(const Registry registry)
-{
-    static size_t id = 0;
- 
+{ 
     Packet packet;
-    SnapShot snap = {id++, registry};
 
     packet.setMessageType(MessageType::SNAPSHOT);
-    packet.setPayload(snap);
+    packet.setPayload(registry);
     return packet;
 }
 
