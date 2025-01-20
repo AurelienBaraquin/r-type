@@ -1,8 +1,9 @@
 #include "Network.hpp"
+#include "Packet.hpp"
 
-std::vector<entityData>& updateSnapshot(const std::vector<entityData>& newSnapshot, bool set)
+Packet& updateSnapshot(const Packet& newSnapshot, bool set)
 {
-    static std::vector<entityData> snap;
+    static Packet snap;
 
     if (set) {
         snap = newSnapshot;
@@ -10,13 +11,13 @@ std::vector<entityData>& updateSnapshot(const std::vector<entityData>& newSnapsh
     return snap;
 }
 
-const std::vector<entityData>& getSnapShot()
+const Packet& getSnapShot()
 {
-    static const std::vector<entityData> emptySnapshot;
+    static const Packet emptySnapshot;
     return updateSnapshot(emptySnapshot, false);
 }
 
-void setSnapshot(const std::vector<entityData>& newSnapshot)
+void setSnapshot(const Packet& newSnapshot)
 {
     updateSnapshot(newSnapshot, true);
 }

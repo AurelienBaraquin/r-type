@@ -4,5 +4,5 @@
 #include "Packet.hpp"
 #include "Serialization.hpp"
 
-const std::vector<entityData>& getSnapShot();
-void setSnapshot(const std::vector<entityData>& newSnapshot);
+const Packet& getSnapShot();
+void setSnapshot(const Packet& newSnapshot);

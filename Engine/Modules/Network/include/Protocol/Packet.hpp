@@ -143,21 +143,30 @@ inline PlayerInput loadInputFromPacket(const Packet& p)
     return p.getPayload<PlayerInput>();
 }
 
-inline Packet generateSnapshot(const std::vector<entityData>& entities)
+inline Packet generateSnapshot(const Registry& registry)
 {
     static size_t id = 0;
 
     Packet packet;
-    SnapShot snap = {id++, entities};
+    std::ostringstream os;
+    cereal::BinaryOutputArchive archive(os);
+    registry.save(archive);
+    std::string registryData = os.str();
+
+    SnapShot snap = {id++, registryData};
     packet.setMessageType(MessageType::SNAPSHOT);
     packet.setPayload(snap);
     return packet;
 }
 
-inline std::vector<entityData> loadSnapshotFromPacket(const Packet& p)
-{
-    if (p.getMessageType() != MessageType::SNAPSHOT) {
-        throw std::runtime_error("Invalid packet type");
-    }
-    return p.getPayload<SnapShot>().entities;
-}
+// inline Registry loadSnapshotFromPacket(const Packet& p)
+// {
+//     if (p.getMessageType() != MessageType::SNAPSHOT) {
+//         throw std::runtime_error("Invalid packet type");
+//     }
+//     std::string registryData = p.getPayload<SnapShot>();
+//     std::istringstream is(registryData);
+//     cereal::BinaryInputArchive archive(is);
+    
+//     return registry;
+// }

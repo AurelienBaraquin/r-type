@@ -80,7 +80,11 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     auto p = generatePlayerInput(this->id, dataStr);
 
     client.sendPacket(p);
-    std::vector<entityData> snap = getSnapShot();
-
+    Packet pa = getSnapShot();
+    if (pa.getMessageType() == MessageType::SNAPSHOT) {
+        std::cout << "Client: Received SNAPSHOT from server.\n";
+        // std::cout << "Client: Received SNAPSHOT from server.\n";
+        // updateEntity(registry, p.getPayload<SnapShot>().data);
+    }
 }
 #endif

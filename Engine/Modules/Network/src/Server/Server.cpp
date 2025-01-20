@@ -26,28 +26,20 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
 Packet Network::snapShot(Registry &registry)
 {
-    RegistryLock lock(registry);
-    entityData data;
-    std::vector<entityData> entities;
-    std::vector<Entity> entitiesToSend;
-    static size_t id = 0;
-
-    for (auto entity :
-         registry.view<Components::Position, Components::Scale, Components::Rotation>()) {
-        entitiesToSend.push_back(entity);
+    std::ostringstream os;
+    {
+        if (!os) {
+            std::cerr << "Failed to open string stream for saving.\n";
+            return Packet();
+        }
+        cereal::BinaryOutputArchive archive(os);
+        registry.save(archive);
+        std::cout << "Registry saved successfully.\n";
     }
+    std::string registryData = os.str();
 
-    for (auto entity : entitiesToSend) {
-        auto pos = registry.getComponent<Components::Position>(entity);
-        auto scale = registry.getComponent<Components::Scale>(entity);
-        auto rot = registry.getComponent<Components::Rotation>(entity);
-        std::vector<Tag> tag = registry.getTags(entity);
-        entityData data = {entity, *pos, *scale, *rot, tag};
-        entities.push_back(data);
-    }
-    return generateSnapshot(entities);
+    return generateSnapshot(registry);
 }
-
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
     static auto lastSnapShotTime = std::chrono::steady_clock::now();
@@ -55,19 +47,12 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     std::chrono::duration<float> elapsedTime = currentTime - lastSnapShotTime;
 
     if (elapsedTime.count() >= 0.1f) {
-    {
-        std::ofstream os("registry.dat", std::ios::binary);
-        if (!os) {
-            std::cerr << "Failed to open file for saving.\n";
-            return;
-        }
-        cereal::BinaryOutputArchive archive(os);
-        registry.save(archive);
-        std::cout << "Registry saved successfully.\n";
-    }
 
-        server.sendAll(this->snapShot(registry));
-        lastSnapShotTime = currentTime;
+        Packet newPack = snapShot(registry);
+        if (newPack.getMessageType() == MessageType::SNAPSHOT) {
+            server.sendAll(newPack);
+            lastSnapShotTime = currentTime;
+        }
     }
 }
 #endif
