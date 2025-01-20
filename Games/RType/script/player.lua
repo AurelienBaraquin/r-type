@@ -36,7 +36,7 @@ function update(delta)
         addTag(bullet, "MainScene")
         setPosition(bullet, bullet_position)
         callMethod(bullet, "set_angle", 0)
-        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 20.0)
+        playSoundEffect("Games/RType/assets/sounds/shoot.ogg", 2.0)
     end
     if shoot_timer > 0 then
         shoot_timer = shoot_timer - 1
@@ -98,7 +98,7 @@ function handle_move(position)
 end
 
 function get_table_input()
-    if hasTag(self, "p1") then 
+    if hasTag(self, "p1") then
         table_input = {
             "MoveUp",
             "MoveDown",
