@@ -2,4 +2,9 @@ function startMusic()
     playBackgroundMusic("Games/Pong/assets/music.ogg", 5.0)
 end
 
-startMusic()
+function init()
+    startMusic()
+end
+
+function update(delta)
+end
