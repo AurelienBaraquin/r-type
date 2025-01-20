@@ -26,8 +26,8 @@ function update(delta)
     if position.y <= 0 then
         position.y = 0
         speed_y = -speed_y
-    elseif position.y >= 600 - 23 then
-        position.y = 600 - 23
+    elseif position.y >= 300 - 23 then
+        position.y = 300 - 23
         speed_y = -speed_y
     end
 

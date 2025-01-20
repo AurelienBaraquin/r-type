@@ -1,0 +1,10 @@
+(lldb) target create "./build/build/Release/Games/Pong/pong_client"
+Current executable set to '/Users/guigui/delivery/tek3/B-CPP-500-MPL-5-2-rtype-guillaume1.tran/build/build/Release/Games/Pong/pong_client' (arm64).
+
+... Interrupted.
+^C
+^C
+(lldb) target create "./build/build/Release/Games/Pong/pong_client"
+Current executable set to '/Users/guigui/delivery/tek3/B-CPP-500-MPL-5-2-rtype-guillaume1.tran/build/build/Release/Games/Pong/pong_client' (arm64).
+^C
+^C
