@@ -26,19 +26,19 @@ Network::Network() : ioContext(), server(ioContext, 12345)
 
 Packet Network::snapShot(Registry &registry)
 {
-    std::ostringstream os;
-    {
-        if (!os) {
-            std::cerr << "Failed to open string stream for saving.\n";
-            return Packet();
-        }
-        cereal::BinaryOutputArchive archive(os);
-        registry.save(archive);
-        // std::cout << "Registry saved successfully.\n";
-    }
-    std::string registryData = os.str();
+    // std::ostringstream os;
+    // {
+    //     if (!os) {
+    //         std::cerr << "Failed to open string stream for saving.\n";
+    //         return Packet();
+    //     }
+    //     cereal::BinaryOutputArchive archive(os);
+    //     registry.save(archive);
+    //     // std::cout << "Registry saved successfully.\n";
+    // }
+    // std::string registryData = os.str();
 
-    return generateSnapshot(registryData);
+    return generateSnapshot(registry);
 }
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
