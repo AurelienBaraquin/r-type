@@ -42,7 +42,7 @@
             },
             "id": 1,
             "tags": [
-                "player"
+                "player", "p1"
             ]
         },
         {
@@ -76,7 +76,7 @@
             },
             "id": 2,
             "tags": [
-                "player"
+                "player", "p2"
             ]
         },
         {

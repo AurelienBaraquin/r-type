@@ -3,14 +3,12 @@ self = nil
 
 function init(e)
     self = e
-    print("init as " .. e)
 end
 
 function update(delta)
     local position = getPosition(self)
 
     if type(position) ~= "table" then
-        print("Position is not a table")
         return
     end
 
@@ -19,13 +17,21 @@ function update(delta)
 end
 
 function handle_move(position)
-    if isInputActive(self, "MoveUp") then
-        position.y = position.y - speed
+    if hasTag(self, "p1") then
+        if isInputActive(self, "MoveUp") then
+            position.y = position.y - speed
+        end
+        if isInputActive(self, "MoveDown") then
+            position.y = position.y + speed
+        end
+    else
+        if isInputActive(self, "MoveUp2") then
+            position.y = position.y - speed
+        end
+        if isInputActive(self, "MoveDown2") then
+            position.y = position.y + speed
+        end
     end
-    if isInputActive(self, "MoveDown") then
-        position.y = position.y + speed
-    end
-
     if position.y < 0 then
         position.y = 0
     end

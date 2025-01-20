@@ -62,6 +62,7 @@ void Engine::updateScript(float deltaTime)
             script->initialized = true;
         }
         if (luaState["update"]) {
+            std::cout << "Updating script: " << script->scriptPath << std::endl;
             luaState["update"](deltaTime);
         }
     }

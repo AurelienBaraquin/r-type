@@ -11,7 +11,7 @@
 #ifdef CLIENT
 Network::Network()
     : ioContext(),
-      client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345))
+      client(ioContext, asio::ip::udp::endpoint(asio::ip::address::from_string("10.101.52.71"), 12345))
 {
     client.startReceiving();
 
