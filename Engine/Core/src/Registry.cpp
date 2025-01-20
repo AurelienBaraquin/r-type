@@ -28,15 +28,15 @@ Entity Registry::createEntity(std::vector<Tag> tags)
 void Registry::destroyEntity(Entity entity)
 {
     if (!inRegionLock) {
-            std::unique_lock lock(mutex);
-            internalDestroyEntity(entity);
+        std::unique_lock lock(mutex);
+        internalDestroyEntity(entity);
     } else {
     }
 }
 
 void Registry::internalDestroyEntity(Entity entity)
 {
-    if (entity == 0) { // debug
+    if (entity == 0) {  // debug
         std::cout << "registry Destroying entity 0" << std::endl;
     }
     entityManager.destroyEntity(entity);

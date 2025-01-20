@@ -12,13 +12,21 @@ if(WIN32)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 endif(WIN32)
 
+if(CLIENT)
+    add_definitions(-DCLIENT)
+endif()
+
+if(SERVER)
+    add_definitions(-DSERVER)
+endif()
+
 find_package(GTest)
 find_package(lua)
 find_package(sol2)
 find_package(Chipmunk2D)
 find_package(raylib)
 find_package(nlohmann_json)
-find_package(SFML 2.5 REQUIRED COMPONENTS audio)
-
+find_package(asio REQUIRED)
+find_package(cereal CONFIG REQUIRED)
 add_subdirectory(Engine)
 add_subdirectory(Games)

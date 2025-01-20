@@ -7,7 +7,7 @@ angle = 0
 distance = 0
 init_pos = 0
 
-fire_rate = 20
+fire_rate = 10
 fire_timer = 0
 function init(e)
     self = e
@@ -17,7 +17,7 @@ end
 function set_property(new_angle, new_distance, pos)
     angle = new_angle
     print(new_angle)
-    fire_timer = 4 * (new_angle / (2 * 3.14))
+    fire_timer = fire_rate * (new_angle / (2 * 3.14))
     print(fire_timer)
     distance = new_distance + 20
     init_pos = pos
@@ -30,7 +30,7 @@ end
 function update(delta)
     local position = getPosition(self)
     movement = movement + delta * 50
-    angle = angle + 0.01
+    angle = angle + 0.012
     if movement > 1 then
         init_pos = init_pos - 1
         movement = 0

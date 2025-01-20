@@ -2,8 +2,10 @@
 // Created by Guillaume Tran on 03/01/2025.
 //
 
-#include <nlohmann/json.hpp>
 #include "Editor.hpp"
+
+#include <nlohmann/json.hpp>
+
 #include "raygui.h"
 
 void Editor::run()
@@ -14,53 +16,99 @@ void Editor::run()
     camera.zoom = 1.0f;
 
     std::vector<Entity> unfilteredEntities = _engine.getRegistry().view<Components::Json>();
-    for (const auto& entity : unfilteredEntities)
-    {
+    for (const auto& entity : unfilteredEntities) {
         std::vector<std::string> tags = _engine.getRegistry().getTags(entity);
     }
-    std::vector<bool> TextBoxesBool;
     Entity oldSelectedEntity = -1;
 
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-
-        GuiPanel(_centerBox, "Scene");
-
-        auto entities = getSortedEntitiesByZ();
-
-        BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
-        BeginMode2D(camera);
-        drawEntities(entities);
-        EndMode2D();
-        EndScissorMode();
-
-        GuiPanel(_leftBox, "Lists");
-        _sceneManager->drawEntities();
-        GuiPanel(_rightBox, "Properties");
-        int padding = 10;
-        drawProperties(padding , TextBoxesBool, oldSelectedEntity);
-
-        EndDrawing();
+    while (!WindowShouldClose()) {
+        drawEditor(camera, oldSelectedEntity);
+        if (handleInputs()) {
+            break;
+        }    
     }
 
     CloseWindow();
-    
+
+    if (_launchScene) {
+        runGame();
+    }
+
     return;
 }
 
-void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Entity& oldSelectedEntity) {
+void Editor::runGame()
+{
+    Engine engine;
+    engine.addModule<Graphic>("game", 384 * 2, 256 * 2);
+    engine.addModule<Inputs>();
+    engine.addModule<Physics>();
+    engine.addModule<Audio>();
+
+    engine.loadScene(_scenePath);
+    engine.run();
+}
+
+void Editor::drawEditor(Camera2D camera, Entity& oldSelectedEntity)
+{
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    GuiPanel(_centerBox, "Scene");
+
+    auto entities = getSortedEntitiesByZ();
+    // SCENE
+    BeginScissorMode(_centerBox.x, _centerBox.y, _centerBox.width, _centerBox.height);
+    BeginMode2D(camera);
+    drawEntities(entities);
+    EndMode2D();
+    EndScissorMode();
+
+    GuiPanel(_leftBox, "Lists");
+    char* label = _scenePath.data();
+    if (GuiTextBox(Rectangle{_leftBox.x + 10, _leftBox.y + 25, 200, 20}, label, 100,
+                    editScene)) {
+        editScene = !editScene;
+        _scenePath = label;
+    }
+
+    _sceneManager->drawEntities(50);
+    GuiPanel(_rightBox, "Properties");
+    int padding = 25;
+    drawProperties(padding, TextBoxesBool, oldSelectedEntity);
+
+    EndDrawing();
+}
+
+bool Editor::handleInputs()
+{
+    if (IsKeyPressed(KEY_F1)) {
+        saveScene();
+    }
+    if (IsKeyPressed(KEY_F2)) {
+        reloadScene();
+    }
+    if (IsKeyPressed(KEY_F5)) {
+        _launchScene = true;
+        return true;
+    }
+    return false;
+}
+
+void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool,
+                            Entity& oldSelectedEntity)
+{
     if (_selectedEntity == -1) {
         return;
     }
 
-    auto json = _engine.getRegistry().getComponent<Components::Json>(_selectedEntity);
+    auto jsonComponent = _engine.getRegistry().getComponent<Components::Json>(_selectedEntity);
+    std::string jsonString = jsonComponent->data;
+    nlohmann::json json = nlohmann::json::parse(jsonString);
     int iComponent = 0;
 
-    for (auto it = json->data["components"].begin(); it != json->data["components"].end(); ++it) {
+    for (auto it = json["components"].begin(); it != json["components"].end(); ++it) {
         GuiLabel(Rectangle{_rightBox.x + 10, _rightBox.y + padding, 100, 20}, it.key().c_str());
-
         for (auto it2 = it.value().begin(); it2 != it.value().end(); ++it2) {
             if (_selectedEntity != oldSelectedEntity) {
                 TextBoxesBool.push_back(false);
@@ -80,7 +128,8 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Enti
             char* label = value.data();
             padding += 20;
 
-            if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20}, label, 100, TextBoxesBool[iComponent])) {
+            if (GuiTextBox(Rectangle{_rightBox.x + 110, _rightBox.y + padding, 100, 20}, label, 100,
+                           TextBoxesBool[iComponent])) {
                 TextBoxesBool[iComponent] = !TextBoxesBool[iComponent];
                 if (!TextBoxesBool[iComponent]) {
                     saveScene();
@@ -90,14 +139,21 @@ void Editor::drawProperties(int& padding, std::vector<bool>& TextBoxesBool, Enti
             }
 
             if (valueMemory != value) {
+                bool changed = true;
                 if (it2->is_number()) {
                     *it2 = std::stof(value);
                 } else if (it2->is_boolean()) {
                     *it2 = value == "true";
-                } else {
+                } else if (it2->is_string()) {
                     *it2 = value;
+                } else {
+                    changed = false;
+                    std::cout << "Type not supported" << std::endl;
                 }
-                saveScene();
+                if (changed) {
+                    std::string newJsonString = json.dump();
+                    jsonComponent->data = newJsonString;
+                }
             }
 
             iComponent++;
@@ -119,8 +175,7 @@ std::vector<Entity> Editor::getSortedEntitiesByZ()
 
 void Editor::drawEntities(const std::vector<Entity>& entities)
 {
-    for (const auto& entity : entities)
-    {
+    for (const auto& entity : entities) {
         auto position = _engine.getRegistry().getComponent<Components::Position>(entity);
         auto rotation = _engine.getRegistry().getComponent<Components::Rotation>(entity);
         auto scale = _engine.getRegistry().getComponent<Components::Scale>(entity);
@@ -129,14 +184,11 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
         float adjustedY = _centerBox.y + position->y;
         Components::Position adjustedPosition = {(int)adjustedX, (int)adjustedY, position->z};
 
-        if (_engine.getRegistry().hasComponent<Components::Sprite>(entity))
-        {
+        if (_engine.getRegistry().hasComponent<Components::Sprite>(entity)) {
             auto sprite = _engine.getRegistry().getComponent<Components::Sprite>(entity);
             BrutSprite bruteSpriteVar = _graphic.manageSprites().getSprite(sprite->spriteID);
             _graphic.drawTextureEx(&bruteSpriteVar, &adjustedPosition, rotation, scale);
-        }
-        else if (_engine.getRegistry().hasComponent<Components::Animation>(entity))
-        {
+        } else if (_engine.getRegistry().hasComponent<Components::Animation>(entity)) {
             auto animation = _engine.getRegistry().getComponent<Components::Animation>(entity);
             auto frames = _graphic.manageAnimations().getAnimation(animation->animationID);
             auto currentFrame = frames[animation->currentFrame];
@@ -144,10 +196,17 @@ void Editor::drawEntities(const std::vector<Entity>& entities)
             BrutSprite sprite = {currentFrame.textureID, currentFrame.width, currentFrame.height,
                                  currentFrame.originX, currentFrame.originY};
             _graphic.drawTextureEx(&sprite, &adjustedPosition, rotation, scale);
-        }
-        else
-        {
+        } else {
             DrawCircle(adjustedPosition.x, adjustedPosition.y, 10, RED);
         }
     }
+}
+
+Camera2D Editor::setCamera()
+{
+    Camera2D camera = {0};
+    camera.target = (Vector2){0, 0};
+    camera.offset = (Vector2){_centerBox.x, _centerBox.y};
+    camera.zoom = 1.0f;
+    return camera;
 }

@@ -1,0 +1,66 @@
+{
+  "sceneTag": "assets",
+  "entities": [],
+  "animations": [
+    {
+      "animationID": 1,
+      "frameTime": 1,
+      "frames": [
+        {
+          "textureID": 2,
+          "width": 35,
+          "height": 124,
+          "originX": 0,
+          "originY": 0
+        }
+      ]
+    }
+  ],
+  "sprites": [
+    {
+      "spriteID": 1,
+      "data": {
+        "textureID": 1,
+        "width": 23,
+        "height": 23,
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "spriteID": 2,
+      "data": {
+        "textureID": 2,
+        "width": 26,
+        "height": 93,
+        "originX": 0,
+        "originY": 0
+      }
+    },
+    {
+      "spriteID": 3,
+      "data": {
+        "textureID": 3,
+        "width": 26,
+        "height": 93,
+        "originX": 0,
+        "originY": 0
+      }
+    }
+  ],
+  "scenes": ["inputs.json"],
+  "textures": [
+    {
+      "textureID": 1,
+      "path": "Games/Pong/assets/ball.png"
+    },
+    {
+      "textureID": 2,
+      "path": "Games/Pong/assets/paddle_1.png"
+    },
+    {
+      "textureID": 3,
+      "path": "Games/Pong/assets/paddle_2.png"
+    }
+  ]
+}

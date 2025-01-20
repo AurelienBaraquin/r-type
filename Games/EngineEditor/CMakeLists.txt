@@ -25,5 +25,9 @@ target_link_libraries(EngineEditor PRIVATE
         Engine::Graphic
         Engine::Inputs
         Engine::Audio
+        Engine::Network
         raylib
 )
+add_definitions(-DCLIENT)
+target_compile_definitions(EngineEditor PRIVATE CLIENT)
+

@@ -1,0 +1,123 @@
+{
+    "entities": [
+        {
+            "_name_": "AudioSystem",
+            "components": {
+                "Script": {
+                    "scriptPath": "Games/Pong/script/audio.lua"
+                }
+            },
+            "tags": [
+                "audio"
+            ]
+        },
+        {
+            "_name_": "Player1",
+            "components": {
+                "Area2D": {
+                    "height": 17.0,
+                    "width": 33.0
+                },
+                "Input": {
+                    "inputConfigID": 0
+                },
+                "Position": {
+                    "x": 15.0,
+                    "y": 5.0,
+                    "z": 0.0
+                },
+                "Rotation": {
+                    "angle": 0.0
+                },
+                "Scale": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "Sprite": {
+                    "spriteID": 2
+                },
+                "Script": {
+                    "scriptPath": "Games/Pong/script/player.lua"
+                }
+            },
+            "id": 1,
+            "tags": [
+                "player", "p1"
+            ]
+        },
+        {
+            "_name_": "Player2",
+            "components": {
+                "Area2D": {
+                    "height": 17.0,
+                    "width": 33.0
+                },
+                "Input": {
+                    "inputConfigID": 0
+                },
+                "Position": {
+                    "x": 355.0,
+                    "y": 110.0,
+                    "z": 0
+                },
+                "Rotation": {
+                    "angle": 0.0
+                },
+                "Scale": {
+                    "x": 0,
+                    "y": 0
+                },
+                "Sprite": {
+                    "spriteID": 3
+                },
+                "Script": {
+                    "scriptPath": "Games/Pong/script/player.lua"
+                }
+            },
+            "id": 2,
+            "tags": [
+                "player", "p2"
+            ]
+        },
+        {
+            "_name_": "Ball",
+            "components": {
+                "Area2D": {
+                    "height": 10.0,
+                    "width": 10.0
+                },
+                "Velocity": {
+                    "x": 200.0,
+                    "y": 150.0
+                },
+                "Position": {
+                    "x": 400.0,
+                    "y": 300.0,
+                    "z": 0
+                },
+                "Rotation": {
+                    "angle": 0.0
+                },
+                "Scale": {
+                    "x": 0,
+                    "y": 0
+                },
+                "Sprite": {
+                    "spriteID": 1
+                },
+                "Script": {
+                    "scriptPath": "Games/Pong/script/ball.lua"
+                }
+            },
+            "id": 3,
+            "tags": [
+                "ball"
+            ]
+        }
+    ],
+    "sceneTag": "MainScene",
+    "scenes": [
+        "assets.json",
+        "inputs.json"
+    ]
+}

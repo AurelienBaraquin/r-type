@@ -4,8 +4,8 @@ local spawn_rate = 4
 local shooter_spawned = false
 local wave = 0
 local can_spawn = true
-
 function init(e)
+    
     self = e
 end
 
@@ -24,7 +24,7 @@ end
 function spawnEnemy()
     local enemyType = math.random(1, 2) == 1 and "Enemy1" or "Enemy"
     if wave ~= 0 then 
-        if wave % 50 == 0 then
+        if wave % 15 == 0 then
             enemyType = "Boss"
             can_spawn = false
         elseif wave % 10 == 0 then
@@ -33,8 +33,6 @@ function spawnEnemy()
             enemyType = "Shooter"
         end
     end
-    enemyType = "Boss"
-    can_spawn = false
     wave = wave + 1
 
     if enemyType == "EnemyRound" then
@@ -63,8 +61,9 @@ function spawnEnemy1Hord()
 end
 
 function spawnEnemyCircle()
-    gap = 3.14 * 2 / 11
-    for i = 1, 10 do
+    n_enemies = 16
+    gap = 3.14 * 2 / (n_enemies + 3)
+    for i = 1, n_enemies do
         local enemy = spawnEnemyByName("EnemyRound", 500 + math.cos(gap * i) * 110, 90 + 24 + math.sin(gap * i) * 110)
         callMethod(enemy, "set_property", gap * i, 110, 500)
 

@@ -1,0 +1,27 @@
+{
+    "sceneTag": "enemy2",
+    "entities": [
+        {
+            "Template":
+            {
+                "name": "eye_enemy",
+                "tags": ["enemy"],
+                "components": {
+                    "Position": { "x": 0, "y": 0, "z": 0 },
+                    "Scale": { "x": 0, "y": 0 },
+                    "Rotation": { "angle": 0 },
+                    "Animation": {
+                        "animationID": 8,
+                        "currentFrame": 0,
+                        "elapsedTime": 0.0,
+                        "loop": true,
+                        "playing": true
+                    },
+                    "Area2D": { "width": 6, "height": 6 },
+                    "Script": { "scriptPath": "Games/RType/script/enemies_stage_2/eye_enemy.lua" }
+                }
+            }
+        }
+
+    ]
+}

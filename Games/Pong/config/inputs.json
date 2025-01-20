@@ -1,0 +1,20 @@
+{
+  "sceneTag": "inputs",
+  "inputConfigs": [
+    {
+      "id": 0,
+      "inputConfig": {
+        "keyboard": {
+          "MoveUp": "W",
+          "MoveDown": "S",
+          "MoveUp2": "UP",
+          "MoveDown2": "DOWN"
+        },
+        "controller": {
+          "MoveUp": "RightStickYPositive",
+          "MoveDown": "RightStickYNegative"
+        }
+      }
+    }
+  ]
+}

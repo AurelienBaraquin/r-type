@@ -4,7 +4,10 @@ local angle = 0
 local follow_delay = 0
 local follow_timer = 0
 local player_position = nil
+local y = 0
+local bend_force = 0
 function init(e)
+    y = 0
     selfEntity = e
     follow_delay = 0.0
 end
@@ -29,27 +32,11 @@ end
 
 
 function update(delta)
-    y = 0
     if selfEntity == nil then
         return
     end
-    if follow_delay < follow_timer then
-        print("follow delay")
-        follow_delay = follow_delay + 1 * delta
-        followPlayer(selfEntity)
-    end
 
-    if follow_delay >= follow_timer and follow_timer ~= 0 then
-        if math.abs(player_position.y - getPosition(selfEntity).y) < 5 then
-            y = 0
-        elseif player_position.y > getPosition(selfEntity).y then
-            y = 1
-        elseif player_position.y < getPosition(selfEntity).y then
-           y = -1
-        else
-            y = 0
-        end
-    end
+   handleFollow(delta)
 
     local position = getPosition(selfEntity)
     old_x = position.x
@@ -65,7 +52,32 @@ function update(delta)
     end
 end
 
-function followPlayer(self)
+function handleFollow(delta)
+    if follow_timer == 0 then
+        return
+    end
+    if follow_delay < follow_timer then
+        follow_delay = follow_delay + 1 * delta
+        followPlayer()
+    end
+    distance = math.abs(player_position.y - getPosition(selfEntity).y)
+    if follow_delay >= follow_timer and follow_timer ~= 0 then
+        y = 0
+        if distance < 20 then
+            y = 0
+        elseif player_position.y > getPosition(selfEntity).y then
+            y = 0.01 * distance
+
+        elseif player_position.y < getPosition(selfEntity).y then
+           y = -0.01 * distance
+        else
+            y = 0
+        end
+        follow_timer = 0
+    end
+end
+
+function followPlayer()
     print("follow player")
     local players = getEntitiesByTag("player")
     if #players == 0 then

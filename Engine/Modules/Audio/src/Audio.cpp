@@ -3,46 +3,105 @@
 #include <iostream>
 #include <stdexcept>
 
+AudioManager& AudioManager::getInstance()
+{
+    static AudioManager instance;
+    return instance;
+}
+
+AudioManager::AudioManager()
+{
+    InitAudioDevice();
+}
+
+AudioManager::~AudioManager()
+{
+    for (auto& [path, sound] : soundCache) {
+        UnloadSound(sound);
+    }
+    for (auto& [path, music] : musicCache) {
+        UnloadMusicStream(music);
+    }
+    CloseAudioDevice();
+}
+
+Sound AudioManager::loadSound(const std::string& filePath)
+{
+    if (soundCache.find(filePath) == soundCache.end()) {
+        soundCache[filePath] = LoadSound(filePath.c_str());
+    }
+    return soundCache[filePath];
+}
+
+void AudioManager::unloadSound(const std::string& filePath)
+{
+    if (soundCache.find(filePath) != soundCache.end()) {
+        UnloadSound(soundCache[filePath]);
+        soundCache.erase(filePath);
+    }
+}
+
+Music AudioManager::loadMusic(const std::string& filePath)
+{
+    if (musicCache.find(filePath) == musicCache.end()) {
+        musicCache[filePath] = LoadMusicStream(filePath.c_str());
+    }
+    return musicCache[filePath];
+}
+
+void AudioManager::unloadMusic(const std::string& filePath)
+{
+    if (musicCache.find(filePath) != musicCache.end()) {
+        UnloadMusicStream(musicCache[filePath]);
+        musicCache.erase(filePath);
+    }
+}
+
 Audio::Audio()
 {
 }
 
 Audio::~Audio()
 {
+    if (musicPlaying) {
+        StopMusicStream(currentMusic);
+    }
 }
 
-void Audio::playBackgroundMusic(const std::string& filePath, float volume)
+void Audio::playBackgroundMusic(const std::string& filePath, float volume, bool loop)
 {
-    if (!music.openFromFile(filePath)) {
-        std::cerr << "Failed to load background music: " << filePath << std::endl;
-        return;
+    if (musicPlaying) {
+        StopMusicStream(currentMusic);
     }
-
-    music.setVolume(volume);
-    music.setLoop(true);
-    music.play();
+    currentMusic = AudioManager::getInstance().loadMusic(filePath);
+    SetMusicVolume(currentMusic, volume);
+    currentMusic.looping = loop;
+    PlayMusicStream(currentMusic);
+    musicPlaying = true;
 }
 
 void Audio::stopBackgroundMusic()
 {
-    music.stop();
-    std::cout << "Background music stopped!" << std::endl;
+    if (musicPlaying) {
+        StopMusicStream(currentMusic);
+        musicPlaying = false;
+    }
 }
 
 void Audio::playSoundEffect(const std::string& filePath, float volume)
 {
-    if (!buffer.loadFromFile(filePath)) {
-        std::cerr << "Failed to load sound effect: " << filePath << std::endl;
-        return;
-    }
-
-    sound.setBuffer(buffer);
-    sound.setVolume(volume);
-    sound.play();
+    Sound sound = AudioManager::getInstance().loadSound(filePath);
+    SetSoundVolume(sound, volume);
+    PlaySound(sound);
 }
 
 void Audio::update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem)
 {
+    if (musicPlaying) {
+        UpdateMusicStream(currentMusic);
+    }
+
+    RegistryLock lock(registry);
     for (auto entity : registry.view<AudioSource>()) {
         auto* audioSource = registry.getComponent<AudioSource>(entity);
 

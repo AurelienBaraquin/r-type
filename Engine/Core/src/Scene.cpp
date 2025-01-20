@@ -22,7 +22,9 @@ void SceneLoader::loadEntity(const nlohmann::json& entityData, const std::string
     Entity entity = registry.createEntity();
     const auto& components = entityData["components"];
 
-    factory.addComponent(entity, "Json", entityData, registry);
+    std::string componentsStr = entityData.dump();
+    std::cout << "componentsStr: " << componentsStr << std::endl;
+    factory.addComponent(entity, "Json", componentsStr, registry);
 
     for (auto& [componentName, componentData] : components.items()) {
         factory.addComponent(entity, componentName, componentData, registry);
@@ -60,7 +62,6 @@ void SceneLoader::loadScene(const std::string& filePath, bool reload)
         }
     }
     if (!reload) {
-
         if (sceneData.find("scenes") != sceneData.end()) {
             for (const auto& scene : sceneData["scenes"]) {
                 std::filesystem::path scenePath = std::filesystem::path(path).parent_path() / scene;
@@ -71,7 +72,6 @@ void SceneLoader::loadScene(const std::string& filePath, bool reload)
         loaderManager.load(sceneData);
     }
     file.close();
-    
 }
 
 void SceneLoader::changeScene(const std::string& filePath)
@@ -80,6 +80,5 @@ void SceneLoader::changeScene(const std::string& filePath)
     for (auto entity : entities) {
         registry.destroyEntity(entity);
     }
-    SceneLoader(factory, registry, loaderManager, _entityTemplateManager)
-        .loadScene(filePath);
+    SceneLoader(factory, registry, loaderManager, _entityTemplateManager).loadScene(filePath);
 }
