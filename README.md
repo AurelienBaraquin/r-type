@@ -7,6 +7,8 @@
 - [Aurelien Baraquin](Aurelien.Baraquin@epitech.eu)
 - [Guillaume Tran](Guillaume1.tran@epitech.eu)
 - [Louis Cornu](Louis.cornu@epitech.eu)
+- [Victor Boudet](Victor.boudet@epitech.eu)
+- [Mehrdad Zeinali](Merhdad.zeinali@epitech.eu)
 
 Duration of the project : 2 months
 
@@ -19,10 +21,9 @@ The goal of this project is divided in 2 parts, firstly we have to create a game
 - C++
 - CMake
 - Conan
-- SDL2
+- Raylib
 - Sol2
 - Lua
-- SFML
 
 ## Supported platforms
 
