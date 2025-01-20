@@ -23,10 +23,6 @@
 
 # Introduction
 
-This document describes the architecture of the game engine project,
-the components, and the modules.
-
-## About
 
 The game engine project is a C++ project that aims to create a game engine.
 The engine is based on the [ECS (Entity Component System)](https://en.wikipedia.org/wiki/Entity_component_system) architecture.
@@ -37,20 +33,32 @@ It was created for a school project at EPITECH.
 <br><br>
 
 
-# Components
+## Components
 
-This document describes the components.
+### Graphic components
 
-# Graphic components
+Graphic components handle the visual representation of entities in the game world. Examples include:
+- **Sprite**: Holds texture information.
+- **Transform**: Contains position, scale, and rotation.
 
-TODO: Add graphic components
+### Physics Components
 
-# Physics components
+Physics components define the physical properties and behaviors of entities, such as:
+- **Position**: Tracks the location of an entity.
+- **Scale**: Represents the size of an entity.
+- **Velocity**: Specifies movement speed and direction.
 
-TODO: Add physics components
+### Adding New Components
 
-# ADD new components
-
+To add a new component:
+1. Create a new header file under `Engine/Core/include/components/`.
+2. Define the component structure.
+   ```cpp
+   #pragma once
+   struct NewComponent {
+       int data;
+   };
+   ```
 
 
 # Modules
@@ -133,15 +141,36 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 To add a library to the engine, first add it to the conanfile.txt then add it to the CMakeList.txt
 
-```txt
-[requires]
-gtest/1.15.0
-incbin/cci.20211107
-sdl/2.28.3
-sdl_image/2.6.3
-sol2/3.3.1
-lua/5.4.6
-chipmunk2d/7.0.3 <----- add here
+```python
+from conan import ConanFile
+from conan.tools.cmake import cmake_layout
+
+class CactusEngine(ConanFile):
+    name = "CactusEngine"
+    version = "1.0"
+    settings = "os", "compiler", "build_type", "arch"
+    generators = ["CMakeDeps", "CMakeToolchain"]
+    default_options = {"*:shared": False}
+
+    def requirements(self):
+        self.requires("gtest/1.15.0")
+        self.requires("raylib/5.5")
+        self.requires("sol2/3.3.1")
+        self.requires("lua/5.4.6")
+        self.requires("chipmunk2d/7.0.3")
+        self.requires("cista/0.15")
+        self.requires("nlohmann_json/3.11.3")
+        self.requires("flac/1.4.3", force=True)
+        self.requires("asio/1.32.0")
+        self.requires("cereal/1.3.2")
+        # Others...
+
+    def layout(self):
+        self.folders.build = "build/Release"
+        self.folders.generators = "build/Release/generators"
+        self.folders.source = "src"
+        cmake_layout(self)
+
 ```
 
 ```cmake
@@ -157,8 +186,7 @@ find_package(incbin REQUIRED)
 find_package(lua REQUIRED)
 find_package(sol2 REQUIRED)
 find_package(Chipmunk2D) <----- add here
-find_package(SDL2_image)
-find_package(SDL2)
+find_package(Raylib)
 find_package(nlohmann_json)
 
 add_subdirectory(Engine)
@@ -166,8 +194,46 @@ add_subdirectory(Games)
 
 ```
 
-# Adding new functions for lua scripting
+# Adding New Functions for Lua Scripting
 
-To add new functions for lua scripting, add the following code to the ```ScriptBindings.cpp``` file:
+This section explains how to add new C++ functions to the Lua scripting system in the game engine.
+
+## Step 1: Define the Function in C++
+
+Create the C++ function you want to expose to Lua. For example:
 
 ```cpp
+#include <iostream>
+#include <string>
+
+void printMessage(const std::string& message) {
+    std::cout << "Lua says: " << message << std::endl;
+}
+```
+
+This function takes a string as input and prints it to the console.
+
+## Step 2: Bind the Function in ScriptBindings.cpp
+
+Open the ScriptBindings.cpp file and register the function using the Lua binding library (e.g., Sol2):
+
+```cpp
+#include <sol/sol.hpp>
+#include "ScriptBindings.hpp"
+
+void ScriptBindings::bindFunctions(sol::state& lua) {
+    lua.set_function("printMessage", &printMessage);
+}
+```
+
+Here, the printMessage function is bound to Lua with the name printMessage.
+
+## Step 3: Call the Function in a Lua Script
+
+In your Lua script, you can now call the function as if it were natively available:
+
+```lua
+printMessage("Hello from Lua!")
+```
+
+When the Lua script runs, it will call the C++ function and print the message to the console.
