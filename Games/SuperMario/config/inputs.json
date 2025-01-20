@@ -1,0 +1,12 @@
+{
+    "sceneTag": "inputs",
+    "inputConfigs": [
+      {
+        "id": 0,
+        "inputConfig": {
+          "keyboard": { "Jump": "SPACE" }
+        }
+      }
+    ]
+  }
+  

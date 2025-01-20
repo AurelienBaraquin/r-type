@@ -1,0 +1,30 @@
+{
+    "entities": [
+      {
+        "_name_": "Background",
+        "components": {
+          "Sprite": { "spriteID": 1 },
+          "Position": { "x": 0, "y": 0, "z": 0 }
+        }
+      },
+      {
+        "_name_": "Bird",
+        "components": {
+          "Sprite": { "spriteID": 2 },
+          "Position": { "x": 100, "y": 300, "z": 0 },
+          "Script": { "scriptPath": "Games/SuperMario/script/bird.lua" }
+        }
+      },
+      {
+        "_name_": "Pipe",
+        "components": {
+          "Sprite": { "spriteID": 3 },
+          "Position": { "x": 400, "y": 300, "z": 0 },
+          "Script": { "scriptPath": "Games/SuperMario/script/pipe.lua" }
+        }
+      }
+    ],
+    "sceneTag": "MainScene",
+    "scenes": ["assets.json", "inputs.json"]
+  }
+  
