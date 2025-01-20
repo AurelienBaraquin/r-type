@@ -8,8 +8,8 @@ cooldownTimer = 0
 function init(e)
     self = e
     print("Ball initialized: " .. e)
-    speed_x = 4
-    speed_y = 3
+    speed_x = -4
+    speed_y = -3
 end
 
 function update(delta)
@@ -26,8 +26,8 @@ function update(delta)
     if position.y <= 0 then
         position.y = 0
         speed_y = -speed_y
-    elseif position.y >= 600 - 10 then
-        position.y = 600 - 10
+    elseif position.y >= 600 - 23 then
+        position.y = 600 - 23
         speed_y = -speed_y
     end
 
