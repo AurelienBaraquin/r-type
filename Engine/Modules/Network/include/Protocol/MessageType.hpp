@@ -35,11 +35,12 @@ struct entityData {
     Components::Position pos;
     Components::Scale scale;
     Components::Rotation rot;
+    std::vector<Tag> tag;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(entity, pos, scale, rot);
+        ar(entity, pos, scale, rot, tag);
     }
 };
 

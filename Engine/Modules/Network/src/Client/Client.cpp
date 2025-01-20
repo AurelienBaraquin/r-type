@@ -36,33 +36,50 @@ std::vector<std::string> getDatas()
     return dataStr;
 }
 
+void updateC(Registry &registry, Entity entity, entityData data)
+{
+
+}
+
+// void Network::updateEntity(Registry &registry, std::vector<entityData> snap)
+// {
+//     for (auto entity : snap) {
+//         if (!registry.hasTag(entity.entity, "server")) {
+//             Entity newEnt = registry.createEntity(entity.tag);
+//             registry.addTag(newEnt, "server");
+//             ServerToClient[entity.entity] = entity;
+//         }
+//         updateC(registry, ServerToClient[entity.entity], entity);
+//     }
+// }
+
+// void removeWithoutTag(Registry &registry, Tag tag)
+// {
+//     for (auto entity : registry.view<Components::Position, Components::Scale, Components::Rotation>()) {
+//         if (!registry.hasTag(entity, tag)) {
+//             registry.destroyEntity(entity);
+//         }
+//     }
+// }
+
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    std::ifstream file("registry.txt", std::ios::binary);
-    if (file.is_open()) {
-        // cereal::BinaryInputArchive archive(file);
-        // archive(registry);
+    std::ifstream file("registry.txt");
+    cereal::BinaryInputArchive archive(file);
     registry.clear();
+    archive(registry);
 
-    }
     std::vector<std::string> dataStr = getDatas();
 
     auto p = generatePlayerInput(this->id, dataStr);
 
     client.sendPacket(p);
-
+    // removeWithoutTag(registry, "server");
     std::vector<entityData> snap = getSnapShot();
-    if (snap.size() > 0) {
-        // std::cout << snap.size() << " entities in snapshot.\n";
-        setSnapshot(std::vector<entityData>{});
-        // for (auto entity : snap) {
-        //     std::cout << "Entity: " << entity.entity << " at (" << entity.pos.x << ", " <<
-        //     entity.pos.y
-        //     << ", "
-        //       << entity.pos.z << ")\n";
-        // }
-        // std::cout << "Client: Apply SNAPSHOT from server.\n";
-    }
+    // if (snap.size() > 0) {
+        // setSnapshot(std::vector<entityData>{});
+        // udpateEntity(registry, snap);
+    // }
     // auto data = Sharable::getInstance().getSharedVariable("Snapshot");
     // Sharable::getInstance().setSharedVariable("Snapshot", std::vector<entityData>{});
     // if (data.has_value()) {

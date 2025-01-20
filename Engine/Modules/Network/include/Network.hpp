@@ -36,5 +36,7 @@ class Network : public ISystem, public ILoader
 #elif CLIENT
     UdpClient client;
     int id;  // need to be replaced by uuid
+    void updateEntity(Registry &registry, std::vector<entityData> snap);
+    std::unordered_map<Entity, Entity> ServerToClient;
 #endif
 };

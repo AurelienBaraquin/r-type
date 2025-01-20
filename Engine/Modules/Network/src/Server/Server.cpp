@@ -41,7 +41,8 @@ Packet Network::snapShot(Registry &registry)
         auto pos = registry.getComponent<Components::Position>(entity);
         auto scale = registry.getComponent<Components::Scale>(entity);
         auto rot = registry.getComponent<Components::Rotation>(entity);
-        entityData data = {entity, *pos, *scale, *rot};
+        std::vector<Tag> tag = registry.getTags(entity);
+        entityData data = {entity, *pos, *scale, *rot, tag};
         entities.push_back(data);
     }
     return generateSnapshot(entities);
