@@ -260,43 +260,45 @@ class Registry
             entityManager.clear();
             _tags.clear();
             entityMasks.clear();
-            componentPools.clear();
+            // componentPools.clear();
         } else {
             entityManager.clear();
             _tags.clear();
             entityMasks.clear();
-            componentPools.clear();
+            // componentPools.clear();
         }
     }
 
-    template <class Archive>
-    void serialize(Archive& archive)
-    {
-        std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
-        for (auto& [type, pool] : componentPools) {
-            pools[type.name()] = pool->clone();
-        }
-        archive(entityManager,  // Ok
-                _tags,          // Ok
-                entityMasks,    // Ok
-                pools           // Ok
-        );
+   template <class Archive>
+void save(Archive& archive) const
+{
+    std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
+    for (auto& [typeIndex, pool] : componentPools) {
+        pools[typeIndex.name()] = pool->clone(); 
     }
 
-    template <class Archive>
-    void deserialize(Archive &archive)
-    {
-        std::cout << "Deserializing registry\n";
-        std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
-        archive(entityManager,  // Ok
-                _tags,          // Ok
-                entityMasks,    // Ok
-                pools           // Ok
-        );
-        for (auto& [type, pool] : pools) {
-            componentPools[std::type_index(typeid(type))] = std::move(pool);
-        }
+    archive(entityManager,
+            _tags,
+            entityMasks,
+            pools);
+}
+
+template <class Archive>
+void load(Archive &archive)
+{
+    std::cout << "Deserializing registry\n";
+    std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
+    
+    archive(entityManager,
+            _tags,
+            entityMasks,
+            pools);
+
+    for (auto& [typeName, pool] : pools) {
+        auto actualTypeIndex = std::type_index(typeid(*pool));
+        componentPools[actualTypeIndex] = std::move(pool);
     }
+}
 
    private:
     EntityManager entityManager;

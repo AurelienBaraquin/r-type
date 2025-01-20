@@ -54,12 +54,18 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     auto currentTime = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = currentTime - lastSnapShotTime;
 
-    if (elapsedTime.count() >= 1.0f) {
-        {
-            std::ofstream file("registry.txt");
-            cereal::BinaryOutputArchive archive(file);
-            archive(registry);
+    if (elapsedTime.count() >= 0.1f) {
+    {
+        std::ofstream os("registry.dat", std::ios::binary);
+        if (!os) {
+            std::cerr << "Failed to open file for saving.\n";
+            return;
         }
+        cereal::BinaryOutputArchive archive(os);
+        registry.save(archive);
+        std::cout << "Registry saved successfully.\n";
+    }
+
         server.sendAll(this->snapShot(registry));
         lastSnapShotTime = currentTime;
     }

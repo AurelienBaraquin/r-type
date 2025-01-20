@@ -64,11 +64,21 @@ void updateC(Registry &registry, Entity entity, entityData data)
 
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {
-    std::ifstream file("registry.txt");
-    cereal::BinaryInputArchive archive(file);
-    registry.clear();
-    archive(registry);
-
+    {
+        std::ifstream is("registry.dat", std::ios::binary);
+        if (!is) {
+            std::cerr << "Failed to open file for loading.\n";
+            return;
+        }
+        cereal::BinaryInputArchive archive(is);
+        registry.clear();
+        registry.load(archive);
+        std::vector<Entity> entities = registry.getEntitiesByTag("player");
+        for (auto entity : entities) {
+            std::cout << "Entity: " << entity << "\n";
+        }
+        std::cout << "Registry loaded successfully.\n";
+    }
     std::vector<std::string> dataStr = getDatas();
 
     auto p = generatePlayerInput(this->id, dataStr);
