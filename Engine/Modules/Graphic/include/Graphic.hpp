@@ -38,6 +38,7 @@ class Graphic : public ISystem, public ILoader, public NotThreadable
     void load(const nlohmann::json& data) override
     {
     }
+    
     std::vector<ILoader*> getLoaders() override
     {
         return {dynamic_cast<ILoader*>(&_TextureSystem), dynamic_cast<ILoader*>(&_SpriteSystem),

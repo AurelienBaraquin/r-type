@@ -53,16 +53,15 @@ void Engine::updateScript(float deltaTime)
 {
     for (auto entity : _registry.view<Components::Script>()) {
         auto* script = _registry.getComponent<Components::Script>(entity);
-
         sol::state& luaState = _ScriptSystem.getScript(entity, script->scriptPath);
         if (!script->initialized) {
             if (luaState["init"]) {
                 luaState["init"](entity);
             }
             script->initialized = true;
+            continue;
         }
         if (luaState["update"]) {
-            std::cout << "Updating script: " << script->scriptPath << std::endl;
             luaState["update"](deltaTime);
         }
     }

@@ -94,6 +94,11 @@ class Engine : public ISystem
         return _systemManager;
     }
 
+    LoaderManager& getLoaderManager()
+    {
+        return _loaderManager;
+    }
+
    private:
     void startup();
     void registerScriptBindings(ScriptSystem& ScriptSystem, Registry& registry) override;
@@ -105,6 +110,8 @@ class Engine : public ISystem
     void update(float deltaTime, Registry& registry, ScriptSystem& scriptSystem) override
     {
     }
+
+    
 
     ScriptSystem _ScriptSystem;
     SystemManager _systemManager;

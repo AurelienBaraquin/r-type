@@ -48,8 +48,13 @@ class Editor
     void drawScene();
     void reloadScene()
     {
-        std::cout << _scenePath << std::endl;
-        _engine.reloadScene(_scenePath);
+        // std::cout << _scenePath << std::endl;
+        _engine.changeScene(_scenePath);
+        // std::ifstream file(_scenePath);
+        // file >> _sceneData;
+        // file.close();
+        // std::cout << _sceneData << std::endl;
+        // _engine.getLoaderManager().load(_sceneData);
     }
     void drawEntities(const std::vector<Entity>& entities);
     std::vector<Entity> getSortedEntitiesByZ();
@@ -106,6 +111,7 @@ class Editor
     std::shared_ptr<SceneManager> _sceneManager;
 
     Graphic& _graphic;
+    Camera2D _camera;
     float _width = 0;
     float _height = 0;
     Rectangle _leftBox;
@@ -117,4 +123,6 @@ class Editor
     std::string _scenePath;
     bool editScene = false;
     bool _launchScene = false;
+
+    std::vector<KeyboardKey> _pressedKeys;
 };

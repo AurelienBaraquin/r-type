@@ -33,8 +33,11 @@ class LoaderManager
     void load(const nlohmann::json& data)
     {
         for (auto& loader : _loaders) {
+            std::cout << "Loading: " << loader->getPart() << std::endl;
             if (data.find(loader->getPart()) != data.end()) {
                 loader->load(data[loader->getPart()]);
+            } else {
+                std::cout << "No data for: " << loader->getPart() << std::endl;
             }
         }
     }

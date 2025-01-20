@@ -35,6 +35,8 @@ Texture2D TextureSystem::get(int textureID) const
 
 void TextureSystem::load(const nlohmann::json& data)
 {
+    std::cout << "clearing texture to load new ones" << std::endl;
+    textures.clear();
     for (const auto& textureData : data) {
         int textureID = textureData["textureID"].get<int>();
         std::string path = textureData["path"].get<std::string>();
