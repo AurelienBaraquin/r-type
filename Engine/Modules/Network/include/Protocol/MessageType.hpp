@@ -46,7 +46,7 @@ struct entityData {
 
 struct SnapShot {
     size_t id;
-    Registry entities;
+    std::string entities;
 
     template <class Archive>
     void serialize(Archive& archive)
