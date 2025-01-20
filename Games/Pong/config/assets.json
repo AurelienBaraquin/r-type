@@ -2,19 +2,6 @@
   "sceneTag": "assets",
   "entities": [],
   "animations": [
-    {
-      "animationID": 1,
-      "frameTime": 1,
-      "frames": [
-        {
-          "textureID": 2,
-          "width": 35,
-          "height": 124,
-          "originX": 0,
-          "originY": 0
-        }
-      ]
-    }
   ],
   "sprites": [
     {

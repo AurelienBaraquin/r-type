@@ -1,5 +1,10 @@
 function startMusic()
-    -- playBackgroundMusic("Games/RType/assets/sounds/background_music.ogg", 100.0)
+    playBackgroundMusic("Games/RType/assets/sounds/background_music.ogg", 2.0)
 end
 
-startMusic()
+function init()
+    startMusic()
+end
+
+function update(delta)
+end

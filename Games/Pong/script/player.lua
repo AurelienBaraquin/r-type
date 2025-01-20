@@ -35,8 +35,8 @@ function handle_move(position)
     if position.y < 0 then
         position.y = 0
     end
-    if position.y > 450 - 50 then
-        position.y = 450 - 50
+    if position.y > 600 - 93 then
+        position.y = 600 - 93
     end
 
     return position
