@@ -287,18 +287,18 @@ void save(Archive& archive) const
 template <class Archive>
 void load(Archive &archive)
 {
-    std::cout << "Deserializing registry\n";
+    // std::cout << "Deserializing registry\n";
     try {
         std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
         
-        std::cout << "[DEBUG] pools.size() before archive = " << pools.size() << std::endl;
+        // std::cout << "[DEBUG] pools.size() before archive = " << pools.size() << std::endl;
         
         archive(entityManager,
                 _tags,
                 entityMasks,
                 pools);
         
-        std::cout << "[DEBUG] pools.size() after archive = " << pools.size() << std::endl;
+        // std::cout << "[DEBUG] pools.size() after archive = " << pools.size() << std::endl;
         
         std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> componentPoolsEx;
 
@@ -306,15 +306,15 @@ void load(Archive &archive)
             if(pool) {
                 auto actualTypeIndex = pool->getTypeIndex();
                 componentPoolsEx[actualTypeIndex] = std::move(pool);
-                std::cout << "[DEBUG] Loaded pool for type: " << actualTypeIndex.name() << std::endl;
+                // std::cout << "[DEBUG] Loaded pool for type: " << actualTypeIndex.name() << std::endl;
             } else {
-                std::cout << "[DEBUG] Encountered null pool for type: " << typeName << std::endl;
+                // std::cout << "[DEBUG] Encountered null pool for type: " << typeName << std::endl;
             }
         }
         
-        std::cout << "[DEBUG] componentPoolsEx.size() = " << componentPoolsEx.size() << std::endl;
+        // std::cout << "[DEBUG] componentPoolsEx.size() = " << componentPoolsEx.size() << std::endl;
         componentPools = std::move(componentPoolsEx);
-        std::cout << "[DEBUG] componentPools.size() after assignment = " << componentPools.size() << std::endl;
+        // std::cout << "[DEBUG] componentPools.size() after assignment = " << componentPools.size() << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Failed to deserialize registry: " << e.what() << std::endl;
     }

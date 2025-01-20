@@ -54,7 +54,7 @@ void UdpClient::handleReceive(const std::error_code& ec, std::size_t bytes_recei
                         //   << entity.z << ")\n";
                     setSnapshot(p);
                     // Sharable::getInstance().setSharedVariable("Snapshot", snap);
-                    // std::cout << "Client: Received SNAPSHOT from server.\n";
+                    std::cout << "Client: Received SNAPSHOT from server.\n";
                     break;
                 }
                 case MessageType::PLAYER_INPUT: {

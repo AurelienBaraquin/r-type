@@ -34,11 +34,11 @@ Packet Network::snapShot(Registry &registry)
         }
         cereal::BinaryOutputArchive archive(os);
         registry.save(archive);
-        std::cout << "Registry saved successfully.\n";
+        // std::cout << "Registry saved successfully.\n";
     }
     std::string registryData = os.str();
 
-    return generateSnapshot(registry);
+    return generateSnapshot(registryData);
 }
 void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSystem)
 {

@@ -23,11 +23,11 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
         eventManager->publish(std::make_shared<Events::Shutdown>());
         return;
     }
-    std::cout << "Graphic: Update\n";
+    // std::cout << "Graphic: Update\n";
     RegistryLock lock(registry);
 
     std::vector<Entity> entitiesToDraw;
-    std::cout << "Graphic: Drawing entities\n";
+    // std::cout << "Graphic: Drawing entities\n";
     auto f = async([this, &registry, deltaTime, &entitiesToDraw]() {
         for (auto entity : registry.view<Components::Sprite, Components::Position,
                                          Components::Scale, Components::Rotation>()) {
@@ -49,16 +49,16 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
     });
 
     BeginDrawing();
-    std::cout << "Graphic: Drawing\n";
+    // std::cout << "Graphic: Drawing\n";
     BeginMode2D(camera);
-    std::cout << "Graphic: Drawing mode 2D\n";
+    // std::cout << "Graphic: Drawing mode 2D\n";
     ClearBackground(BLACK);
-    std::cout << "Graphic: Clear background\n";
+    // std::cout << "Graphic: Clear background\n";
     f.wait();
-    std::cout << "Graphic: Drawing entities\n";
+    // std::cout << "Graphic: Drawing entities\n";
     for (auto entity : entitiesToDraw) {
         if (registry.hasComponent<Components::Animation>(entity)) {
-            std::cout << "Graphic: Drawing animation\n";
+            // std::cout << "Graphic: Drawing animation\n";
             auto animation = registry.getComponent<Components::Animation>(entity);
             auto position = registry.getComponent<Components::Position>(entity);
             auto scale = registry.getComponent<Components::Scale>(entity);
@@ -66,7 +66,7 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
             if (!animation || !position || !scale || !rotation) {
                 continue;
             }
-            std::cout << "Graphic: Drawing all animation\n";
+            // std::cout << "Graphic: Drawing all animation\n";
             _AnimationSystem.updateAnimation(*animation, deltaTime);
 
             if (!animation->playing) continue;
@@ -80,21 +80,21 @@ void Graphic::update(float deltaTime, Registry& registry, ScriptSystem& scriptSy
 
             drawTextureEx(&sprite, position, rotation, scale);
         } else if (registry.hasComponent<Components::Sprite>(entity)) {
-            std::cout << "Graphic: Drawing sprite\n";
+            // std::cout << "Graphic: Drawing sprite\n";
             auto sprite = registry.getComponent<Components::Sprite>(entity);
             auto position = registry.getComponent<Components::Position>(entity);
             auto scale = registry.getComponent<Components::Scale>(entity);
             auto rotation = registry.getComponent<Components::Rotation>(entity);
-            std::cout << "Graphic: Drawing all sprite\n";
+            // std::cout << "Graphic: Drawing all sprite\n";
             if (!sprite || !position || !scale || !rotation) {
                 continue;
             }
             auto brutSprite = _SpriteSystem.getSprite(sprite->spriteID);
             drawTextureEx(&brutSprite, position, rotation, scale);
-            std::cout << "Graphic: Drawing sprite end\n";
+            // std::cout << "Graphic: Drawing sprite end\n";
         }
     }
-    std::cout << "Graphic: End drawing\n";
+    // std::cout << "Graphic: End drawing\n";
     EndDrawing();
 }
 

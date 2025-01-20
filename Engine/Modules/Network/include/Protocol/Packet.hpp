@@ -143,17 +143,13 @@ inline PlayerInput loadInputFromPacket(const Packet& p)
     return p.getPayload<PlayerInput>();
 }
 
-inline Packet generateSnapshot(const Registry& registry)
+inline Packet generateSnapshot(const std::string registryData)
 {
     static size_t id = 0;
-
+ 
     Packet packet;
-    std::ostringstream os;
-    cereal::BinaryOutputArchive archive(os);
-    registry.save(archive);
-    std::string registryData = os.str();
+    SnapShot snap = {registryData, id++};
 
-    SnapShot snap = {id++, registryData};
     packet.setMessageType(MessageType::SNAPSHOT);
     packet.setPayload(snap);
     return packet;

@@ -73,7 +73,7 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
         cereal::BinaryInputArchive archive(is);
         registry.clear();
         archive(registry);
-        std::cout << "Registry loaded successfully.\n";
+        // std::cout << "Registry loaded successfully.\n";
     }
     std::vector<std::string> dataStr = getDatas();
 
@@ -83,6 +83,11 @@ void Network::update(float deltaTime, Registry &registry, ScriptSystem &scriptSy
     Packet pa = getSnapShot();
     if (pa.getMessageType() == MessageType::SNAPSHOT) {
         std::cout << "Client: Received SNAPSHOT from server.\n";
+        std::string sn = pa.getPayload<SnapShot>().entities;
+        std::cout << sn << std::endl;
+        std::istringstream is(sn);
+        cereal::BinaryInputArchive archive(is);
+        registry.load(archive);
         // std::cout << "Client: Received SNAPSHOT from server.\n";
         // updateEntity(registry, p.getPayload<SnapShot>().data);
     }
