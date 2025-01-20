@@ -287,6 +287,7 @@ template <class Archive>
 void load(Archive &archive)
 {
     std::cout << "Deserializing registry\n";
+    try {
     std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
     
     archive(entityManager,
@@ -297,6 +298,9 @@ void load(Archive &archive)
     for (auto& [typeName, pool] : pools) {
         auto actualTypeIndex = std::type_index(typeid(*pool));
         componentPools[actualTypeIndex] = std::move(pool);
+    }
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to deserialize registry: " << e.what() << std::endl;
     }
 }
 
