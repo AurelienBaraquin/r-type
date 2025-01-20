@@ -11,6 +11,7 @@ function init(e)
 end
 
 function update(delta)
+
     local position = getPosition(self)
 
     local rot = getRotation(self)

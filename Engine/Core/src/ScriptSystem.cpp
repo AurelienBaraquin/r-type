@@ -25,12 +25,15 @@ sol::state& ScriptSystem::getScript(Entity entity, const std::string& scriptPath
         std::shared_lock lock(mutex);
         auto it = scripts.find({entity, scriptPath});
         if (it != scripts.end()) {
+            std::cout << "Script already exists: " << scriptPath << std::endl;
             return it->second;
         }
     }
 
     // Create and initialize new script
+
     std::unique_lock lock(mutex);
+    std::cout << "Creating new script: " << scriptPath << std::endl;
     auto& luaState = scripts[{entity, scriptPath}];
     initializeScript(luaState, scriptPath);
     return luaState;
