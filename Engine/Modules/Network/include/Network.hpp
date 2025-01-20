@@ -8,8 +8,8 @@
 #include "Protocol.hpp"
 #include "UdpClient.hpp"
 #include "UdpServer.hpp"
-
-class Network : public ISystem, public ILoader
+#include "ISystem.hpp"
+class Network : public ISystem, public ILoader, public NotThreadable
 {
    public:
     Network();

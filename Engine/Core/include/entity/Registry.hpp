@@ -260,21 +260,21 @@ class Registry
             entityManager.clear();
             _tags.clear();
             entityMasks.clear();
-            // componentPools.clear();
+            componentPools.clear();
         } else {
             entityManager.clear();
             _tags.clear();
             entityMasks.clear();
-            // componentPools.clear();
+            componentPools.clear();
         }
     }
 
-   template <class Archive>
+template <class Archive>
 void save(Archive& archive) const
 {
     std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
-    for (auto& [typeIndex, pool] : componentPools) {
-        pools[typeIndex.name()] = pool->clone(); 
+    for (const auto& [typeIndex, pool] : componentPools) {
+        pools[pool->getTypeIndex().name()] = pool->clone();
     }
 
     archive(entityManager,
@@ -282,27 +282,44 @@ void save(Archive& archive) const
             entityMasks,
             pools);
 }
+
 
 template <class Archive>
 void load(Archive &archive)
 {
     std::cout << "Deserializing registry\n";
     try {
-    std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
-    
-    archive(entityManager,
-            _tags,
-            entityMasks,
-            pools);
+        std::unordered_map<std::string, std::unique_ptr<IComponentPool>> pools;
+        
+        std::cout << "[DEBUG] pools.size() before archive = " << pools.size() << std::endl;
+        
+        archive(entityManager,
+                _tags,
+                entityMasks,
+                pools);
+        
+        std::cout << "[DEBUG] pools.size() after archive = " << pools.size() << std::endl;
+        
+        std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> componentPoolsEx;
 
-    for (auto& [typeName, pool] : pools) {
-        auto actualTypeIndex = std::type_index(typeid(*pool));
-        componentPools[actualTypeIndex] = std::move(pool);
-    }
+        for (auto& [typeName, pool] : pools) {
+            if(pool) {
+                auto actualTypeIndex = pool->getTypeIndex();
+                componentPoolsEx[actualTypeIndex] = std::move(pool);
+                std::cout << "[DEBUG] Loaded pool for type: " << actualTypeIndex.name() << std::endl;
+            } else {
+                std::cout << "[DEBUG] Encountered null pool for type: " << typeName << std::endl;
+            }
+        }
+        
+        std::cout << "[DEBUG] componentPoolsEx.size() = " << componentPoolsEx.size() << std::endl;
+        componentPools = std::move(componentPoolsEx);
+        std::cout << "[DEBUG] componentPools.size() after assignment = " << componentPools.size() << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Failed to deserialize registry: " << e.what() << std::endl;
     }
 }
+
 
    private:
     EntityManager entityManager;

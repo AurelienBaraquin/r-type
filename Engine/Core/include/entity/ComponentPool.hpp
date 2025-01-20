@@ -24,6 +24,7 @@ class IComponentPool
    public:
     virtual ~IComponentPool() = default;
     virtual void remove(Entity entity) = 0;
+    virtual std::type_index getTypeIndex() const = 0;
 
     template <class Archive>
     void serialize(Archive& archive)
@@ -36,7 +37,7 @@ class IComponentPool
 template <typename T>
 class ComponentPool : public IComponentPool
 {
-   public:
+public:
     void add(Entity entity, T component)
     {
         components[entity] = std::move(component);
@@ -64,9 +65,15 @@ class ComponentPool : public IComponentPool
         return std::make_unique<ComponentPool<T>>(*this);
     }
 
-   private:
+    std::type_index getTypeIndex() const override
+    {
+        return typeid(T);
+    }
+
+private:
     std::unordered_map<Entity, T> components;
 };
+
 
 // Register ComponentPool specializations with Cereal
 CEREAL_REGISTER_TYPE(ComponentPool<Components::Json>);
