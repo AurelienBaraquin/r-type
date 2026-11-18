@@ -1,8 +1,16 @@
 # R-Type — CactusEngine
 
+![R-Type](doc/assets/image.jpg)
+
 A networked, multiplayer R-Type built on **CactusEngine**, a modular C++17 game engine written from scratch: ECS core, Lua scripting, JSON scenes and an authoritative UDP server.
 
 Epitech 3rd-year project (team of 5, Nov 2024 – Jan 2025).
+
+<p align="center">
+  <img src="doc/screenshots/gameplay.png" width="32%" alt="Two players shooting">
+  <img src="doc/screenshots/stage.png" width="32%" alt="Enemy waves">
+  <img src="doc/screenshots/boss.png" width="32%" alt="Boss fight">
+</p>
 
 ## Highlights
 
